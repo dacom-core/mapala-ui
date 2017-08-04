@@ -28,8 +28,12 @@ module.exports = {
     middleware: 'i18n'
   },
   plugins: [
+    { src: '~/plugins/element-ui.js', ssr: false },
     { src: '~/plugins/i18n.js', ssr: true },
-    { src: '~/plugins/element-ui.js', ssr: false }
+    { src: '~/plugins/vue-cookies.js', ssr: true },
+    { src: '~/plugins/vue-google-maps.js', ssr: true },
+    { src: '~/plugins/vue-lazyload.js', ssr: true },
+    { src: '~/plugins/vue-scroll-to.js', ssr: false }
   ],
   /*
   ** Build configuration
