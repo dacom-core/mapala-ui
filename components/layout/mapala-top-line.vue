@@ -21,7 +21,7 @@
 
       div.divider
 
-      nuxt-link(v-if="!isAuth" class="login", :to="{ name: 'login' }")
+      nuxt-link(v-if="!isAuth" class="login", :to="{ path: 'login' }", @click="")
         | Вход
 
       div(v-on-click-outside="closeMenu")

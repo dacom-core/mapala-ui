@@ -62,7 +62,7 @@ module.exports = {
       401: '/'
     },
     requestInterceptor: (config, { store }) => {
-      if (store.state.token) {
+      if (store.state.locale) {
         config.headers.common['Locale'] = store.state.locale
       }
       return config

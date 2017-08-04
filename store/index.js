@@ -3,11 +3,7 @@ import MobileDetect from 'mobile-detect'
 export const state = () => ({
   locales: ['en', 'ru'],
   locale: 'ru',
-  isMobile: false,
-  modalWindow: {
-    isShown: false,
-    content: ''
-  }
+  isMobile: false
 })
 
 export const mutations = {
