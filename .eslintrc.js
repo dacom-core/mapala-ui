@@ -11,6 +11,12 @@ module.exports = {
     'html'
   ],
   // add your custom rules here
-  rules: {},
+  rules: {
+    "no-trailing-spaces": 0,
+    "flowtype-errors/show-errors": 2,
+    'allow-parens': 0,
+    'generator-star-spacing': 0,
+    'camelcase': 0
+  },
   globals: {}
 }

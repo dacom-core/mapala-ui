@@ -1,18 +1,18 @@
 <template lang="pug">
   div
-    top
+    top-line
     div.gw
       nuxt
-    modal
+    modal-window
 </template>
 <script>
-  import Top from '~/components/layout/app-top-line'
-  import Modal from '~/components/layout/app-modal-window'
+  import TopLine from '~/components/layout/mapala-top-line'
+  import ModalWindow from '~/components/layout/mapala-modal-window'
 
   export default {
     components: {
-      Top,
-      Modal
+      TopLine,
+      ModalWindow
     },
     methods: {}
   }

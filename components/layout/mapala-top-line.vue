@@ -21,13 +21,13 @@
 
       div.divider
 
-      nuxt-link(v-if="!isAuth" class="login", :to="{ name: 'login' }")
-        | Вход
+      show-modal-button(class="login", modal-content-component="login")
+        | {{ $t('log_in') }}
 
       div(v-on-click-outside="closeMenu")
 
         div(v-if="isAuth", @click="menuOpen", class="open_menu")
-          | Меню
+          | {{ $t('menu') }}
 
         div(
           v-if="isAuth",
@@ -35,29 +35,33 @@
           class="user_menu"
         )
 
-          nuxt-link(class="wal", :to="{name: 'userWallet', params: {modules: userName}}")
+          show-modal-button(class="wal", modal-content-component="userWallet")
             i.purce
             span.txt_i
-              | Кошелек
+              | {{ $t('Wallet') }}
             span(class="amount", v-text="userBalance")
-
 
           div.divd
           div.mn
-            nuxt-link(class="m_item", :to="{name: 'userSettings', params: {modules: userName}}")
-              | Настройки
+            show-modal-button(class="m_item", modal-content-component="userSettings")
+              | {{ $t('setting') }}
 
             nuxt-link(class="m_item", :to="'/ico/'")
               | ICO
 
             a(href="#" v-if="isAuth" class="m_item", @click="userLogout")
-              | Logout
+              | {{ $t('log_out') }}
 </template>
 
 <script>
   import { mapState, mapActions } from 'vuex'
+  import showModalButton from '~/components/modal/mapala-show-modal-button'
 
   export default {
+    components: {
+      showModalButton
+    },
+
     mounted () {
 
     },

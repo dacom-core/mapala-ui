@@ -32,7 +32,7 @@
     "vue-on-click-outside": "^1.0.3",
     "vue-scrollto": "^2.7.2",
     "vue-style-loader": "^3.0.1",
-    "vue2-google-maps": "^0.7.10"
+    "vue2-google-maps": "^0.7.10",
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
