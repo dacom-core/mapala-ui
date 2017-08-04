@@ -1,26 +1,36 @@
 <template lang="pug">
-  a(@click="showModal(content)")
+  a(@click="openModal")
+    slot
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 
 export default {
-  props: ['content'],
+  props: ['modalContentComponent'],
 
   mounted () {
-
   },
 
   data () {
-    return {}
+    return {
+    }
   },
 
   methods: {
     ...mapActions({
-      'showModal': 'modal/showModal',
-      'hideModal': 'modal/showModal'
-    })
+      'showModal': 'modal/index/showModal',
+      'hideModal': 'modal/index/hideModal'
+    }),
+
+    async openModal () {
+      try {
+        const path = await this.showModal(this.modalContentComponent)
+        this.router.push(path)
+      } catch (e) {
+        console.log(e)
+      }
+    }
   }
 }
 </script>

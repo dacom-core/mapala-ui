@@ -13,10 +13,9 @@ export const state = () => ({
 })
 
 export const actions = {
-  showModal ({ commit, redirect }, name) {
-    const componentPath = state.modalWindow.nameToRouteMatch[name]
+  showModal ({ commit, state }, name) {
     commit('SHOW_MODAL')
-    redirect(componentPath)
+    return state.modalWindow.nameToRouteMatch[name]
   },
   hideModal ({ commit }) {
     commit('HIDE_MODAL')
