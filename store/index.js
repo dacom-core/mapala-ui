@@ -14,9 +14,21 @@ export const mutations = {
   }
 }
 
+export const getters = {
+  isMobile (state) {
+    return state.isMobile
+  }
+}
+
 export const actions = {
-  nuxtServerInit ({ state }, { req }) {
+  nuxtServerInit ({ state, dispatch, commit }, { req }) {
+    const isAuth = true
     //  Does mobile phone load the app
     state.isMobile = new MobileDetect(req.headers['user-agent']).phone()
+
+    if (isAuth) { //  Must be auth check.
+      // dispatch('user/actions/fetch_user')
+      state.user.state.isAuth = true
+    }
   }
 }

@@ -45,5 +45,9 @@
   "update": "Update",
   "user_blog": "User's blog",
   "wallet": "Wallet",
-  "weekly_revenues": "Weekly revenues"
+  "weekly_revenues": "Weekly revenues",
+  "you_do_not_have_posts_yet": "You don't have posts yet",
+  "write_message": "Write",
+  "this_user_do_not_have_posts": "Oops! This user doesn't have posts yet, but you are free to read posts from other authors",
+  "watch": "Watch"
 }

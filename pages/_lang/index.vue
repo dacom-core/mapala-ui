@@ -1,90 +1,87 @@
 <template lang="pug">
-  div
-    div.wrapper
-      div.tape(v-bind:class="{ tapeMobile: isMobile }")
-        user-profile(v-if="user && user != 'mapala'", :has-not-pages="has_not_pages")
+  two-columns-layout
+    template(slot="leftScreen")
 
-        nuxt-link(
-          :to="{ name: 'createNewPost', params: { user: userName } }",
-          v-if="isAuth &&(userName == $route.params.user || $route.name == 'index')" class="add_post"
-          )
-          div.av_wrap
-            img.user_av(:src="userAvatar")
-          div.write_post
-            | {{ $t('add') }}
+      create-post-button(v-if="isAuth")
 
-        el-row(
-          v-if="userName != $route.params.user && !isMobile"
-          type="flex"
-          class="blog-nav"
-          justify="space-between"
-          )
-          el-col(:span="11")
-            nuxt-link(:to="{name: 'index'}")
+      el-row(
+        type="flex"
+        class="blog-nav"
+        justify="space-between"
+      )
+        el-col(:span="11")
+          nuxt-link(:to="{name: 'index'}")
+            el-button(:plain="true" size="large" type="info")
+              | {{ $t('travel_blogs') }}
+
+        el-col(:span="11")
+          router-link(:to="'/mapala'")
+            el-button(:plain="true" size="large" type="info")
+              | {{ $t('mapala_blogs') }}
+
+      div(v-if="userName != $route.params.user && isMobile()")
+        el-row(type="flex" class="blog-nav" justify="space-between")
+          el-col(:span="24")
+            router-link(:to="{name: 'index'}")
               el-button(:plain="true" size="large" type="info")
                 | {{ $t('travel_blogs') }}
 
-          el-col(:span="11")
-            router-link(:to="'/mapala'")
+        el-row(
+          v-if="userName != $route.params.user"
+          type="flex"
+          class="blog-nav"
+          justify="space-between"
+        )
+          el-col(:span="24")
+            nuxt-link(:to="'/mapala'")
               el-button(:plain="true" size="large" type="info")
                 | {{ $t('mapala_blogs') }}
 
-        div(v-if="userName != $route.params.user && isMobile")
-          el-row(type="flex" class="blog-nav" justify="space-between")
-            el-col(:span="24")
-              router-link(:to="{name: 'index'}")
-                el-button(:plain="true" size="large" type="info")
-                  | {{ $t('travel_blogs') }}
+      mugen-scroll(
+        tag="mu",
+        :handler="nextPosts",
+        :should-handle="!loading"
+      )
+        | &nbsp;
 
-          el-row(
-            v-if="userName != $route.params.user"
-            type="flex"
-            class="blog-nav"
-            justify="space-between"
-            )
-            el-col(:span="24")
-              nuxt-link(:to="'/mapala'")
-                el-button(:plain="true" size="large" type="info")
-                  | {{ $t('mapala_blogs') }}
 
-        post-list
 
-        mugen-scroll(
-          v-if="!has_not_pages"
-          tag="mu",
-          :handler="nextPosts",
-          :should-handle="!loading"
-          )
-          | &nbsp;
-      component(v-if="!isMobile" v-bind:is="rightView")
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
+import TwoColumnsLayout from '~/components/layout/mapala-two-column-layout'
+import CreatePostButton from '~/components/blog/__parts__/mapala-create-post-button'
 
 export default {
   data () {
     return {
-      rightView: null
+      rightView: null,
+      // Заглушки
+      loading: false
     }
   },
   computed: {
-    ...mapState({
-      isAuth: 'user/auth/isAuth',
-      userName: 'user/personal/userName',
-      userAvatar: 'user/personal/avatar',
-      userBalance: 'user/wallet/balance',
-      isMobile: 'isMobile'
-    }),
+    ...mapState('user/state', {
+      isAuth: state => state.isAuth,
+      userName: state => state.userName
+    })
   },
 
   methods: {
+    ...mapGetters(['isMobile']),
+    // Заглушки
+    nextPosts () {
+    }
   },
-  created () {
-    //  let user = this.$route.params.user
-    //  this.authorPosts(user)
-  },
+
   components: {
+    TwoColumnsLayout,
+    CreatePostButton
+  },
+
+  mounted () {
+    console.log(this.isMobile)
   }
 }
 </script>
@@ -111,3 +108,5 @@ export default {
     margin-left: 0!important;
   }
 </style>
+
+

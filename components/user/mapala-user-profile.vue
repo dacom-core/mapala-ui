@@ -19,6 +19,12 @@
         nuxt-link.but.ic.set(:to="{name: 'userSettings', params: {user: userName}}")
           | {{ $t('setting') }}
 
+
+
+    create-post-button
+
+
+
     div.no_post(v-if="has_not_pages")
       div(v-if="auth.user.username != $route.params.user")
         p
@@ -31,13 +37,21 @@
           | {{ $t('you_do_not_have_posts_yet') }}
         nuxt-link.blue_btn(v-if="isAuth", :to="{name: 'createNewPost', params: {user: userName}}")
           | {{ $t('write_message') }}
+
+
+
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import CreatePostButton from '~/components/blog/__parts__/mapala-post-button'
 
 export default {
-  props: ['has_not_pages'],
+  props: ['hasPosts'],
+
+  components: {
+    CreatePostButton
+  },
 
   data () {
     return {}
