@@ -1,46 +1,42 @@
-<template>
-  <div class="map">
-    <gmap-map
-      :options="mapOptions"
-      :center="center"
-      :zoom="4"
-      @idle="fetchMarkers"
-      ref="mmm"
-      map-type-id="terrain"
+<template lang="pug">
+  div.map
+    gmap-map(
+      :options="mapOptions",
+      :center="center",
+      :zoom="4",
+      @idle="fetchMarkers",
+      ref="mmm",
+      map-type-id="terrain",
       @dragend="checkBounds"
-    >
+      )
 
-      <gmap-marker
-        v-for="marker in markers"
-        :key="marker.permlink + marker.author"
-        :position="{lat: Number(marker.position.latitude), lng: Number(marker.position.longitude)}"
-        :clickable="true"
-        :draggable="false"
-        :icon="icon"
-        @mouseover="openInfoWindow(marker)"
-        @mouseout="infoWindow.opened = false"
-        @click="$router.push({name: 'page', params: { author: marker.author, permlink: marker.permlink }})">
-      </gmap-marker>
+      gmap-marker(
+        v-for="marker in markers",
+        :key="marker.permlink + marker.author",
+        :position="{lat: Number(marker.position.latitude), lng: Number(marker.position.longitude)}",
+        :clickable="true",
+        :draggable="false",
+        :icon="icon",
+        @mouseover="openInfoWindow(marker)",
+        @mouseout="infoWindow.opened = false",
+        @click="$router.push({name: 'page', params: { author: marker.author, permlink: marker.permlink }})"
+        )
 
-      <gmap-info-window
-        :options="infoWindow.options"
-        :opened="infoWindow.opened"
-        :content="infoWindow.content"
-        :position="infoWindow.position"
-        @closeclick="infoWindow.opened=false">
-      </gmap-info-window>
-    </gmap-map>
-  </div>
+      gmap-info-window(
+        :options="infoWindow.options",
+        :opened="infoWindow.opened",
+        :content="infoWindow.content",
+        :position="infoWindow.position",
+        @closeclick="infoWindow.opened=false"
+        )
 </template>
 
 <script>
-  import {googleMapStyles} from '../main'
-  import {Marker} from '../services'
+  import { googleMapStyles } from '~/plugins/vue-google-maps'
 
   export default {
     data () {
       return {
-        // map: this.$refs.mmm.$mapObject,
         markers: [],
         infoWindow: {
           options: {
@@ -55,7 +51,7 @@
             lng: 0.0
           },
           opened: false,
-          content: '',
+          content: ''
         },
         mapOptions: {
           styles: googleMapStyles,
@@ -68,12 +64,9 @@
             position: null
           },
         },
-        center: {lat:50.0542, lng:20.0051},
-        icon: `http://${location.host}/static/icon-marker-3.png`,
+        center: { lat: 50.0542, lng: 20.0051 },
+        icon: '~assets/static/icon-marker-3.png'
       }
-    },
-    created() {
-
     },
     computed: {
       pages () {
@@ -84,24 +77,24 @@
       }
     },
     methods: {
-      fetchMarkers() {
-        var map = this.$refs.mmm.$mapObject
-        let bounds = map.getBounds()
+      fetchMarkers () {
+        const map = this.$refs.mmm.$mapObject
+        const bounds = map.getBounds()
         this.mapOptions.zoomControlOptions.position = google.maps.ControlPosition.TOP_RIGHT
         this.mapOptions.streetViewControlOptions.position = google.maps.ControlPosition.TOP_CENTER
 
-        let bbox = [
+        const bbox = [
           bounds.b.b,
           bounds.f.b,
           bounds.b.f,
           bounds.f.f
         ].join()
 
-        Marker.get({bbox: bbox}).then(res => {
+        Marker.get({ bbox: bbox }).then(res => {
           this.markers = res.body.results
         })
       },
-      openInfoWindow(marker) {
+      openInfoWindow (marker) {
         this.infoWindow.opened = true
 
         this.infoWindow.content = `<h3>${marker.title}</h3><p>${marker.body}</p>`
@@ -113,7 +106,7 @@
           lng: Number(marker.position.longitude)
         }
       },
-      setNewCenter(){
+      setNewCenter () {
         function getRandomInt(min, max) {
           min = Math.ceil(min)
           max = Math.floor(max)
@@ -121,44 +114,32 @@
         }
 
         let r_mark = getRandomInt(0, this.pages.length - 1)
-
-        // this.center = {
-        //   lat: Number(this.pages[r_mark].position.latitude),
-        //   lng: Number(this.pages[r_mark].position.longitude)
-        // }
       },
       /**
        * World map strict bounds
        */
-      checkBounds(){
+      checkBounds () {
         var allowedBounds = new google.maps.LatLngBounds(
           new google.maps.LatLng(-81.5),
           new google.maps.LatLng(81.5)
-        );
+        )
 
         var map = this.$refs.mmm.$mapObject
 
-        var maxY = allowedBounds.getNorthEast().lat();
-        var minY = allowedBounds.getSouthWest().lat();
-        var x = map.getCenter().lng();
-        var y = map.getCenter().lat();
+        var maxY = allowedBounds.getNorthEast().lat()
+        var minY = allowedBounds.getSouthWest().lat()
+        var x = map.getCenter().lng()
+        var y = map.getCenter().lat()
         if ((y < maxY && y > 0) || (y > minY && y < 0)) {
-          return;
+          return
         }
 
         if (y < minY) y = minY;
         if (y > maxY) y = maxY;
 
-        map.setCenter(new google.maps.LatLng(y, x));
+        map.setCenter(new google.maps.LatLng(y, x))
       }
-    },
-    // watch: {
-    //   'pages'() {
-    //     if (this.pages.length) {
-    //       this.setNewCenter()
-    //     }
-    //   }
-    // },
+    }
   }
 
 </script>

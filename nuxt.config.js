@@ -62,6 +62,7 @@ module.exports = {
     redirectError: {
       401: '/'
     },
+    baseURL: 'https://mapala.net/api/',
     requestInterceptor: (config, { store }) => {
       if (store.state.locale) {
         config.headers.common['Locale'] = store.state.locale

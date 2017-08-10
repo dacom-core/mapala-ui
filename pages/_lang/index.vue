@@ -37,12 +37,17 @@
               el-button(:plain="true" size="large" type="info")
                 | {{ $t('mapala_blogs') }}
 
+      post-list
+
       mugen-scroll(
         tag="mu",
         :handler="nextPosts",
         :should-handle="!loading"
       )
         | &nbsp;
+
+    template(slot="rightScreen")
+      post-map
 
 
 
@@ -52,8 +57,15 @@
 import { mapState, mapGetters } from 'vuex'
 import TwoColumnsLayout from '~/components/layout/mapala-two-column-layout'
 import CreatePostButton from '~/components/blog/__parts__/mapala-create-post-button'
+import PostList from '~/components/blog/mapala-post-list'
+import PostMap from '~/components/blog/mapala-post-map'
 
 export default {
+  async fetch ({ store: { dispatch, commit } }) {
+    const { data: { results } } = await dispatch('posts/fetch_posts')
+    commit('posts/SET_POSTS', results)
+  },
+
   data () {
     return {
       rightView: null,
@@ -62,9 +74,9 @@ export default {
     }
   },
   computed: {
-    ...mapState('user/state', {
-      isAuth: state => state.isAuth,
-      userName: state => state.userName
+    ...mapState('user', {
+      isAuth: state => state.auth.isAuth,
+      userName: state => state.personal.userName
     })
   },
 
@@ -77,11 +89,9 @@ export default {
 
   components: {
     TwoColumnsLayout,
-    CreatePostButton
-  },
-
-  mounted () {
-    console.log(this.isMobile)
+    CreatePostButton,
+    PostList,
+    PostMap
   }
 }
 </script>

@@ -1,43 +1,34 @@
 <template lang="pug">
   div
-    <PageItem v-for="page in pages" :page="page" :key="page.id"></PageItem>
-    <div v-loading.body="loading"></div>
-  </div>
+    post-item(v-for="post in posts.data", :post="post", :key="post.id")
+    div(v-loading.body="posts.loading")
 </template>
 
 
 <script>
-  import PageItem from './PageItem.vue'
+import PostItem from './mapala-post-item'
+import { mapState } from 'vuex'
 
-  export default {
-    // props: ['pages'],
+export default {
+  data () {
+    return {}
+  },
 
-    data () {
-      return {
-        // TODO Седлать ожидание подгрузки постов
-        // loading: this.$parent.loading,
-      }
-    },
-    computed: {
-      pages () {
-        return this.$store.state.posts.data
-      },
-      loading () {
-        return this.$store.state.posts.loading
-      }
-    },
-    components: {
-      PageItem
-    },
+  computed: mapState('posts', {
+    posts: state => state.posts
+  }),
+
+  components: {
+    PostItem
   }
-
+}
 </script>
 <style>
   .wrapper{
     display: flex;
     width: 100%;
     position: relative;
-    background-image: url(../../frontend/assets/icon-marker-3.png);
+    background-image: url('~assets/icon-marker-3.png');
     background: none;
   }
 
@@ -128,7 +119,7 @@
     color: #7e8793;
     padding-left: 12px;
     position: relative;
-    background: url(../../frontend/assets/icon-location-small.svg) no-repeat left 3px;
+    background: url('~assets/icon-location-small.svg') no-repeat left 3px
   }
 
   .tape .post .write_header{
@@ -169,12 +160,12 @@
   }
 
   .tape .post .icon.comment{
-    background: url(../../frontend/assets/icon-comment.svg) no-repeat left center;
+    background: url('~assets/icon-comment.svg') no-repeat left center;
     margin-right: 18px;
   }
 
   .tape .post .icon.repost{
-    background: url(../../frontend/assets/icon-repost.svg) no-repeat left center;
+    background: url('~assets/icon-repost.svg') no-repeat left center;
   }
 
   .tape .post .support{

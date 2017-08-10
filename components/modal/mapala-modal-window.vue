@@ -23,7 +23,7 @@ export default {
     return {}
   },
   computed: mapState({
-    isVisible: state => state.modal.index.modalWindow.isShown
+    isVisible: state => state.modal.modalWindow.isShown
   }),
   methods: mapActions({
     'hideModal': 'modal/hideModal'

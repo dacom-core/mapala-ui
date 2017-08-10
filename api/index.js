@@ -1,18 +1,31 @@
-export default function generate_API_fetcher (api_path) {
-  return function () {
-    return axios.get(api_path).then((response) => {
-      // console.log(api_path, 'api fetcher success, status code', response.status)
-      if (response.status !== 200) {
-        // console.log('considered a bad code, thus rejected')
-        return Promise.reject(response)
-      }
-      // console.log(response.data.length
-      //   ? `there are ${response.data.length} items in the response`
-      //   : 'can`t identify response.data.length')
-      return Promise.resolve(response)
-    }).catch((response) => {
-      console.log(api_path, 'API FETCHER ERROR, status code', response.status)
-      return Promise.reject(response)
-    })
+import axios from 'axios'
+import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from './config'
+axios.defaults.baseURL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}`
+// axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com'
+
+/**
+ * create vue-resource's resource like object
+ *
+ * Default Actions
+ *   get: {method: 'GET'}
+ *   save: {method: 'POST'}
+ *   query: {method: 'GET'}
+ *   update: {method: 'PUT'}
+ *   delete: {method: 'DELETE'}
+ *
+ * @param path the resource path
+ * @param http axios instance
+ * @param actions custom actions
+ * @returns the resource object
+ */
+export function Resource (path, http, actions) {
+  const obj = {
+    get: () => http.get(path),
+    view: id => http.get(path + '/' + id),
+    save: obj => http.post(path, obj),
+    query: params => http.get(path, { params }),
+    update: (id, obj) => http.put(path + '/' + id, obj),
+    delete: id => http.delete(path + '/' + id)
   }
+  return Object.assign(obj, actions)
 }

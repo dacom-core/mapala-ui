@@ -72,10 +72,10 @@
     },
 
     computed: mapState({
-      isAuth: state => state.user.state.isAuth,
-      userName: state => state.user.state.userName,
-      userAvatar: state => state.user.state.avatar,
-      userBalance: state => state.user.state.balance,
+      isAuth: state => state.user.auth.isAuth,
+      userName: state => state.user.personal.userName,
+      userAvatar: state => state.user.personal.avatar,
+      userBalance: state => state.user.wallet.balance,
       isMobile: state => state.isMobile,
       locale: state => state.locale
     }),

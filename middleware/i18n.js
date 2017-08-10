@@ -9,7 +9,7 @@ export default function ({ app, store, route, params, error, redirect, hotReload
   // Set locale
   store.commit('SET_LANG', locale)
   app.i18n.locale = store.state.locale
-  // If route is /en/... -> redirect to /...
+  // If route is /ru/... -> redirect to /...
   if (locale === 'ru' && route.fullPath.indexOf('/ru') === 0) {
     return redirect(route.fullPath.replace(/^\/ru/, '/'))
   }

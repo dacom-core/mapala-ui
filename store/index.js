@@ -11,6 +11,10 @@ export const mutations = {
     if (state.locales.indexOf(locale) !== -1) {
       state.locale = locale
     }
+  },
+
+  SET_MOBILE (state, payload) {
+    state.isMobile = payload
   }
 }
 
@@ -21,14 +25,15 @@ export const getters = {
 }
 
 export const actions = {
-  nuxtServerInit ({ state, dispatch, commit }, { req }) {
-    const isAuth = true
-    //  Does mobile phone load the app
-    state.isMobile = new MobileDetect(req.headers['user-agent']).phone()
+  nuxtServerInit ({ dispatch, commit }, { req, app: { $axios }}) {
+    const cookieHasToken = false
+    const isMobile = new MobileDetect(req.headers['user-agent']).phone() //  Is the page loaded from a phone
+    commit('SET_MOBILE', isMobile)
 
-    if (isAuth) { //  Must be auth check.
-      // dispatch('user/actions/fetch_user')
-      state.user.state.isAuth = true
+    if (cookieHasToken) { //  Must be token check.
+      dispatch('user/auth/fetch_user').then(() => {
+        commit('user/auth/SET_AUTH', true)
+      })
     }
   }
 }

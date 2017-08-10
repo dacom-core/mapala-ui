@@ -1,6 +1,6 @@
 <template lang="pug">
   nuxt-link(
-    :to="{ name: 'createNewPost', params: { user: userName } }",
+    :to="{ path: '/post/create' }",
     class="add_post"
     )
     div.av_wrap
