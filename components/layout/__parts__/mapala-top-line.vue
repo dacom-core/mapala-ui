@@ -5,7 +5,7 @@
         class="main_logo",
         :class="{ main_logoMobile: isMobile }",
         :to="'/' + locale",
-      )
+        )
         img(src="~assets/MapalaLogo.png")
         span
           | MAPALA
@@ -13,7 +13,7 @@
       nuxt-link(
         v-if="isAuth",
         :to="'/'+userName"
-      )
+        )
         div.user
           span(class="user_name" v-text="userName")
           img(v-if="userAvatar" class="user_logo", :src="userAvatar")
@@ -21,19 +21,19 @@
 
       div.divider
 
-      show-modal-button(class="login", modal-content-component="login")
+      show-modal-button(v-if="!isAuth", class="login", modal-content-component="login")
         | {{ $t('log_in') }}
 
-      div(v-on-click-outside="closeMenu")
+      div(v-else, v-on-click-outside="closeMenu")
 
-        div(v-if="isAuth", @click="menuOpen", class="open_menu")
+        div(@click="menuOpen", class="open_menu")
           | {{ $t('menu') }}
 
         div(
           v-if="isAuth",
           :class="{active : isMenuOpened, user_menuMobile: isMobile }"
           class="user_menu"
-        )
+          )
 
           show-modal-button(class="wal", modal-content-component="userWallet")
             i.purce
@@ -72,12 +72,12 @@
     },
 
     computed: mapState({
-      isAuth: 'user/auth/isAuth',
-      userName: 'user/personal/userName',
-      userAvatar: 'user/personal/avatar',
-      userBalance: 'user/wallet/balance',
-      isMobile: 'isMobile',
-      locale: 'locale'
+      isAuth: state => state.user.state.isAuth,
+      userName: state => state.user.state.userName,
+      userAvatar: state => state.user.state.avatar,
+      userBalance: state => state.user.state.balance,
+      isMobile: state => state.isMobile,
+      locale: state => state.locale
     }),
 
     methods: {
@@ -164,7 +164,7 @@
       right 0
       top 0
       box-sizing border-box
-      background url(../../assets/icon-menu.svg) no-repeat 53px center
+      background url(../../../assets/icon-menu.svg) no-repeat 53px center
       cursor pointer
       transition color 200ms ease
 
@@ -186,7 +186,7 @@
       right 0
       top 0
       box-sizing border-box
-      background url(../../assets/icon-login.svg) no-repeat 53px center
+      background url(../../../assets/icon-login.svg) no-repeat 53px center
       cursor pointer
       transition color 200ms ease
       text-decoration none
@@ -247,7 +247,7 @@
       width 45px
       height 38px
       display block
-      background url(../../assets/icon-purce.svg) no-repeat
+      background url(../../../assets/icon-purce.svg) no-repeat
       margin-bottom 10px
     .txt_i
       font 700 16px 'PT Sans'

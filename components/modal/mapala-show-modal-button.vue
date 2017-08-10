@@ -9,12 +9,8 @@ import { mapActions } from 'vuex'
 export default {
   props: ['modalContentComponent'],
 
-  mounted () {
-  },
-
   data () {
-    return {
-    }
+    return {}
   },
 
   methods: {

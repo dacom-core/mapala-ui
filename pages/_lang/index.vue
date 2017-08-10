@@ -1,41 +1,112 @@
 <template lang="pug">
-  div
-    | {{ $t("wallet") }}
+  two-columns-layout
+    template(slot="leftScreen")
+
+      create-post-button(v-if="isAuth")
+
+      el-row(
+        type="flex"
+        class="blog-nav"
+        justify="space-between"
+      )
+        el-col(:span="11")
+          nuxt-link(:to="{name: 'index'}")
+            el-button(:plain="true" size="large" type="info")
+              | {{ $t('travel_blogs') }}
+
+        el-col(:span="11")
+          router-link(:to="'/mapala'")
+            el-button(:plain="true" size="large" type="info")
+              | {{ $t('mapala_blogs') }}
+
+      div(v-if="userName != $route.params.user && isMobile()")
+        el-row(type="flex" class="blog-nav" justify="space-between")
+          el-col(:span="24")
+            router-link(:to="{name: 'index'}")
+              el-button(:plain="true" size="large" type="info")
+                | {{ $t('travel_blogs') }}
+
+        el-row(
+          v-if="userName != $route.params.user"
+          type="flex"
+          class="blog-nav"
+          justify="space-between"
+        )
+          el-col(:span="24")
+            nuxt-link(:to="'/mapala'")
+              el-button(:plain="true" size="large" type="info")
+                | {{ $t('mapala_blogs') }}
+
+      mugen-scroll(
+        tag="mu",
+        :handler="nextPosts",
+        :should-handle="!loading"
+      )
+        | &nbsp;
+
+
+
 </template>
 
 <script>
-  export default {
+import { mapState, mapGetters } from 'vuex'
+import TwoColumnsLayout from '~/components/layout/mapala-two-column-layout'
+import CreatePostButton from '~/components/blog/__parts__/mapala-create-post-button'
+
+export default {
+  data () {
+    return {
+      rightView: null,
+      // Заглушки
+      loading: false
+    }
+  },
+  computed: {
+    ...mapState('user/state', {
+      isAuth: state => state.isAuth,
+      userName: state => state.userName
+    })
+  },
+
+  methods: {
+    ...mapGetters(['isMobile']),
+    // Заглушки
+    nextPosts () {
+    }
+  },
+
+  components: {
+    TwoColumnsLayout,
+    CreatePostButton
+  },
+
+  mounted () {
+    console.log(this.isMobile)
   }
+}
 </script>
 
-<style>
-  .container
-  {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+<style lang="stylus">
+  .hideScroll {
+    overflow-y: hidden;
+  }
+  .blog-nav {
+    margin-bottom: 25px;
     text-align: center;
   }
-  .title
-  {
-    font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
-    display: block;
-    font-weight: 300;
-    font-size: 100px;
-    color: #35495e;
-    letter-spacing: 1px;
+  .blog-nav button {
+    width: 100%;
   }
-  .subtitle
-  {
-    font-weight: 300;
-    font-size: 42px;
-    color: #526488;
-    word-spacing: 5px;
-    padding-bottom: 15px;
+  .blog-nav .router-link-exact-active button {
+    border-color: #50bfff;
+    color: #50bfff;
   }
-  .links
-  {
-    padding-top: 15px;
+  .el-notification__content {
+    text-align: left;
+  }
+  .tapeMobile {
+    margin-left: 0!important;
   }
 </style>
+
+

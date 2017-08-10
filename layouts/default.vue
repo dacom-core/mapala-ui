@@ -6,16 +6,16 @@
     modal-window
 </template>
 <script>
-  import TopLine from '~/components/layout/mapala-top-line'
-  import ModalWindow from '~/components/layout/mapala-modal-window'
+import TopLine from '~/components/layout/__parts__/mapala-top-line'
+import ModalWindow from '~/components/modal/mapala-modal-window'
 
-  export default {
-    components: {
-      TopLine,
-      ModalWindow
-    },
-    methods: {}
-  }
+export default {
+  components: {
+    TopLine,
+    ModalWindow
+  },
+  methods: {}
+}
 </script>
 
 <style lang="stylus">
