@@ -49,8 +49,6 @@
     template(slot="rightScreen")
       post-map
 
-
-
 </template>
 
 <script>

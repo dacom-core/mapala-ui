@@ -20,8 +20,7 @@ axios.defaults.baseURL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_A
  */
 export function Resource (path, http, actions) {
   const obj = {
-    get: () => http.get(path),
-    view: id => http.get(path + '/' + id),
+    get: (id) => http.get(path + '/' + id),
     save: obj => http.post(path, obj),
     query: params => http.get(path, { params }),
     update: (id, obj) => http.put(path + '/' + id, obj),

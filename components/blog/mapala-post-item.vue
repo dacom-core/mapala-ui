@@ -8,10 +8,11 @@
       div.top_block
         div.img_wrap
           nuxt-link(:to="'/'+post.author.username")
-            img.user_av(:src="post.author.avatar")
+            img.user_av(v-if="post.author.avatar", :src="post.author.avatar")
+            img.user_av(v-else :src="~assets/icon-profile-w.svg")
         div.name_block
           nuxt-link.name(:to=" '/'+ post.author.username")
-            | Here should be post's user blockchain name (TODO)
+            | username
           div.date
             | {{ post.created_at || post.updated_at | formatDate }}
 
@@ -27,7 +28,7 @@
     div.bottom_block(:class="{ mobileBlock: isMobile }")
       div.icons
         nuxt-link(
-          :to="{name: 'post', params: {author: post.author.username, permlink: post.permlink }}"
+          :to="{ name: 'post', params: { author: post.author.username, permlink: post.permlink } }"
           class="icon comment"
           )
           | {{ post.comments_count }}
@@ -69,6 +70,10 @@ export default {
     pluralizeNoun (count, nounFormOne, nounFormTwo, nounFormThree) {
       return pluralizer(count, nounFormOne, nounFormTwo, nounFormThree)
     }
+  },
+
+  formatDate () {
+
   }
 }
 </script>

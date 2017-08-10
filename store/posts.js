@@ -17,7 +17,7 @@ export const state = () => ({
 
 export const actions = {
   fetch_posts ({ commit }) {
-    return Post.get()
+    return Post.query() // Retrieving all posts
   }
 }
 
