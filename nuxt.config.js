@@ -10,7 +10,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '/mapala.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=PT+Sans:400,700' },
       { rel: 'stylesheet', href: 'https://necolas.github.io/normalize.css/3.0.3/normalize.css' }
     ]
