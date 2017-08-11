@@ -164,10 +164,9 @@
         return pluralizer(count, nounFormOne, nounFormTwo, nounFormThree)
       },
       makePath (action, username, permalink = '') {
-        linkMaker(action, username, permalink = '')
+        return linkMaker(action, username, permalink)
       },
       getPageUrl (post) {
-        //        return ('http://' + window.location.hostname + '/'+post.author+'/'+post.permlink)
       }
     },
     watch: {

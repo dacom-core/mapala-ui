@@ -1,11 +1,9 @@
 <template lang="pug">
   div
-    p all user's posts
+    p user posts
 </template>
 
 <script>
-//  import {mapState, mapActions, mapMutations} from 'vuex';
-
 export default {
   mounted () {
 
