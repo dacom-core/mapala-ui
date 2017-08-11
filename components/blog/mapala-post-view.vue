@@ -6,11 +6,11 @@
     div.top_block
       div.t_col
         div.img_wrap
-          nuxt-link(:to="'/'+post.author.username")
+          nuxt-link(:to=" '/' + post.author.username")
             img.user_av(:src="post.author.avatar")
 
         div.name_block
-          nuxt-link(:to=" '/'+ post.author.username" class="name")
+          nuxt-link(:to=" '/' + post.author.username" class="name")
             | {{ post.author.bc_username }}
           div.date
             | {{ post.created_at || post.updated_at | formatDate }}
@@ -20,8 +20,8 @@
 
       div.t_col
         nuxt-link.edit(
-          v-if="post.author.username == auth.user.username",
-          :to="{ name: 'edit', params: { author: post.author.username, permlink: post.permlink } }"
+          v-if="post.author.username == userName",
+          :to="makePath('edit', post.author.username, post.permlink)"
           )
           | {{ $t('edit') }}
 
@@ -45,7 +45,7 @@
           | {{ $t('share') }}
 
       el-button-group.support_block(:loading="loading", :class="{ isDisabled: !isAuth }")
-        el-button(v-if="auth.isAuth", @click="vote(post)")
+        el-button(v-if="isAuth", @click="vote(post)")
           img(style="height: 12px" src="~assets/like.png")
         el-button(v-else :plain="true", :disabled="true", icon="check")
         el-button(type="primary" class="support")
@@ -57,9 +57,13 @@
   import VueMarkdown from 'vue-markdown'
   import shareVK from '@/utils/share_vk'
   import pluralizer from '@/utils/pluralizer'
-  import { mapMutations, mapActions } from 'vuex'
+  import linkMaker from '@/utils/router_link_maker'
+  import { mapMutations, mapActions, mapState } from 'vuex'
 
   export default {
+    async fetch ({ store: { dispatch, commit } }) {
+      console.log('tesssst')
+    },
 
     data () {
       return {
@@ -86,6 +90,11 @@
       }
     },
     computed: {
+      ...mapState({
+        isAuth: state => state.user.auth.isAuth,
+        userName: state => state.user.personal.userName
+      }),
+
       /**
        * TODO перенести в отдельную vue директиву
        *
@@ -154,6 +163,9 @@
       pluralizeNoun (count, nounFormOne, nounFormTwo, nounFormThree) {
         return pluralizer(count, nounFormOne, nounFormTwo, nounFormThree)
       },
+      makePath (action, username, permalink = '') {
+        linkMaker(action, username, permalink = '')
+      },
       getPageUrl (post) {
         //        return ('http://' + window.location.hostname + '/'+post.author+'/'+post.permlink)
       }
@@ -170,7 +182,7 @@
 </script>
 
 
-<style lang="scss">
+<style lang="stylus">
   .ql-video {
     width: 100%;
     height: 400px;
@@ -178,19 +190,19 @@
   .user_av {
     border-radius: 50%;
   }
-  .prev_post{
+  .prev_post {
     width: 70px;
     height: 70px;
     position: fixed;
     top: 48%;
     left: calc((100% - 866px)/2 - 130px);
     z-index: 102;
-    background: url(../../frontend/assets/icon-prev.svg) no-repeat;
+    background: url('~/assets/icon-prev.svg') no-repeat;
     cursor: pointer;
   }
 
-  .next_post{
-    background: url(../../frontend/assets/icon-prev.svg) no-repeat;
+  .next_post {
+    background: url('~/assets/icon-prev.svg') no-repeat;
     transform: rotateZ(180deg);
     width: 70px;
     height: 70px;
@@ -202,13 +214,13 @@
   }
 
   .post_block .close{
-    background: url(../../frontend/assets/icon-close-black.svg) no-repeat center center;
+    background: url('~/assets/icon-close-black.svg') no-repeat center center;
     width: 40px;
     height: 40px;
     cursor: pointer;
   }
 
-  .post_block .edit{
+  .post_block .edit {
     font: 700 14px/36px 'PT Sans';
     box-sizing: border-box;
     padding: 0 16px;
@@ -228,7 +240,7 @@
     text-decoration: none;
   }
 
-  .post_block{
+  .post_block {
     border-radius: 6px;
     background-color: #ffffff;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
@@ -239,31 +251,31 @@
     position: relative;
   }
 
-  .post_block .c_header{
+  .post_block .c_header {
     font: 700 40px 'PT Sans';
     letter-spacing: -0.8px;
     color: #20252d;
     margin: 0 30px 20px;
   }
 
-  .post_block .c_text{
+  .post_block .c_text {
     font: 21px/1.52 'PT Sans';
     letter-spacing: -1px;
     color: #141823;
     margin: 0 30px 40px;
   }
 
-  .post_block .top_block{
+  .post_block .top_block {
     display: flex;
     margin: 40px 30px 35px;
     justify-content: space-between;
   }
 
-  .post_block .t_col{
+  .post_block .t_col {
     display: flex;
   }
 
-  .post_block .top_block .img_wrap{
+  .post_block .top_block .img_wrap {
     border-radius: 50%;
     margin-right: 8px;
     width: 40px;
@@ -271,30 +283,30 @@
     flex-shrink: 0;
   }
 
-  .post_block img{
+  .post_block img {
     display: block;
   }
 
-  .post_block .name_block{
+  .post_block .name_block {
     margin-right: 8px;
     margin-top: 1px;
   }
 
-  .post_block .name{
+  .post_block .name {
     font: 700 16px/20px 'PT Sans';
     letter-spacing: -0.5px;
     color: #6d9ee1;
     text-decoration: none;
   }
 
-  .post_block .date{
+  .post_block .date {
     font-size: 12px;
     letter-spacing: -0.5px;
     color: rgba(72, 84, 101, 0.7);
     line-height: 16px;
   }
 
-  .post_block .top_block .location{
+  .post_block .top_block .location {
     margin-top: 4px;
     font-size: 16px;
     line-height: 18px;
@@ -302,22 +314,22 @@
     color: #7e8793;
     padding-left: 12px;
     position: relative;
-    background: url(../../frontend/assets/icon-location-small.svg) no-repeat left 3px;
+    background: url('~/assets/icon-location-small.svg') no-repeat left 3px;
   }
 
-  .post_block .bottom_block{
+  .post_block .bottom_block {
     display: flex;
     align-items: center;
     padding: 0 30px;
     margin-bottom: 30px;
   }
 
-  .post_block .icons{
+  .post_block .icons {
     display: flex;
     align-items: center;
   }
 
-  .post_block .icon{
+  .post_block .icon {
     display: block;
     cursor: pointer;
     font: 14px/34px 'PT Sans';
@@ -327,24 +339,23 @@
     text-decoration: none;
   }
 
-  .post_block .icon.comment{
-    background: url(../../frontend/assets/icon-comment.svg) no-repeat left center;
+  .post_block .icon.comment {
+    background: url('~/assets/icon-comment.svg') no-repeat left center;
     margin-right: 18px;
   }
 
-  .post_block .icon.repost{
-    background: url(../../frontend/assets/icon-repost.svg) no-repeat left center;
+  .post_block .icon.repost {
+    background: url('~/assets/icon-repost.svg') no-repeat left center;
     margin-right: 18px;
   }
 
-  .post_block .support{
+  .post_block .support {
     font: 14px/34px 'PT Sans';
     letter-spacing: -0.5px;
     color: rgba(255, 255, 255, 0.7);
     padding: 0 12px 0 12px;
     border-radius: 3px;
     text-decoration: none;
-    // background: url(../assets/icon-support.svg) #6d9ee1 no-repeat 12px center;
     background: #6d9ee1;
     margin-right: 35px;
     cursor: pointer;
@@ -354,7 +365,7 @@
     height: 31px;
   }
 
-  .post_block .is-disabled{
+  .post_block .is-disabled {
     color: #bfcbd9;
     cursor: not-allowed;
     background-image: none;
@@ -362,27 +373,24 @@
     border-color: #d1dbe5;
   }
 
-  .post_block .support span{
+  .post_block .support span {
     color: #ffffff;
-    // padding-left: 10px;
-    // border-left: 1px solid #fff;
-    // margin-left: 14px;
   }
 
-  .post_block .main_image{
+  .post_block .main_image {
     overflow: hidden;
     margin: 0 -1px 25px;
   }
 
-  .post_block .main_image img{
+  .post_block .main_image img {
     width: 100%;
   }
 
-  .post_block .content{
+  .post_block .content {
     overflow: hidden;
   }
 
-  .post_block .c_text img{
+  .post_block .c_text img {
     max-height: 492px;
     max-width: 100%;
     text-align: center;

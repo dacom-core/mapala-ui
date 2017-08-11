@@ -16,5 +16,6 @@ export const actions = {
     const { results } = await User.current()
     commit('user/personal/FILL_USER', results)
     commit('user/wallet/FILL_BALANCE', results)
+    commit('user/auth/SET_AUTH', true)
   }
 }

@@ -28,9 +28,7 @@ export const actions = {
     commit('SET_MOBILE', isMobile)
 
     if (cookieHasToken) { //  Must be token check.
-      dispatch('user/auth/fetch_user').then(() => {
-        commit('user/auth/SET_AUTH', true)
-      })
+      dispatch('user/auth/fetch_user')
     }
   }
 }
