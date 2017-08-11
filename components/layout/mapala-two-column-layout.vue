@@ -5,6 +5,8 @@
         slot(name="leftScreen")
 
       slot(v-if="!isMobile" name="rightScreen")
+
+      nuxt-child
 </template>
 
 <script>

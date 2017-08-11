@@ -11,22 +11,34 @@
       leave-active-class="animated fadeOut"
       mode="out-in"
       )
-      nuxt-child
+      slot
 
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   data () {
     return {}
   },
-  computed: mapState({
-    isVisible: state => state.modal.modalWindow.isShown
-  }),
-  methods: mapActions({
-    'hideModal': 'modal/hideModal'
-  })
+  computed: {
+    ...mapState({
+      isVisible: state => state.modal.isShown
+    })
+  },
+  methods: {
+    ...mapMutations({
+      showModal: 'modal/SHOW_MODAL',
+      hideModal: 'modal/HIDE_MODAL'
+    })
+  },
+  mounted () {
+    this.showModal()
+  },
+
+  beforeDestroy () {
+    this.hideModal()
+  }
 }
 </script>

@@ -1,53 +1,54 @@
 <template lang="pug">
-  two-columns-layout
-    template(slot="leftScreen")
+  div
+    two-columns-layout
+      template(slot="leftScreen")
 
-      create-post-button(v-if="isAuth")
-
-      el-row(
-        type="flex"
-        class="blog-nav"
-        justify="space-between"
-      )
-        el-col(:span="11")
-          nuxt-link(:to="{name: 'index'}")
-            el-button(:plain="true" size="large" type="info")
-              | {{ $t('travel_blogs') }}
-
-        el-col(:span="11")
-          router-link(:to="'/mapala'")
-            el-button(:plain="true" size="large" type="info")
-              | {{ $t('mapala_blogs') }}
-
-      div(v-if="userName != $route.params.user && isMobile()")
-        el-row(type="flex" class="blog-nav" justify="space-between")
-          el-col(:span="24")
-            router-link(:to="{name: 'index'}")
-              el-button(:plain="true" size="large" type="info")
-                | {{ $t('travel_blogs') }}
+        create-post-button(v-if="isAuth")
 
         el-row(
-          v-if="userName != $route.params.user"
           type="flex"
           class="blog-nav"
           justify="space-between"
         )
-          el-col(:span="24")
-            nuxt-link(:to="'/mapala'")
+          el-col(:span="11")
+            nuxt-link(:to="{name: 'index'}")
+              el-button(:plain="true" size="large" type="info")
+                | {{ $t('travel_blogs') }}
+
+          el-col(:span="11")
+            router-link(:to="'/mapala'")
               el-button(:plain="true" size="large" type="info")
                 | {{ $t('mapala_blogs') }}
 
-      post-list
+        div(v-if="userName != $route.params.user && isMobile()")
+          el-row(type="flex" class="blog-nav" justify="space-between")
+            el-col(:span="24")
+              router-link(:to="{name: 'index'}")
+                el-button(:plain="true" size="large" type="info")
+                  | {{ $t('travel_blogs') }}
 
-      mugen-scroll(
-        tag="mu",
-        :handler="nextPosts",
-        :should-handle="!loading"
-      )
-        | &nbsp;
+          el-row(
+            v-if="userName != $route.params.user"
+            type="flex"
+            class="blog-nav"
+            justify="space-between"
+          )
+            el-col(:span="24")
+              nuxt-link(:to="'/mapala'")
+                el-button(:plain="true" size="large" type="info")
+                  | {{ $t('mapala_blogs') }}
 
-    template(slot="rightScreen")
-      post-map
+        post-list
+
+        mugen-scroll(
+          tag="mu",
+          :handler="nextPosts",
+          :should-handle="!loading"
+        )
+          | &nbsp;
+
+      template(slot="rightScreen")
+        post-map
 
 </template>
 
@@ -57,6 +58,7 @@ import TwoColumnsLayout from '~/components/layout/mapala-two-column-layout'
 import CreatePostButton from '~/components/blog/__parts__/mapala-create-post-button'
 import PostList from '~/components/blog/mapala-post-list'
 import PostMap from '~/components/blog/mapala-post-map'
+import MapalaModal from '~/components/modal/mapala-modal-window'
 
 export default {
   async fetch ({ store: { dispatch, commit } }) {
@@ -89,7 +91,8 @@ export default {
     TwoColumnsLayout,
     CreatePostButton,
     PostList,
-    PostMap
+    PostMap,
+    MapalaModal
   }
 }
 </script>

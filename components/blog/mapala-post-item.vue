@@ -1,6 +1,6 @@
 <template lang="pug">
   div.post(:id="'page_id_'+ post.id", :class="post.miniature ? 'w_i' : '' ")
-    nuxt-link(:to="{ name: 'post', params: { author: post.author.username, permlink: post.permlink } }" v-if="post.miniature")
+    nuxt-link(:to="{ path: 'login' }" v-if="post.miniature")
       div.post_image
         img.post-image(:src="post.miniature" alt="" onerror="this.style.display='none'")
 

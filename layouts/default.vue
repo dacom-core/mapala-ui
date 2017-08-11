@@ -3,7 +3,6 @@
     top-line
     div.gw
       nuxt
-    modal-window
 </template>
 <script>
 import TopLine from '~/components/layout/__parts__/mapala-top-line'
