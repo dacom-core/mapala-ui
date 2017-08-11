@@ -6,7 +6,7 @@
 
 
 <script>
-import PostItem from './mapala-post-item'
+import PostItem from './mapala-post-list-item'
 import { mapState } from 'vuex'
 
 export default {
@@ -14,7 +14,7 @@ export default {
     return {}
   },
 
-  computed: mapState('posts', {
+  computed: mapState('blog/post-list', {
     posts: state => state.posts
   }),
 

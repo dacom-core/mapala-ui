@@ -1,4 +1,5 @@
 import { Post } from '@/api/posts'
+// import { Comment } from '@/api/posts'
 
 export const state = () => ({
   posts: {
@@ -16,8 +17,19 @@ export const state = () => ({
 })
 
 export const actions = {
-  fetch_posts ({ commit }) {
+  fetch_posts () {
     return Post.query() // Retrieving all posts
+  },
+  fetch_comments () {
+    return Post.commentsTree()
+  },
+
+  add_comment () {
+    // this.new_comment.post = this.post.id
+
+    // Comment.save(this.new_comment).then(res => {
+    //   this.post.comments.push(res.body)
+    // })
   }
 }
 

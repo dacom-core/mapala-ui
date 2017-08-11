@@ -20,7 +20,7 @@
               el-button(:plain="true" size="large" type="info")
                 | {{ $t('mapala_blogs') }}
 
-        div(v-if="userName != $route.params.user && isMobile()")
+        div(v-if="userName != $route.params.user && isMobile")
           el-row(type="flex" class="blog-nav" justify="space-between")
             el-col(:span="24")
               router-link(:to="{name: 'index'}")
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import TwoColumnsLayout from '~/components/layout/mapala-two-column-layout'
 import CreatePostButton from '~/components/blog/__parts__/mapala-create-post-button'
 import PostList from '~/components/blog/mapala-post-list'
@@ -62,26 +62,25 @@ import MapalaModal from '~/components/modal/mapala-modal-window'
 
 export default {
   async fetch ({ store: { dispatch, commit } }) {
-    const { data: { results } } = await dispatch('posts/fetch_posts')
-    commit('posts/SET_POSTS', results)
+    const { data: { results }  } = await dispatch('blog/post-list/fetch_posts')
+    commit('blog/post-list/SET_POSTS', results)
   },
 
   data () {
     return {
       rightView: null,
-      // Заглушки
       loading: false
     }
   },
   computed: {
-    ...mapState('user', {
-      isAuth: state => state.auth.isAuth,
-      userName: state => state.personal.userName
+    ...mapState({
+      isAuth: state => state.user.auth.isAuth,
+      userName: state => state.user.personal.userName,
+      isMobile: state => state.isMobile
     })
   },
 
   methods: {
-    ...mapGetters(['isMobile']),
     // Заглушки
     nextPosts () {
     }

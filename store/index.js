@@ -19,9 +19,6 @@ export const mutations = {
 }
 
 export const getters = {
-  isMobile (state) {
-    return state.isMobile
-  }
 }
 
 export const actions = {
