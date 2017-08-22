@@ -48,7 +48,7 @@
           | &nbsp;
 
       template(slot="rightScreen")
-        post-map
+        post-map(:filters="{}")
 
 </template>
 
@@ -62,8 +62,8 @@ import MapalaModal from '~/components/modal/mapala-modal-window'
 
 export default {
   async fetch ({ store: { dispatch, commit } }) {
-    const { data: { results }  } = await dispatch('blog/post-list/fetch_posts')
-    commit('blog/post-list/SET_POSTS', results)
+    const { data: { results }  } = await dispatch('blog/posts/fetch_posts')
+    commit('blog/posts/SET_POST_LIST', results)
   },
 
   data () {

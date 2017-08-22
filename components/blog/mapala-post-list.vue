@@ -14,8 +14,8 @@ export default {
     return {}
   },
 
-  computed: mapState('blog/post-list', {
-    posts: state => state.posts
+  computed: mapState('blog/posts', {
+    posts: state => state.postList
   }),
 
   components: {

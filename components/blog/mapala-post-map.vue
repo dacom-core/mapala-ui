@@ -13,13 +13,13 @@
       gmap-marker(
         v-for="marker in markers",
         :key="marker.permlink + marker.author",
-        :position="{lat: Number(marker.position.latitude), lng: Number(marker.position.longitude)}",
+        :position="{ lat: Number(marker.position.latitude), lng: Number(marker.position.longitude) }",
         :clickable="true",
         :draggable="false",
         :icon="icon",
         @mouseover="openInfoWindow(marker)",
         @mouseout="infoWindow.opened = false",
-        @click="$router.push({name: 'page', params: { author: marker.author, permlink: marker.permlink }})"
+        @click="$router.push({ name: 'page', params: { author: marker.author, permlink: marker.permlink } })"
         )
 
       gmap-info-window(
@@ -33,8 +33,10 @@
 
 <script>
   import { googleMapStyles } from '~/plugins/vue-google-maps'
+  import { Marker } from '@/api/map'
 
   export default {
+    props: ['filters'],
     data () {
       return {
         markers: [],
@@ -62,10 +64,10 @@
           },
           streetViewControlOptions: {
             position: null
-          },
+          }
         },
         center: { lat: 50.0542, lng: 20.0051 },
-        icon: '~assets/static/icon-marker-3.png'
+        icon: '/icon-marker-3.png'
       }
     },
     computed: {
@@ -77,22 +79,23 @@
       }
     },
     methods: {
-      fetchMarkers () {
+      async fetchMarkers () {
         const map = this.$refs.mmm.$mapObject
         const bounds = map.getBounds()
         this.mapOptions.zoomControlOptions.position = google.maps.ControlPosition.TOP_RIGHT
         this.mapOptions.streetViewControlOptions.position = google.maps.ControlPosition.TOP_CENTER
 
-        const bbox = [
+        const boundingBox = [
           bounds.b.b,
           bounds.f.b,
           bounds.b.f,
           bounds.f.f
         ].join()
 
-//        Marker.get({ bbox: bbox }).then(res => {
-//          this.markers = res.body.results
-//        })
+        const filters = this.filters
+
+        const { data: { results } } = await Marker.query({ bbox: boundingBox, ...filters })
+        this.markers = results
       },
       openInfoWindow (marker) {
         this.infoWindow.opened = true

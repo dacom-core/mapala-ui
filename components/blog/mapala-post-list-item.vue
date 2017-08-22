@@ -57,6 +57,7 @@ import pluralizer from '@/utils/pluralizer'
 import linkMaker from '@/utils/router_link_maker'
 
 export default {
+
   props: ['post'],
 
   data () {

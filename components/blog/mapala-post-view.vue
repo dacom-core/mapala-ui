@@ -53,131 +53,106 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VueMarkdown from 'vue-markdown'
-  import shareVK from '@/utils/share_vk'
-  import pluralizer from '@/utils/pluralizer'
-  import linkMaker from '@/utils/router_link_maker'
-  import { mapMutations, mapActions, mapState } from 'vuex'
+import Vue from 'vue'
+import VueMarkdown from 'vue-markdown'
+import shareVK from '@/utils/share_vk'
+import pluralizer from '@/utils/pluralizer'
+import linkMaker from '@/utils/router_link_maker'
+import { mapMutations, mapActions, mapState } from 'vuex'
+import { Post } from '@/api/posts'
 
-  export default {
-    async fetch ({ store: { dispatch, commit } }) {
-      console.log('tesssst')
-    },
-
-    data () {
-      return {
-        navigate: {
-          next: {},
-          prev: {}
-        },
-        new_comment: {},
-        post: {
-          author: {},
-          comments: []
-        },
-        auth: '',
-        comments: [],
-        mark_view: '',
-        error: false,
-        loading: false,
-        meta: [
-          { property: 'og:title', content: 'title' },
-          { property: 'og:site_name', content: 'Title' },
-          { property: 'og:description', content: 'Title' },
-          { property: 'og:image', content: 'Title' }
-        ]
-      }
-    },
-    computed: {
-      ...mapState({
-        isAuth: state => state.user.auth.isAuth,
-        userName: state => state.user.personal.userName
-      }),
-
-      /**
-       * TODO перенести в отдельную vue директиву
-       *
-       * parce url to <img>
-       * @return <img> tag
-       */
-      postBody () {
-        var body = this.post.body ? this.post.body.replace(
-          /(https?:\S*?\.(?:png|jpe?g|gif)(?:\?[^"']+?)?(?=<|\s))/igm,
-          '<img src="$1"></img>'
-        ) : ''
-        return body
-      }
-    },
-    methods: {
-      ...mapMutations({
-        close: 'modal/HIDE_MODAL'
-      }),
-
-      ...mapActions({
-        addComment: 'posts/add_comment'
-      }),
-
-      get_page () {
-        Post.get({ permlink: this.$route.params.author + '*@*' + this.$route.params.permlink }).then(res => {
-          this.post = res.body
-          this.make_navigate()
-          // this.scrollTop()
-          document.title = res.body.title
-          this.meta = [
-            { property: 'og:title', content: res.body.title },
-            { property: 'og:site_name', content: 'mapala.net' },
-            { property: 'og:description', content: res.body.body .substring(0,70) },
-            { property: 'og:image', content: res.body.meta.image[0] },
-          ]
-
-          // TODO почему функция лежит в Vue.options ?
-          this.mark_view = Vue.options.filters.markdown(this.post.body)
-        })
+export default {
+  data () {
+    return {
+      navigate: {
+        next: {},
+        prev: {}
       },
-
-      // scrollTop(){
-      //   document.querySelector('.full_post').scrollTop = 0
-      // },
-
-      make_navigate() {
-        this.post.prev_page = this.post.prev_page ? {
-          name: 'post',
-          params: {
-            author: this.post.prev_page.author__username,
-            permlink: this.post.prev_page.permlink
-          }
-        } : null
-
-        this.post.next_page = this.post.next_page ? {
-          name: 'post',
-          params: {
-            author: this.post.next_page.author__username,
-            permlink: this.post.next_page.permlink
-          }
-        } : null
+      new_comment: {},
+      post: {
+        author: {},
+        comments: []
       },
-      share (post) {
-        shareVK(post)
-      },
-      pluralizeNoun (count, nounFormOne, nounFormTwo, nounFormThree) {
-        return pluralizer(count, nounFormOne, nounFormTwo, nounFormThree)
-      },
-      makePath (action, username, permalink = '') {
-        return linkMaker(action, username, permalink)
-      },
-      getPageUrl (post) {
-      }
-    },
-    watch: {
-      '$route' () {
-        // fetch_post_content through vuex action
-      }
-    },
-    components: {
-      VueMarkdown
+      auth: '',
+      comments: [],
+      mark_view: '',
+      error: false,
+      loading: false,
+      meta: [
+        { property: 'og:title', content: 'title' },
+        { property: 'og:site_name', content: 'Title' },
+        { property: 'og:description', content: 'Title' },
+        { property: 'og:image', content: 'Title' }
+      ]
     }
+  },
+  computed: {
+    ...mapState({
+      isAuth: state => state.user.auth.isAuth,
+      userName: state => state.user.personal.userName
+    }),
+
+    /**
+     * TODO перенести в отдельную vue директиву
+     *
+     * parce url to <img>
+     * @return <img> tag
+     */
+    postBody () {
+      const body = this.post.body ? this.post.body.replace(
+        /(https?:\S*?\.(?:png|jpe?g|gif)(?:\?[^"']+?)?(?=<|\s))/igm,
+        '<img src="$1"></img>'
+      ) : ''
+      return body
+    }
+  },
+  methods: {
+    ...mapMutations({
+      close: 'modal/HIDE_MODAL'
+    }),
+
+    ...mapActions({
+      addComment: 'posts/add_comment'
+    }),
+
+    make_navigate () {
+      this.post.prev_page = this.post.prev_page ? {
+        name: 'post',
+        params: {
+          author: this.post.prev_page.author__username,
+          permlink: this.post.prev_page.permlink
+        }
+      } : null
+
+      this.post.next_page = this.post.next_page ? {
+        name: 'post',
+        params: {
+          author: this.post.next_page.author__username,
+          permlink: this.post.next_page.permlink
+        }
+      } : null
+    },
+    share (post) {
+      shareVK(post)
+    },
+    pluralizeNoun (count, nounFormOne, nounFormTwo, nounFormThree) {
+      return pluralizer(count, nounFormOne, nounFormTwo, nounFormThree)
+    },
+    makePath (action, username, permalink = '') {
+      return linkMaker(action, username, permalink)
+    },
+    getPageUrl (post) {
+    }
+  },
+  watch: {
+    '$route' () {
+      // fetch_post_content through vuex action
+    }
+  },
+  components: {
+    VueMarkdown
   }
+}
 </script>
 
 
