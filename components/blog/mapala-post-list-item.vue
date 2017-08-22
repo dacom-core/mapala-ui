@@ -16,7 +16,7 @@
             img.user_av(v-else :src="~assets/icon-profile-w.svg")
         div.name_block
           nuxt-link.name(:to=" '/' + post.author.username")
-            | username
+            | {{ post.author.username }}
           div.date
             | {{ post.created_at || post.updated_at | formatDate }}
 

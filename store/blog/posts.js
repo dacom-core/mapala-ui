@@ -14,26 +14,20 @@ export const state = () => ({
     tags: null
   },
   postSingle: {
-    navigate: {
-      next: {},
-      prev: {}
-    },
-    new_comment: {},
-    post: {
-      author: {},
-      comments: []
-    },
-    auth: '',
+    author: {},
+    body: '',
     comments: [],
-    mark_view: '',
-    error: false,
-    loading: false,
-    meta: [
-      { property: 'og:title', content: 'title' },
-      { property: 'og:site_name', content: 'Title' },
-      { property: 'og:description', content: 'Title' },
-      { property: 'og:image', content: 'Title' }
-    ]
+    comments_count: '',
+    created_at: '',
+    id: '',
+    meta: {},
+    next_page: null,
+    payout: '',
+    permlink: '',
+    position: null,
+    position_text: '',
+    prev_page: null,
+    title: ''
   }
 })
 
@@ -59,7 +53,8 @@ export const mutations = {
     state.postList.data = payload
   },
 
-  SET_POST_SIGNLE (state, payload) {
+  SET_POST_SINGLE (state, payload) {
+    console.log(payload)
     state.postSingle = payload
   }
 }

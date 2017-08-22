@@ -1,7 +1,7 @@
 <template lang="pug">
   div.post_block(v-loading.body="!post.body")
-    nuxt-link(v-if="post.next_page" class="prev_post", :to="post.next_page")
-    nuxt-link(v-if="post.prev_page" class="next_post", :to="post.prev_page")
+    nuxt-link(v-if="next_post" class="prev_post", :to="next_post")
+    nuxt-link(v-if="prev_post" class="next_post", :to="prev_post")
 
     div.top_block
       div.t_col
@@ -44,7 +44,7 @@
         a.icon.repost(@click="share(post)")
           | {{ $t('share') }}
 
-      el-button-group.support_block(:loading="loading", :class="{ isDisabled: !isAuth }")
+      el-button-group.support_block(:class="{ isDisabled: !isAuth }")
         el-button(v-if="isAuth", @click="vote(post)")
           img(style="height: 12px" src="~assets/like.png")
         el-button(v-else :plain="true", :disabled="true", icon="check")
@@ -53,57 +53,44 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import VueMarkdown from 'vue-markdown'
 import shareVK from '@/utils/share_vk'
 import pluralizer from '@/utils/pluralizer'
 import linkMaker from '@/utils/router_link_maker'
 import { mapMutations, mapActions, mapState } from 'vuex'
-import { Post } from '@/api/posts'
 
 export default {
   data () {
-    return {
-      navigate: {
-        next: {},
-        prev: {}
-      },
-      new_comment: {},
-      post: {
-        author: {},
-        comments: []
-      },
-      auth: '',
-      comments: [],
-      mark_view: '',
-      error: false,
-      loading: false,
-      meta: [
-        { property: 'og:title', content: 'title' },
-        { property: 'og:site_name', content: 'Title' },
-        { property: 'og:description', content: 'Title' },
-        { property: 'og:image', content: 'Title' }
-      ]
-    }
+    return {}
   },
   computed: {
     ...mapState({
       isAuth: state => state.user.auth.isAuth,
-      userName: state => state.user.personal.userName
+      userName: state => state.user.personal.userName,
+      post: state => state.blog.posts.postSingle
     }),
 
-    /**
-     * TODO перенести в отдельную vue директиву
-     *
-     * parce url to <img>
-     * @return <img> tag
-     */
     postBody () {
       const body = this.post.body ? this.post.body.replace(
         /(https?:\S*?\.(?:png|jpe?g|gif)(?:\?[^"']+?)?(?=<|\s))/igm,
         '<img src="$1"></img>'
       ) : ''
       return body
+    },
+
+    prev_post () {
+      return this.post.next_page ? this.makePath(
+        'post-view',
+        this.post.next_page.author__username,
+        this.post.next_page.permlink
+      ) : false
+    },
+    next_post () {
+      return this.post.prev_page ? this.makePath(
+        'post-view',
+        this.post.prev_page.author__username,
+        this.post.prev_page.permlink
+      ) : false
     }
   },
   methods: {
@@ -114,24 +101,6 @@ export default {
     ...mapActions({
       addComment: 'posts/add_comment'
     }),
-
-    make_navigate () {
-      this.post.prev_page = this.post.prev_page ? {
-        name: 'post',
-        params: {
-          author: this.post.prev_page.author__username,
-          permlink: this.post.prev_page.permlink
-        }
-      } : null
-
-      this.post.next_page = this.post.next_page ? {
-        name: 'post',
-        params: {
-          author: this.post.next_page.author__username,
-          permlink: this.post.next_page.permlink
-        }
-      } : null
-    },
     share (post) {
       shareVK(post)
     },
@@ -141,14 +110,17 @@ export default {
     makePath (action, username, permalink = '') {
       return linkMaker(action, username, permalink)
     },
-    getPageUrl (post) {
+    makeLink (data) {
+      return {
+        name: 'post',
+        params: {
+          author: data.author__username,
+          permlink: data.permlink
+        }
+      }
     }
   },
-  watch: {
-    '$route' () {
-      // fetch_post_content through vuex action
-    }
-  },
+
   components: {
     VueMarkdown
   }
