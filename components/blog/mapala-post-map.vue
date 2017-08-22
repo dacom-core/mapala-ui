@@ -90,9 +90,9 @@
           bounds.f.f
         ].join()
 
-        Marker.get({ bbox: bbox }).then(res => {
-          this.markers = res.body.results
-        })
+//        Marker.get({ bbox: bbox }).then(res => {
+//          this.markers = res.body.results
+//        })
       },
       openInfoWindow (marker) {
         this.infoWindow.opened = true

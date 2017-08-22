@@ -21,7 +21,7 @@
 
       div.divider
 
-      show-modal-button(v-if="!isAuth", class="login", modal-content-component="login")
+      nuxt-link(:to="'/login'", v-if="!isAuth", class="login")
         | {{ $t('log_in') }}
 
       div(v-else, v-on-click-outside="closeMenu")
@@ -35,7 +35,7 @@
           class="user_menu"
           )
 
-          show-modal-button(class="wal", modal-content-component="userWallet")
+          nuxt-link(:to="'/wallet'", class="wal")
             i.purce
             span.txt_i
               | {{ $t('Wallet') }}
@@ -43,7 +43,11 @@
 
           div.divd
           div.mn
-            show-modal-button(class="m_item", modal-content-component="userSettings")
+
+            nuxt-link(
+            :to="'/settings'"
+            class="m_item"
+            )
               | {{ $t('setting') }}
 
             nuxt-link(class="m_item", :to="'/ico/'")
