@@ -34,9 +34,9 @@
 <script>
   import { googleMapStyles } from '~/plugins/vue-google-maps'
   import { Marker } from '@/api/map'
+  import { mapState } from 'vuex'
 
   export default {
-    props: ['filters'],
     data () {
       return {
         markers: [],
@@ -71,6 +71,8 @@
       }
     },
     computed: {
+      ...mapState({ mapFilters: 'map/filters' }),
+
       pages () {
         return this.$store.state.posts.data
       },
@@ -92,9 +94,9 @@
           bounds.f.f
         ].join()
 
-        const filters = this.filters
+        const mapFilters = this.mapFilters
 
-        const { data: { results } } = await Marker.query({ bbox: boundingBox, ...filters })
+        const { data: { results } } = await Marker.query({ bbox: boundingBox, ...mapFilters })
         this.markers = results
       },
       openInfoWindow (marker) {

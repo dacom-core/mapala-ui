@@ -1,103 +1,115 @@
 <template lang="pug">
   div
     header.main_header
-      nuxt-link(
-        class="main_logo",
-        :class="{ main_logoMobile: isMobile }",
-        :to="'/' + locale",
-        )
-        img(src="~assets/MapalaLogo.png")
-        span
-          | MAPALA
 
-      nuxt-link(
-        v-if="isAuth",
-        :to="'/'+userName"
-        )
-        div.user
-          span(class="user_name" v-text="userName")
-          img(v-if="userAvatar" class="user_logo", :src="userAvatar")
-          img(v-else class="no_avatar" src="~assets/icon-profile-w.svg")
-
-      div.divider
-
-      nuxt-link(:to="'/login'", v-if="!isAuth", class="login")
-        | {{ $t('log_in') }}
-
-      div(v-else, v-on-click-outside="closeMenu")
-
-        div(@click="menuOpen", class="open_menu")
-          | {{ $t('menu') }}
-
-        div(
-          v-if="isAuth",
-          :class="{active : isMenuOpened, user_menuMobile: isMobile }"
-          class="user_menu"
+      div.top_left_block
+        nuxt-link(
+          class="main_logo",
+          :class="{ main_logoMobile: isMobile }",
+          :to="'/' + locale",
           )
+          img(src="~assets/MapalaLogo.png")
+          span
+            | MAPALA
 
-          nuxt-link(:to="'/wallet'", class="wal")
-            i.purce
-            span.txt_i
-              | {{ $t('Wallet') }}
-            span(class="amount", v-text="userBalance")
+        div.change_lang
+          input(type="radio" value="ru" id="rus" v-model="locale")
+          label(for="rus", @click="changeLang('ru')")
+            | rus/golos
+          input(type="radio" value="en" id="eng" v-model="locale")
+          label(for="eng", @click="changeLang('en')")
+            | eng/steem
 
-          div.divd
-          div.mn
 
-            nuxt-link(
-            :to="'/settings'"
-            class="m_item"
+      div.top-right-block
+
+        popover
+
+        div.username_wrapper(v-if="isAuth")
+          nuxt-link(
+            v-if="isAuth",
+            :to="'/'+userName"
             )
-              | {{ $t('setting') }}
+            div.user
+              span(class="user_name" v-text="userName")
+              img(v-if="userAvatar" class="user_logo", :src="userAvatar")
+              img(v-else class="no_avatar" src="~assets/icon-profile-w.svg")
 
-            nuxt-link(class="m_item", :to="'/ico/'")
-              | ICO
+        div.divider
 
-            a(href="#" v-if="isAuth" class="m_item", @click="userLogout")
-              | {{ $t('log_out') }}
+        nuxt-link(v-if="!isAuth", :to="'/login'", class="login")
+          | {{ $t('log_in') }}
+
+        div.right_button(v-else, v-on-click-outside="closeMenu")
+
+          div(@click="menuOpen", class="open_menu")
+            | {{ $t('menu') }}
+
+          div(
+            v-if="isAuth",
+            :class="{active : isMenuOpened, user_menuMobile: isMobile }"
+            class="user_menu"
+            )
+
+            nuxt-link(:to="'/wallet'", class="wal")
+              i.purce
+              span.txt_i
+                | {{ $t('Wallet') }}
+              span(class="amount", v-text="userBalance")
+
+            div.divd
+            div.mn
+
+              nuxt-link(
+              :to="'/settings'"
+              class="m_item"
+              )
+                | {{ $t('setting') }}
+
+              nuxt-link(class="m_item", :to="'/ico/'")
+                | ICO
+
+              a(href="#" v-if="isAuth" class="m_item", @click="userLogout")
+                | {{ $t('log_out') }}
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
-  import showModalButton from '~/components/modal/mapala-show-modal-button'
+import { mapState, mapActions } from 'vuex'
 
-  export default {
-    components: {
-      showModalButton
-    },
+export default {
+  data () {
+    return {
+      isMenuOpened: false
+    }
+  },
 
-    mounted () {
+  computed: mapState({
+    isAuth: state => state.user.auth.isAuth,
+    userName: state => state.user.personal.userName,
+    userAvatar: state => state.user.personal.avatar,
+    userBalance: state => state.user.wallet.balance,
+    isMobile: state => state.isMobile,
+    locale: state => state.locale
+  }),
 
-    },
-    data () {
-      return {
-        isMenuOpened: false
-      }
-    },
-
-    computed: mapState({
-      isAuth: state => state.user.auth.isAuth,
-      userName: state => state.user.personal.userName,
-      userAvatar: state => state.user.personal.avatar,
-      userBalance: state => state.user.wallet.balance,
-      isMobile: state => state.isMobile,
-      locale: state => state.locale
+  methods: {
+    ...mapActions({
+      userLogout: 'user/auth/logout'
     }),
 
-    methods: {
-      ...mapActions({
-        userLogout: 'user/auth/logout'
-      }),
+    openMenu () {
+      this.menu_opened = !this.menu_opened
+    },
 
-      openMenu () {
-        this.menu_opened = !this.menu_opened
-      },
+    closeMenu () {
+      (this.isMenuOpened) ? this.isMenuOpened = false : false
+    },
 
-      closeMenu () {
-        (this.isMenuOpened) ? this.isMenuOpened = false : false
-      }
+    changeLang (locale) {
+     // TODO
     }
   }
+}
 </script>
 
 <style lang="stylus" scoped>

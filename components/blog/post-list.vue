@@ -2,11 +2,18 @@
   div
     post-item(v-for="post in posts.data", :post="post", :key="post.id")
     div(v-loading.body="posts.loading")
+
+    mugen-scroll(
+      tag="mu",
+      :handler="nextPosts",
+      :should-handle="!loading"
+      )
+      | &nbsp;
 </template>
 
 
 <script>
-import PostItem from './mapala-post-list-item'
+import PostItem from './post-list-item'
 import { mapState } from 'vuex'
 
 export default {
