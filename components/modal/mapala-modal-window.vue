@@ -2,8 +2,8 @@
   div(
     v-if="isVisible",
     class="pop_back",
-    @click.self="hideModal",
-    v-on-click-outside="hideModal"
+    @click.self="closeModal",
+    v-on-click-outside="closeModal"
     )
     transition(
       name="custom-classes-transition"
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -25,14 +25,22 @@ export default {
   computed: {
     ...mapState({
       isVisible: state => state.modal.isShown
-    })
+    }),
+
+    ...mapGetters(['previousURL'])
   },
   methods: {
     ...mapMutations({
       showModal: 'modal/SHOW_MODAL',
       hideModal: 'modal/HIDE_MODAL'
-    })
+    }),
+
+    closeModal () {
+      this.hideModal()
+      this.$router.push(window.history.back())
+    }
   },
+
   mounted () {
     this.showModal()
   },
@@ -41,4 +49,5 @@ export default {
     this.hideModal()
   }
 }
+
 </script>

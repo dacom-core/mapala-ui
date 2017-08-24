@@ -2,7 +2,9 @@
   div
     top-line
     div.gw
-      nuxt
+      keep-alive
+        nuxt-child
+          nuxt
 </template>
 <script>
 import TopLine from '~/components/layout/__parts__/mapala-top-line'

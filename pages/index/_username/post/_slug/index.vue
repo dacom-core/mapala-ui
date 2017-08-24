@@ -4,7 +4,6 @@
 </template>
 
 <script>
-//  import {mapState, mapActions, mapMutations} from 'vuex';
 import PostView from '~/components/blog/mapala-post-view'
 import MapalaModal from '~/components/modal/mapala-modal-window'
 import { Post } from '@/api/posts'
@@ -14,8 +13,6 @@ export default {
     const { data } = await Post.get(params.username + '*@*' + params.slug)
     return { post: data }
   },
-
-  methods: {},
 
   components: {
     MapalaModal,

@@ -49,7 +49,6 @@
 
       template(slot="rightScreen")
         post-map(:filters="{}")
-
 </template>
 
 <script>
@@ -83,7 +82,8 @@ export default {
   methods: {
     // Заглушки
     nextPosts () {
-    }
+    },
+
   },
 
   components: {

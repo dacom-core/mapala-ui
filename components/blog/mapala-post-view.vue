@@ -25,7 +25,7 @@
           )
           | {{ $t('edit') }}
 
-        div.close(@click="close")
+        div.close(@click="closeModal")
 
     div.main_image(v-if="post.miniature")
       img(:src="post.miniature")
@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      close: 'modal/HIDE_MODAL'
+      hideModal: 'modal/HIDE_MODAL'
     }),
 
     ...mapActions({
@@ -109,7 +109,15 @@ export default {
     },
     makePath (action, username, permalink = '') {
       return linkMaker(action, username, permalink)
+    },
+    closeModal () {
+//      this.$router.push(this.route.from.fullPath)
     }
+  },
+
+  beforeRouteEnter: (to, from, next) => {
+    console.log(to)
+    next()
   },
 
   components: {

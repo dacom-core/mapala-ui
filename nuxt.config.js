@@ -30,10 +30,9 @@ module.exports = {
   },
   plugins: [
     { src: '~/plugins/element-ui.js', ssr: true },
-    { src: '~/plugins/vue-async-computed.js', ssr: true },
     { src: '~/plugins/i18n.js', ssr: true },
     { src: '~/plugins/vue-cookies.js', ssr: true },
-    { src: '~/plugins/vue-google-maps.js' },
+    { src: '~/plugins/vue-google-maps.js', ssr: false },
     { src: '~/plugins/vue-lazyload.js', ssr: true },
     { src: '~/plugins/vue-scroll-to.js', ssr: false },
     { src: '~/plugins/on-click-outside-directive.js', ssr: false },
