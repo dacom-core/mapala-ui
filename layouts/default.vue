@@ -3,7 +3,6 @@
     top-line
     div.gw
       div.wrapper
-        nuxt
         //- LEFT COLUMNT
         div.tape(v-bind:class="{ tapeMobile: isMobile }")
 
@@ -18,33 +17,34 @@
 
         //- CONTENT
         modal-window
+          nuxt
 
 
 </template>
 <script>
-  import { mapState } from 'vuex'
-  import TopLine from '~/components/layout/__parts__/top-line'
-  import ModalWindow from '~/components/modal/modal-window'
-  import CreatePostButton from '~/components/blog/__parts__/button-create-post'
-  import PostList from '~/components/blog/post-list'
-  import PostMap from '~/components/blog/post-map'
-  import SwitchBlogButtons from '~/components/blog/__parts__/buttons-switch-blog'
+import { mapState } from 'vuex'
+import TopLine from '~/components/layout/__parts__/top-line'
+import ModalWindow from '~/components/modal/modal-window'
+import CreatePostButton from '~/components/blog/__parts__/button-create-post'
+import PostList from '~/components/blog/post-list'
+import PostMap from '~/components/blog/post-map'
+import SwitchBlogButtons from '~/components/blog/__parts__/buttons-switch-blog'
 
-  export default {
-    components: {
-      TopLine,
-      ModalWindow,
-      CreatePostButton,
-      PostList,
-      PostMap,
-      SwitchBlogButtons
-    },
-    computed: mapState({
-      isMobile: state => state.isMobile,
-      isAuth: state => state.user.auth.isAuth
-    }),
-    methods: {}
-  }
+export default {
+  components: {
+    TopLine,
+    ModalWindow,
+    CreatePostButton,
+    PostList,
+    PostMap,
+    SwitchBlogButtons
+  },
+  computed: mapState({
+    isMobile: state => state.isMobile,
+    isAuth: state => state.user.auth.isAuth
+  }),
+  methods: {}
+}
 </script>
 
 <style lang="stylus">

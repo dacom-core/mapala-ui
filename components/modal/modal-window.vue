@@ -1,6 +1,6 @@
 <template lang="pug">
   div(
-    v-if="isVisible",
+    v-show="isVisible",
     class="pop_back",
     @click.self="closeModal",
     v-on-click-outside="closeModal"

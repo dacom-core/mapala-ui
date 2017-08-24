@@ -1,3 +1,6 @@
+<template>
+</template>
+
 <script>
 export default {
   async fetch ({ store: { dispatch, commit } }) {
