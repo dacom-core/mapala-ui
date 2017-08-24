@@ -19,8 +19,8 @@
 import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
-  data () {
-    return {}
+  mounted () {
+    this.setBackPath(this.$route.fullPath)
   },
   computed: {
     ...mapState({
@@ -32,21 +32,14 @@ export default {
   methods: {
     ...mapMutations({
       showModal: 'modal/SHOW_MODAL',
-      hideModal: 'modal/HIDE_MODAL'
+      hideModal: 'modal/HIDE_MODAL',
+      setBackPath: 'SET_BACK_PATH'
     }),
 
     closeModal () {
       this.hideModal()
-      this.$router.push(window.history.back())
+      this.$router.push(this.previousURL)
     }
-  },
-
-  mounted () {
-    this.showModal()
-  },
-
-  beforeDestroy () {
-    this.hideModal()
   }
 }
 

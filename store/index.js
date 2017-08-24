@@ -4,7 +4,7 @@ export const state = () => ({
   locales: ['en', 'ru'],
   locale: 'ru',
   isMobile: false,
-  historyStack: ['/']
+  backPath: '' // The Url Before Modal Was Opened
 })
 
 export const mutations = {
@@ -16,8 +16,8 @@ export const mutations = {
   SET_MOBILE (state, payload) {
     state.isMobile = payload
   },
-  PUSH_TO_HISTORY_STACK (state, path) {
-    state.historyStack.push(path)
+  SET_BACK_PATH (state, url) {
+    state.backPath = url
   }
 }
 
@@ -26,13 +26,12 @@ export const getters = {
   * Return the penultimate path from the history stack
   */
   previousURL (state) {
-    return state.historyStack[state.historyStack.length - 1]
+    return state.backPath
   }
 }
 
 export const actions = {
   nuxtServerInit ({ dispatch, commit }, { req, app: { $axios }}) {
-    console.log('haha')
     const cookieHasToken = false
     const isMobile = new MobileDetect(req.headers['user-agent']).phone() //  Is the page loaded from a phone
     commit('SET_MOBILE', isMobile)

@@ -1,14 +1,28 @@
 <template lang="pug">
-  mapala-modal
+  post-view
 </template>
 
 <script>
 import { Post } from '@/api/posts'
+import { mapMutations } from 'vuex'
+import PostView from '~/components/blog/post-view'
 
 export default {
-  async asyncData ({ store, params }) {
+  async fetch ({ store: { commit }, params }) {
     const { data } = await Post.get(params.username + '*@*' + params.slug)
-    return { post: data }
+    commit('blog/posts/SET_POST_SINGLE', data)
+  },
+
+  methods: {
+    ...mapMutations({ showModal: 'modal/SHOW_MODAL' })
+  },
+
+  mounted () {
+    this.showModal()
+  },
+
+  components: {
+    PostView
   }
 }
 </script>

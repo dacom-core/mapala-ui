@@ -3,12 +3,12 @@
     post-item(v-for="post in posts.data", :post="post", :key="post.id")
     div(v-loading.body="posts.loading")
 
-    mugen-scroll(
-      tag="mu",
-      :handler="nextPosts",
-      :should-handle="!loading"
-      )
-      | &nbsp;
+    <!--mugen-scroll(-->
+      <!--tag="mu",-->
+      <!--:handler="nextPosts",-->
+      <!--:should-handle="!loading"-->
+      <!--)-->
+      <!--| &nbsp;-->
 </template>
 
 
@@ -18,7 +18,9 @@ import { mapState } from 'vuex'
 
 export default {
   data () {
-    return {}
+    return {
+      loading: false
+    }
   },
 
   computed: mapState('blog/posts', {

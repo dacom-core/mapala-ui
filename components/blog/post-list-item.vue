@@ -42,7 +42,7 @@
           | {{ $t('share') }}
 
 
-      el-button-group.support_block(:loading="loading", :class="{ isDisabled: isAuth }")
+      el-button-group.support_block(:class="{ isDisabled: isAuth }")
         el-button(v-if="isAuth", @click="vote(post)")
           img(style="height: 12px" src="~assets/like.png")
         el-button(v-else :plain="true", :disabled="true" icon="check")

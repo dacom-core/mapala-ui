@@ -60,14 +60,14 @@ import linkMaker from '@/utils/router_link_maker'
 import { mapMutations, mapActions, mapState } from 'vuex'
 
 export default {
-  props: ['post'],
   data () {
     return {}
   },
   computed: {
     ...mapState({
       isAuth: state => state.user.auth.isAuth,
-      userName: state => state.user.personal.userName
+      userName: state => state.user.personal.userName,
+      post: state => state.blog.posts.postSingle
     }),
 
     postBody () {

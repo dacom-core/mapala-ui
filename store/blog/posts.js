@@ -52,9 +52,7 @@ export const mutations = {
   SET_POST_LIST (state, payload) {
     state.postList.data = payload
   },
-
   SET_POST_SINGLE (state, payload) {
-    console.log(payload)
     state.postSingle = payload
   }
 }

@@ -3,7 +3,7 @@
     top-line
     div.gw
       div.wrapper
-
+        nuxt
         //- LEFT COLUMNT
         div.tape(v-bind:class="{ tapeMobile: isMobile }")
 
@@ -18,7 +18,7 @@
 
         //- CONTENT
         modal-window
-          nuxt
+
 
 </template>
 <script>
