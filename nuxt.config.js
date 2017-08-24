@@ -26,7 +26,9 @@ module.exports = {
     { src: '~/assets/styles/general.styl', lang: 'stylus' }
   ],
   router: {
-    middleware: ['i18n']
+    middleware: ['i18n'],
+    scrollBehavior: function (to, from, savedPosition) {
+    }
   },
   plugins: [
     { src: '~/plugins/element-ui.js', ssr: true },

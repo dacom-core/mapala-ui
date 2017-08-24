@@ -19,7 +19,6 @@
         modal-window
           nuxt
 
-
 </template>
 <script>
 import { mapState } from 'vuex'

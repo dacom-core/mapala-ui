@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.post_block(v-loading.body="!post.body")
+  div.post-content
     nuxt-link(v-if="next_post" class="prev_post", :to="next_post")
     nuxt-link(v-if="prev_post" class="next_post", :to="prev_post")
 
@@ -111,7 +111,7 @@ export default {
       return linkMaker(action, username, permalink)
     },
     closeModal () {
-//      this.$router.push(this.route.from.fullPath)
+
     }
   },
 
@@ -158,14 +158,14 @@ export default {
     right: calc((100% - 866px)/2 - 130px);
   }
 
-  .post_block .close{
+  .post-content .close{
     background: url('~/assets/icon-close-black.svg') no-repeat center center;
     width: 40px;
     height: 40px;
     cursor: pointer;
   }
 
-  .post_block .edit {
+  .post-content .edit {
     font: 700 14px/36px 'PT Sans';
     box-sizing: border-box;
     padding: 0 16px;
@@ -185,42 +185,33 @@ export default {
     text-decoration: none;
   }
 
-  .post_block {
-    border-radius: 6px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    border: solid 1px rgba(72, 84, 101, 0.2);
-    max-width: 866px;
-    width: 100%;
-    margin: 0 auto 80px;
-    position: relative;
-  }
 
-  .post_block .c_header {
+
+  .post-content .c_header {
     font: 700 40px 'PT Sans';
     letter-spacing: -0.8px;
     color: #20252d;
     margin: 0 30px 20px;
   }
 
-  .post_block .c_text {
+  .post-content .c_text {
     font: 21px/1.52 'PT Sans';
     letter-spacing: -1px;
     color: #141823;
     margin: 0 30px 40px;
   }
 
-  .post_block .top_block {
+  .post-content .top_block {
     display: flex;
     margin: 40px 30px 35px;
     justify-content: space-between;
   }
 
-  .post_block .t_col {
+  .post-content .t_col {
     display: flex;
   }
 
-  .post_block .top_block .img_wrap {
+  .post-content .top_block .img_wrap {
     border-radius: 50%;
     margin-right: 8px;
     width: 40px;
@@ -228,30 +219,30 @@ export default {
     flex-shrink: 0;
   }
 
-  .post_block img {
+  .post-content img {
     display: block;
   }
 
-  .post_block .name_block {
+  .post-content .name_block {
     margin-right: 8px;
     margin-top: 1px;
   }
 
-  .post_block .name {
+  .post-content .name {
     font: 700 16px/20px 'PT Sans';
     letter-spacing: -0.5px;
     color: #6d9ee1;
     text-decoration: none;
   }
 
-  .post_block .date {
+  .post-content .date {
     font-size: 12px;
     letter-spacing: -0.5px;
     color: rgba(72, 84, 101, 0.7);
     line-height: 16px;
   }
 
-  .post_block .top_block .location {
+  .post-content .top_block .location {
     margin-top: 4px;
     font-size: 16px;
     line-height: 18px;
@@ -262,19 +253,19 @@ export default {
     background: url('~/assets/icon-location-small.svg') no-repeat left 3px;
   }
 
-  .post_block .bottom_block {
+  .post-content .bottom_block {
     display: flex;
     align-items: center;
     padding: 0 30px;
     margin-bottom: 30px;
   }
 
-  .post_block .icons {
+  .post-content .icons {
     display: flex;
     align-items: center;
   }
 
-  .post_block .icon {
+  .post-content .icon {
     display: block;
     cursor: pointer;
     font: 14px/34px 'PT Sans';
@@ -284,17 +275,17 @@ export default {
     text-decoration: none;
   }
 
-  .post_block .icon.comment {
+  .post-content .icon.comment {
     background: url('~/assets/icon-comment.svg') no-repeat left center;
     margin-right: 18px;
   }
 
-  .post_block .icon.repost {
+  .post-content .icon.repost {
     background: url('~/assets/icon-repost.svg') no-repeat left center;
     margin-right: 18px;
   }
 
-  .post_block .support {
+  .post-content .support {
     font: 14px/34px 'PT Sans';
     letter-spacing: -0.5px;
     color: rgba(255, 255, 255, 0.7);
@@ -310,7 +301,7 @@ export default {
     height: 31px;
   }
 
-  .post_block .is-disabled {
+  .post-content .is-disabled {
     color: #bfcbd9;
     cursor: not-allowed;
     background-image: none;
@@ -318,24 +309,24 @@ export default {
     border-color: #d1dbe5;
   }
 
-  .post_block .support span {
+  .post-content .support span {
     color: #ffffff;
   }
 
-  .post_block .main_image {
+  .post-content .main_image {
     overflow: hidden;
     margin: 0 -1px 25px;
   }
 
-  .post_block .main_image img {
+  .post-content .main_image img {
     width: 100%;
   }
 
-  .post_block .content {
+  .post-content .content {
     overflow: hidden;
   }
 
-  .post_block .c_text img {
+  .post-content .c_text img {
     max-height: 492px;
     max-width: 100%;
     text-align: center;

@@ -1,7 +1,9 @@
 <template lang="pug">
   div.post(:id="'page_id_' + post.id", :class="post.miniature ? 'w_i' : '' ")
 
+
     nuxt-link(
+      @click.native="test"
       v-if="post.miniature",
       :to="makePath('post-view', post.author.username, post.permlink)"
       )
