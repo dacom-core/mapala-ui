@@ -4,7 +4,8 @@ export const state = () => ({
   locales: ['en', 'ru'],
   locale: 'ru',
   isMobile: false,
-  backPath: '' // The Url Before Modal Was Opened
+  historyStack: [], // All urls(paths) which have been visited.
+  backPath: '/' // The Url Before Modal Was Opened
 })
 
 export const mutations = {
@@ -18,6 +19,9 @@ export const mutations = {
   },
   SET_BACK_PATH (state, url) {
     state.backPath = url
+  },
+  PUSH_TO_HISTORY_STACK (state, path) {
+    state.historyStack.push(path)
   }
 }
 

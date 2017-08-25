@@ -34,7 +34,7 @@ export default {
 
     closeModal () {
       this.hideModal()
-//      this.$router.push(history.back())
+      this.$router.push(this.backPath)
     }
   }
 }
