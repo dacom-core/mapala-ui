@@ -1,4 +1,4 @@
-import { Post } from '@/api/posts'
+import { Post } from '@/api/services'
 
 export const state = () => ({
   postList: {

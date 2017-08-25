@@ -13,3 +13,19 @@ export const User = {
     initialBlockchains: (user_name) => axios.get(`users/${user_name}/initial_blockchains/`)
   })
 }
+
+export const Post = {
+  ...resource('pages/', axios, {
+    commentsTree: (permalink) => axios.get(`pages/${permalink}/comments_tree/`),
+    updatePost: (payload) => axios.post('pages/update_post/', payload),
+    trPost: () => axios.post('pages/tr_post/')
+  })
+}
+
+export const Comment = {
+  ...resource('comments/', axios, {})
+}
+
+export const Marker = {
+  ...resource('markers/', axios, {})
+}

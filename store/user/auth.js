@@ -1,4 +1,4 @@
-import { User } from '@/api/user'
+import { User } from '@/api/services'
 
 export const state = () => ({
   isAuth: false,

@@ -33,7 +33,7 @@
 
 <script>
   import { googleMapStyles } from '~/plugins/vue-google-maps'
-  import { Marker } from '@/api/map'
+  import { Marker } from '@/api/services'
   import { mapState } from 'vuex'
 
   export default {

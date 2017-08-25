@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { Post } from '@/api/posts'
+import { Post } from '@/api/services'
 import { mapMutations } from 'vuex'
 import PostView from '~/components/blog/post-view'
 

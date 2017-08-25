@@ -38,7 +38,8 @@ module.exports = {
     { src: '~/plugins/vue-lazyload.js', ssr: true },
     { src: '~/plugins/vue-scroll-to.js', ssr: false },
     { src: '~/plugins/on-click-outside-directive.js', ssr: false },
-    { src: '~/plugins/filters.js', ssr: true }
+    { src: '~/plugins/filters.js', ssr: true },
+    { src: '~/plugins/vue-async-computed.js', ssr: true }
   ],
   /*
   ** Build configuration

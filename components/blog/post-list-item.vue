@@ -50,6 +50,9 @@
         el-button(v-else :plain="true", :disabled="true" icon="check")
         el-button(type="primary" class="support")
           | {{ post.payout | toRub }} ₽
+
+    comments-block(:post="post")
+
 </template>
 
 <script>
@@ -57,6 +60,7 @@ import { mapState } from 'vuex'
 import shareVK from '@/utils/share_vk'
 import pluralizer from '@/utils/pluralizer'
 import linkMaker from '@/utils/router_link_maker'
+import CommentsBlock from './comments/comments-block'
 
 export default {
 
@@ -81,6 +85,9 @@ export default {
     makePath (action, username, permalink) {
       return linkMaker(action, username, permalink)
     }
+  },
+  components: {
+    CommentsBlock
   }
 }
 </script>

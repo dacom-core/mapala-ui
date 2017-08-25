@@ -27,7 +27,7 @@
     "query-string": "^5.0.0",
     "sass-loader": "^6.0.6",
     "stylus-loader": "^3.0.1",
-    "vue-async-computed": "^3.2.1",
+    "vue-async-computed": "^3.3.0",
     "vue-cookie": "^1.1.4",
     "vue-fontawesome": "0.0.2",
     "vue-i18n": "^7.1.0",
