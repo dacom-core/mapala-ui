@@ -40,7 +40,8 @@ export default {
   },
   computed: mapState({
     isMobile: state => state.isMobile,
-    isAuth: state => state.user.auth.isAuth
+    isAuth: state => state.user.auth.isAuth,
+    isModalShown: state => state.modal.isShown
   }),
   methods: {}
 }
@@ -87,4 +88,8 @@ export default {
 
   .tapeMobile
     margin-left 0!important
+
+  .overflowHidden {
+    overflow: hidden
+  }
 </style>

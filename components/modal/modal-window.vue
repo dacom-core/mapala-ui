@@ -20,26 +20,21 @@
 import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
-  mounted () {
-    this.setBackPath(this.$route.fullPath)
-  },
   computed: {
     ...mapState({
       isVisible: state => state.modal.isShown
     }),
 
-    ...mapGetters(['previousURL'])
+    ...mapGetters(['backPath'])
   },
   methods: {
     ...mapMutations({
-      showModal: 'modal/SHOW_MODAL',
-      hideModal: 'modal/HIDE_MODAL',
-      setBackPath: 'SET_BACK_PATH'
+      hideModal: 'modal/HIDE_MODAL'
     }),
 
     closeModal () {
       this.hideModal()
-      this.$router.push(this.previousURL)
+//      this.$router.push(history.back())
     }
   }
 }

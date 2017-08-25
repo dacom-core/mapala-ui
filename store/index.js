@@ -25,7 +25,7 @@ export const getters = {
   /**
   * Return the penultimate path from the history stack
   */
-  previousURL (state) {
+  backPath (state) {
     return state.backPath
   }
 }
