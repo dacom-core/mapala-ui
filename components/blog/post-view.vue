@@ -25,8 +25,6 @@
           )
           | {{ $t('edit') }}
 
-        div.close(@click="closeModal")
-
     div.main_image(v-if="post.miniature")
       img(:src="post.miniature")
 
@@ -109,9 +107,6 @@ export default {
     },
     makePath (action, username, permalink = '') {
       return linkMaker(action, username, permalink)
-    },
-    closeModal () {
-
     }
   },
 
@@ -157,14 +152,6 @@ export default {
     top: 48%;
     right: calc((100% - 866px)/2 - 130px);
   }
-
-  .post-content .close{
-    background: url('~/assets/icon-close-black.svg') no-repeat center center;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-  }
-
   .post-content .edit {
     font: 700 14px/36px 'PT Sans';
     box-sizing: border-box;

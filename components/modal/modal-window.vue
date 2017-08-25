@@ -12,6 +12,7 @@
       mode="out-in"
       )
       div.modal_wrapper
+        div.close(@click="closeModal")
         slot
 
 </template>
@@ -52,4 +53,13 @@ export default {
     width: 100%
     margin: 0 auto 80px
     position: relative
+
+  .close
+    position: absolute
+    right: 30px
+    top: 25px
+    background: url('~/assets/icon-close-black.svg') no-repeat center center
+    width: 40px
+    height: 40px;
+    cursor: pointer
 </style>
