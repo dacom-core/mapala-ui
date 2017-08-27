@@ -17,8 +17,7 @@
 
         //- CONTENT
         modal-window
-          keep-alive
-            nuxt
+          nuxt
 
 </template>
 <script>

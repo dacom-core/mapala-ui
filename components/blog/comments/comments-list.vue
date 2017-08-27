@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    div.show_more_comments_button(v-if="hasPostMoreComments", @click="isShowMoreCommentsClicked = true")
+    div.show_more_comments_button(v-if="hasPostMoreComments", @click="fetchAllComments()")
       | {{ $t('show_comments') }}
 
     comments-item(v-for="comment of comments", :comment="comment", :key="comment.id")
@@ -11,6 +11,7 @@
 <script>
 import { Comment } from '@/api/services'
 import CommentsItem from './comments-list-item'
+import _ from 'lodash'
 
 export default {
   props: ['post'],
@@ -18,6 +19,7 @@ export default {
   data () {
     return {
       isShowMoreCommentsClicked: false,
+      comments: _.cloneDeep(this.post.comments)
     }
   },
 
@@ -28,21 +30,10 @@ export default {
       return this.post.comments_count > this.comments.length // TODO не может с null length посчитать.
     }
   },
-
-  asyncComputed: {
-    async comments () {
-      if (this.isShowMoreCommentsClicked) {
-        const { data } = await this.fetchComments()
-        return data
-      } else {
-        return this.post.comments // Preloaded with post comments (By default 3 if there is)
-      }
-    }
-  },
-
   methods: {
-    fetchComments () {
-      return Comment.query({ 'page': this.post.id })
+    async fetchAllComments () {
+      const { data } = await Comment.query({ 'page': this.post.id })
+      this.comments = data
     }
   },
 
