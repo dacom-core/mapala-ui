@@ -14,3 +14,54 @@ html
 
 .el-loading-mask
   position: fixed !important
+
+.el-popover {
+  border-radius: 5px !important;
+  background-color: #5D7293 !important;
+  border: none;
+  justify-content: space-between;
+  display: flex;
+  padding: 10px 20px;
+  padding-bottom: 20px;
+}
+
+.poster__Column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 90px;
+}
+
+.poster__Column h4 {
+  font-family: PTSans;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.5;
+  text-align: left;
+  color: #ec9eb5;
+}
+
+.el-popover .popper__arrow{
+  border-bottom-color: #5D7293 !important;
+}
+
+.el-popover .popper__arrow::after {
+  border-bottom-color: #5D7293 !important;
+}
+
+
+.poster_link {
+  transition: .4s ease-out;
+  width: 100%;
+  cursor: pointer;
+  display: block;
+  border-radius: 5px;
+  text-align: left;
+  padding: 3px 1px 3px 1px;
+  text-decoration: none;
+  color: #8DAFE1 !important;
+}
+.poster_link:hover {
+  background-color: #4c6282;
+}
+

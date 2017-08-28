@@ -22,7 +22,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import TopLine from '~/components/layout/__parts__/top-line'
+import TopLine from '~/components/layout/top-line'
 import ModalWindow from '~/components/modal/modal-window'
 import CreatePostButton from '~/components/blog/__parts__/button-create-post'
 import PostList from '~/components/blog/post-list'

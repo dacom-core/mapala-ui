@@ -27,7 +27,7 @@ export default {
     hasPostMoreComments () {
       // return true if the quantity of all comments for this post is bigger than
       // the quantity of comments preloaded with post (By default 3 if there is)
-      return this.post.comments_count > this.comments.length // TODO не может с null length посчитать.
+      return this.post.comments_count > this.comments.length
     }
   },
   methods: {

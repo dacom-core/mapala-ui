@@ -29,3 +29,9 @@ export const Comment = {
 export const Marker = {
   ...resource('markers/', axios, {})
 }
+
+export const Group = {
+  ...resource('groups/', axios, {
+    // 'markers': { method: 'GET', url: '/api/markers/' }
+  })
+}

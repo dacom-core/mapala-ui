@@ -23,7 +23,12 @@
 
       div.top-right-block
 
-        popover
+        a.el-button.mapala-fest-link(href="https://fest.mapala.net")
+          span
+            | MapalaFest
+
+
+        poster
 
         div.username_wrapper(v-if="isAuth")
           nuxt-link(
@@ -75,6 +80,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import Poster from '~/components/layout/__parts__/poster'
 
 export default {
   data () {
@@ -106,8 +112,11 @@ export default {
     },
 
     changeLang (locale) {
-     // TODO
+      // TODO
     }
+  },
+  components: {
+    Poster
   }
 }
 </script>
@@ -207,7 +216,7 @@ export default {
     right: 0;
     top: 0;
     box-sizing: border-box;
-    background: url(../../../assets/icon-menu.svg) no-repeat 53px center;
+    background: url(../../assets/icon-menu.svg) no-repeat 53px center;
     cursor: pointer;
     transition: color .2s ease;
   }
@@ -230,7 +239,7 @@ export default {
     height: 102%;
     line-height: 42px;
     box-sizing: border-box;
-    background: url(../../../assets/icon-login.svg) no-repeat 53px center;
+    background: url(../../assets/icon-login.svg) no-repeat 53px center;
     cursor: pointer;
     transition: color .2s ease;
     text-decoration: none;
@@ -325,7 +334,7 @@ export default {
     width: 45px;
     height: 38px;
     display: block;
-    background: url(../../../assets/icon-purce.svg) no-repeat;
+    background: url(../../assets/icon-purce.svg) no-repeat;
     margin-bottom: 10px;
   }
 
@@ -398,6 +407,58 @@ export default {
     opacity: 1;
   }
   .change_lang [type="radio"]:checked + label:before{
-    background-image: url(../../../assets/icon-checked-blue.svg);
+    background-image: url(../../assets/icon-checked-blue.svg);
   }
+
+
+@media screen and (max-width: 600px) {
+  .username_wrapper {
+    display: none;
+  }
+
+  .top_left_block {
+    flex: 1;
+  }
+
+  .top-right-block {
+    justify-content: space-between;
+  }
+
+}
+
+
+@media screen and (max-width: 767px) {
+  .change_lang {
+    display: none;
+  }
+
+  .top_left_block {
+    flex: 0.5;
+  }
+
+  .top-right-block {
+    flex: 1;
+    justify-content: space-around;
+  }
+}
+
+.mapala-fest-link {
+  display: flex;
+  align-items: center;
+  background: transparent !important;
+  border: none !important;
+  font-size: 12px !important;
+}
+
+.mapala-fest-link span {
+  color: #fff;
+  font-style: oblique;
+}
+
+@media screen and (max-width: 500px) {
+  .mapala-fest-link {
+    display: none;
+  }
+}
+
 </style>
