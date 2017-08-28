@@ -26,7 +26,7 @@ module.exports = {
     { src: '~/assets/styles/general.styl', lang: 'stylus' }
   ],
   router: {
-    middleware: ['i18n', 'history-logger'],
+    middleware: ['i18n', 'history-logger', 'mobile'],
     scrollBehavior: function (to, from, savedPosition) {
     }
   },
@@ -39,7 +39,8 @@ module.exports = {
     { src: '~/plugins/vue-scroll-to.js', ssr: false },
     { src: '~/plugins/on-click-outside-directive.js', ssr: false },
     { src: '~/plugins/filters.js', ssr: true },
-    { src: '~/plugins/vue-async-computed.js', ssr: true }
+    { src: '~/plugins/vue-async-computed.js', ssr: true },
+    { src: '~/plugins/onsen-ui.js', ssr: false }
   ],
   /*
   ** Build configuration
