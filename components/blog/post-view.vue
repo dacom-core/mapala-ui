@@ -48,9 +48,13 @@
         el-button(v-else :plain="true", :disabled="true", icon="check")
         el-button(type="primary" class="support")
           | {{ post.payout | toRub }} ₽
+
+    comments-block(:post="post")
+
 </template>
 
 <script>
+import CommentsBlock from './comments/comments-block'
 import VueMarkdown from 'vue-markdown'
 import shareVK from '@/utils/share_vk'
 import pluralizer from '@/utils/pluralizer'
@@ -116,7 +120,8 @@ export default {
   },
 
   components: {
-    VueMarkdown
+    VueMarkdown,
+    CommentsBlock
   }
 }
 </script>
