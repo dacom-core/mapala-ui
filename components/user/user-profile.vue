@@ -8,35 +8,32 @@
         div.round_av
           img.user_av(:src="userAvatar")
         div.name.verified
-          | Here should be user blockchain name (TODO)
-
-      div.bottom_bl(v-if="auth.user.username == user.username")
-        nuxt-link.but.ic.wal(:to="{name: 'userWallet', params: {user: userName}}")
+          | {{ this.$route.params.username }}
+      div.bottom_bl(v-if="IsUserOwnPage")
+        nuxt-link.but.ic.wal(:to="{ to: '/wallet', params: { user: userName } }")
           | {{ $t('my_wallett') }}
 
         i.divd
 
-        nuxt-link.but.ic.set(:to="{name: 'userSettings', params: {user: userName}}")
+        nuxt-link.but.ic.set(:to="{ to: '/settings', params: { user: userName } }")
           | {{ $t('setting') }}
-
 
 
     create-post-button
 
 
+    <!--div.no_post(v-if="has_not_pages")-->
+      <!--div(v-if="auth.user.username != $route.params.user")-->
+        <!--p-->
+          <!--| {{ $t('this_user_do_not_have_posts') }}-->
+        <!--nuxt-link(:to="{name: 'index'}" class="blue_btn")-->
+          <!--| {{ $t('watch') }}-->
 
-    div.no_post(v-if="has_not_pages")
-      div(v-if="auth.user.username != $route.params.user")
-        p
-          | {{ $t('this_user_do_not_have_posts') }}
-        nuxt-link(:to="{name: 'index'}" class="blue_btn")
-          | {{ $t('watch') }}
-
-      div(v-else)
-        p
-          | {{ $t('you_do_not_have_posts_yet') }}
-        nuxt-link.blue_btn(v-if="isAuth", :to="{name: 'createNewPost', params: {user: userName}}")
-          | {{ $t('write_message') }}
+      <!--div(v-else)-->
+        <!--p-->
+          <!--| {{ $t('you_do_not_have_posts_yet') }}-->
+        <!--nuxt-link.blue_btn(v-if="isAuth", :to="{name: 'createNewPost', params: {user: userName}}")-->
+          <!--| {{ $t('write_message') }}-->
 
 
 
@@ -44,7 +41,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import CreatePostButton from '~/components/blog/__parts__/mapala-post-button'
+import CreatePostButton from '~/components/blog/__parts__/button-create-post'
 
 export default {
   props: ['hasPosts'],
@@ -56,6 +53,7 @@ export default {
   data () {
     return {}
   },
+
   computed: {
     ...mapState({
       isAuth: 'user/auth/isAuth',
@@ -63,20 +61,18 @@ export default {
       userAvatar: 'user/personal/avatar',
       userBalance: 'user/wallet/balance',
       isMobile: 'isMobile'
-    })
+    }),
+
+    isUserOwnPage () {
+      return this.userName === this.$route.params.username // Is it the logged user's page.
+    }
   },
+
   methods: {
     fetchUser () {
     },
     changeLang () {
     }
-  },
-  watch: {
-    '$route' () {
-    }
-  },
-
-  created () {
   }
 }
 
@@ -134,7 +130,7 @@ export default {
     opacity: 1;
   }
   .change_lang [type="radio"]:checked + label:before{
-    background-image: url(../../frontend/assets/icon-checked-blue.svg);
+    background-image: url(../../assets/icon-checked-blue.svg);
   }
 
   .pf{
@@ -171,7 +167,7 @@ export default {
     border-radius: 50%;
     margin: 0 auto 20px;
     display: block;
-    background: url(../../frontend/assets/icon-profile.svg) #fff no-repeat;
+    background: url(../../assets/icon-profile.svg) #fff no-repeat;
     background-size: cover;
     position: relative;
     overflow: hidden;
@@ -194,7 +190,7 @@ export default {
     content: '';
     width: 21px;
     height: 21px;
-    background: url(../../frontend/assets/icon-blue-check.svg) no-repeat;
+    background: url(../../assets/icon-blue-check.svg) no-repeat;
     top: -9px;
     right: -24px;
   }
@@ -216,11 +212,11 @@ export default {
   }
 
   .pf .bottom_bl .wal{
-    background: url(../../frontend/assets/icon-wallet.svg) no-repeat 16% center;
+    background: url(../../assets/icon-wallet.svg) no-repeat 16% center;
   }
 
   .pf .bottom_bl .set{
-    background: url(../../frontend/assets/icon-settings.svg) no-repeat 22% center;
+    background: url(../../assets/icon-settings.svg) no-repeat 22% center;
   }
 
   .pf .bottom_bl .divd{

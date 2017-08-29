@@ -6,6 +6,8 @@
         //- LEFT COLUMNT
         div.tape(v-bind:class="{ tapeMobile: isMobile }")
 
+          user-profile-block(v-if="isUserPage")
+
           create-post-button(v-if="isAuth")
 
           switch-blog-buttons
@@ -28,6 +30,7 @@ import CreatePostButton from '~/components/blog/__parts__/button-create-post'
 import PostList from '~/components/blog/post-list'
 import PostMap from '~/components/blog/post-map'
 import SwitchBlogButtons from '~/components/blog/__parts__/buttons-switch-blog'
+import UserProfileBlock from '~/components/user/user-profile'
 
 export default {
   components: {
@@ -36,13 +39,21 @@ export default {
     CreatePostButton,
     PostList,
     PostMap,
-    SwitchBlogButtons
+    SwitchBlogButtons,
+    UserProfileBlock
   },
-  computed: mapState({
-    isMobile: state => state.isMobile,
-    isAuth: state => state.user.auth.isAuth,
-    isModalShown: state => state.modal.isShown
-  }),
+
+  computed: {
+    ...mapState({
+      isMobile: state => state.isMobile,
+      isAuth: state => state.user.auth.isAuth
+    }),
+
+    isUserPage () {
+      return this.$route.params.username
+    }
+  },
+
   methods: {}
 }
 </script>

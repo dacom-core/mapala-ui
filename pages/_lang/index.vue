@@ -3,11 +3,8 @@
 
 <script>
 export default {
-  layout: ({ isMobile }) => isMobile ? 'mobile' : 'default',
-
-  async fetch ({ store: { dispatch, commit } }) {
-    const { data: { results } } = await dispatch('blog/posts/fetch_posts')
-    commit('blog/posts/SET_POST_LIST', results)
+  async fetch ({ store }) {
+    await store.dispatch('blog/posts/fetch_posts')
   }
 }
 </script>

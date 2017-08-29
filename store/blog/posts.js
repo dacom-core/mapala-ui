@@ -32,8 +32,9 @@ export const state = () => ({
 })
 
 export const actions = {
-  fetch_posts () {
-    return Post.query() // Retrieving all posts
+  async fetch_posts ({ commit }, filter = '') {
+    const { data: { results } } = await Post.query(filter) // Retrieving all posts
+    commit('SET_POST_LIST', results)
   },
   fetch_comments () {
     return Post.commentsTree()
