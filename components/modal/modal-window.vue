@@ -2,8 +2,7 @@
   div(
     v-show="isVisible",
     class="pop_back",
-    @click.self="closeModal",
-    v-on-click-outside="closeModal"
+    @click.self="closeModal"
     )
     transition(
       name="custom-classes-transition"

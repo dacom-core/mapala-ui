@@ -13,9 +13,8 @@ export default {
       class: 'overflowHidden'
     }
   },
-  async fetch ({ store: { commit }, params }) {
-    const { data } = await Post.get(params.username + '*@*' + params.slug)
-    commit('blog/posts/SET_POST_SINGLE', data)
+  async fetch ({ store: { commit, dispatch }, params }) {
+    await dispatch('blog/posts/fetch_single_post', params)
   },
 
   methods: {

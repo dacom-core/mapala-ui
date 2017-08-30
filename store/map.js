@@ -1,32 +1,30 @@
+import { Marker } from '@/api/services'
+
 export const state = () => ({
-  filters: ''
+  filters: '', // Filters for markers (user/group/etc)
+  markers: [],
+  boundingBox: '',
+  isReady: false
 })
 
 export const actions = {
-  computeFilters ({ commit, rootState: { user } }, page) {
-
-    let filters
-
-    switch (page) {
-      case 'index':
-        filters = ''
-        break
-      case 'group':
-        filters = { group: 'rnd' }
-        break
-      case 'user':
-        filters = { author__username: user.auth.isAuth }
-        break
-    }
-
-    console.log(filters)
-
-    commit('SET_FILTERS', filters)
+  async fetch_markers ({ commit, state }) {
+    const { data: { results } } = await Marker.query({ bbox: state.boundingBox, ...state.filters })
+    commit('SET_MARKERS', results)
   }
 }
 
 export const mutations = {
   SET_FILTERS (state, payload) {
     state.filters = payload
+  },
+  SET_MARKERS (state, payload) {
+    state.markers = payload
+  },
+  SET_BOUNDING_BOX (state, payload) {
+    state.boundingBox = payload
+  },
+  SET_MAP_STATE (state, payload) {
+    state.isReady = payload
   }
 }

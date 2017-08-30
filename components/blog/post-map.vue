@@ -4,7 +4,7 @@
       :options="mapOptions",
       :center="center",
       :zoom="4",
-      @idle="fetchMarkers",
+      @idle="updateMarkersList",
       ref="mmm",
       map-type-id="terrain",
       @dragend="checkBounds"
@@ -33,13 +33,11 @@
 
 <script>
   import { googleMapStyles } from '~/plugins/vue-google-maps'
-  import { Marker } from '@/api/services'
-  import { mapState } from 'vuex'
+  import { mapActions, mapMutations } from 'vuex'
 
   export default {
     data () {
       return {
-        markers: [],
         infoWindow: {
           options: {
             maxWidth: 250,
@@ -71,8 +69,9 @@
       }
     },
     computed: {
-      ...mapState({ mapFilters: 'map/filters' }),
-
+      markers () {
+        return this.$store.state.map.markers
+      },
       pages () {
         return this.$store.state.posts.data
       },
@@ -81,7 +80,13 @@
       }
     },
     methods: {
-      async fetchMarkers () {
+      ...mapMutations({
+        setBoundingBox: 'map/SET_BOUNDING_BOX',
+        setMapStateTo: 'map/SET_MAP_STATE'
+      }),
+      ...mapActions({ fetch_markers: 'map/fetch_markers' }),
+
+      updateMarkersList () {
         const map = this.$refs.mmm.$mapObject
         const bounds = map.getBounds()
         this.mapOptions.zoomControlOptions.position = google.maps.ControlPosition.TOP_RIGHT
@@ -94,10 +99,9 @@
           bounds.f.f
         ].join()
 
-        const mapFilters = this.mapFilters
+        this.setBoundingBox(boundingBox)
 
-        const { data: { results } } = await Marker.query({ bbox: boundingBox, ...mapFilters })
-        this.markers = results
+        this.fetch_markers()
       },
       openInfoWindow (marker) {
         this.infoWindow.opened = true
@@ -112,7 +116,7 @@
         }
       },
       setNewCenter () {
-        function getRandomInt(min, max) {
+        function getRandomInt (min, max) {
           min = Math.ceil(min)
           max = Math.floor(max)
           return Math.floor(Math.random() * (max - min)) + min
@@ -144,6 +148,10 @@
 
         map.setCenter(new google.maps.LatLng(y, x))
       }
+    },
+
+    mounted () {
+      this.setMapStateTo(true)
     }
   }
 

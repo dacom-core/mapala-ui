@@ -36,6 +36,10 @@ export const actions = {
     const { data: { results } } = await Post.query(filter) // Retrieving all posts
     commit('SET_POST_LIST', results)
   },
+  async fetch_single_post ({ commit }, urlParams) {
+    const { data } = await Post.get(urlParams.username + '*@*' + urlParams.slug)
+    commit('SET_POST_SINGLE', data)
+  },
   fetch_comments () {
     return Post.commentsTree()
   },

@@ -50,6 +50,7 @@ export default {
     }),
 
     isUserPage () {
+      console.log(this.$route)
       return this.$route.params.username
     }
   },
