@@ -113,12 +113,6 @@ export default {
       return linkMaker(action, username, permalink)
     }
   },
-
-  beforeRouteEnter: (to, from, next) => {
-    console.log(to)
-    next()
-  },
-
   components: {
     VueMarkdown,
     CommentsBlock

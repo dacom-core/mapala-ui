@@ -15,9 +15,6 @@ import CommentsList from './comments-list'
 export default {
   props: ['post'],
 
-  data () {
-  },
-
   methods: {
     // TODO доделать после релиза
     /**

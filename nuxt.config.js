@@ -37,10 +37,8 @@ module.exports = {
     { src: '~/plugins/vue-google-maps.js', ssr: false },
     { src: '~/plugins/vue-lazyload.js', ssr: true },
     { src: '~/plugins/vue-scroll-to.js', ssr: false },
-    { src: '~/plugins/on-click-outside-directive.js', ssr: false },
-    { src: '~/plugins/filters.js', ssr: true },
-    { src: '~/plugins/vue-async-computed.js', ssr: true },
-    { src: '~/plugins/onsen-ui.js', ssr: false }
+    { src: '~/plugins/infinite-scroll.js', ssr: false },
+    { src: '~/plugins/filters.js', ssr: true }
   ],
   /*
   ** Build configuration

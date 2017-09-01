@@ -1,14 +1,7 @@
 <template lang="pug">
   div
     post-item(v-for="post in posts.data", :post="post", :key="post.id")
-    div(v-loading.body="posts.loading")
-
-    <!--mugen-scroll(-->
-      <!--tag="mu",-->
-      <!--:handler="nextPosts",-->
-      <!--:should-handle="!loading"-->
-      <!--)-->
-      <!--| &nbsp;-->
+    div(v-loading.body="isLoading")
 </template>
 
 
@@ -24,7 +17,8 @@ export default {
   },
 
   computed: mapState('blog/posts', {
-    posts: state => state.postList
+    posts: state => state.postList,
+    isLoading: state => state.isLoading
   }),
 
   components: {

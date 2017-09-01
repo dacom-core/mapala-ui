@@ -28,15 +28,13 @@
     "query-string": "^5.0.0",
     "sass-loader": "^6.0.6",
     "stylus-loader": "^3.0.1",
-    "vue-async-computed": "^3.3.0",
     "vue-cookie": "^1.1.4",
     "vue-fontawesome": "0.0.2",
     "vue-i18n": "^7.1.0",
+    "vue-infinite-scroll": "^2.0.1",
     "vue-lazyload": "^1.0.6",
     "vue-markdown": "^2.2.4",
-    "vue-mugen-scroll": "^0.2.5",
     "vue-no-ssr": "^0.2.0",
-    "vue-on-click-outside": "^1.0.3",
     "vue-scrollto": "^2.7.2",
     "vue-style-loader": "^3.0.1",
     "vue2-google-maps": "^0.7.10"
@@ -56,9 +54,9 @@
     "eslint-plugin-standard": "^2.0.1",
     "eslint-plugin-vue": "^2.1.0",
     "flow-bin": "^0.51.1",
-    "onsenui": "^2.5.3",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.5",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
-    "vue-onsenui": "^2.1.1"
+    "stylus-loader": "^3.0.1"
   }
 }

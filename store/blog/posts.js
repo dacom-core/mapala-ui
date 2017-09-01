@@ -28,28 +28,32 @@ export const state = () => ({
     position_text: '',
     prev_page: null,
     title: ''
-  }
+  },
+  isLoading: false
 })
 
 export const actions = {
-  async fetch_posts ({ commit }, filter = '') {
-    const { data: { results } } = await Post.query(filter) // Retrieving all posts
+  async fetch_posts ({ commit, state, rootState }) {
+    commit('TOGGLE_POST_LOADING_STATUS')
+
+    const params = { page: state.postList.page, ...rootState.filters }
+
+    let { data: { results } } = await Post.query(params) // Retrieving all posts
+
+    if (state.postList.page > 1) {
+      results = state.postList.data.concat(results)
+    }
     commit('SET_POST_LIST', results)
+
+    commit('TOGGLE_POST_LOADING_STATUS')
   },
   async fetch_single_post ({ commit }, urlParams) {
     const { data } = await Post.get(urlParams.username + '*@*' + urlParams.slug)
     commit('SET_POST_SINGLE', data)
   },
-  fetch_comments () {
-    return Post.commentsTree()
-  },
-
-  add_comment () {
-    // this.new_comment.post = this.post.id
-
-    // Comment.save(this.new_comment).then(res => {
-    //   this.post.comments.push(res.body)
-    // })
+  async fetch_next_posts ({ commit, dispatch }) {
+    commit('SET_NEXT_PAGE')
+    return dispatch('fetch_posts')
   }
 }
 
@@ -59,5 +63,11 @@ export const mutations = {
   },
   SET_POST_SINGLE (state, payload) {
     state.postSingle = payload
+  },
+  SET_NEXT_PAGE (state) {
+    state.postList.page++
+  },
+  TOGGLE_POST_LOADING_STATUS (state) {
+    state.isLoading = !state.isLoading // Reverse bool
   }
 }

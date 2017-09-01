@@ -12,7 +12,11 @@
 
           switch-blog-buttons
 
-          post-list
+          post-list(
+            v-infinite-scroll="loadNextPosts",
+            infinite-scroll-disabled="isLoading",
+            :infinite-scroll-distance="500"
+            )
 
         //- RIGHT COLUMNT
         post-map
@@ -23,7 +27,7 @@
 
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import TopLine from '~/components/layout/top-line'
 import ModalWindow from '~/components/modal/modal-window'
 import CreatePostButton from '~/components/blog/__parts__/button-create-post'
@@ -46,16 +50,25 @@ export default {
   computed: {
     ...mapState({
       isMobile: state => state.isMobile,
-      isAuth: state => state.user.auth.isAuth
+      isAuth: state => state.user.auth.isAuth,
+      isLoading: state => state.blog.posts.isLoading
     }),
 
     isUserPage () {
-      console.log(this.$route)
       return this.$route.params.username
     }
   },
 
-  methods: {}
+  methods: {
+    ...mapActions({
+      loadNextPosts: 'blog/posts/fetch_next_posts'
+    }),
+    computeDistance () {
+      if (window !== undefined) {
+        // TODO implement load triggering when remains 20% until the end of the height.
+      }
+    }
+  }
 }
 </script>
 

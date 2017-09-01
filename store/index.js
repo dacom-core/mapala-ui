@@ -5,7 +5,8 @@ export const state = () => ({
   locale: 'ru',
   isMobile: false,
   historyStack: [], // All urls(paths) which have been visited.
-  backPath: '/' // The Url Before Modal Was Opened
+  backPath: '/', // The Url Before Modal Was Opened
+  filters: {} // Global filters for markers/posts (for example: user/group)
 })
 
 export const mutations = {
@@ -22,6 +23,9 @@ export const mutations = {
   },
   PUSH_TO_HISTORY_STACK (state, path) {
     state.historyStack.push(path)
+  },
+  SET_FILTERS (state, payload) {
+    state.filters = payload
   }
 }
 
