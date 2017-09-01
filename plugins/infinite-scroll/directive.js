@@ -101,7 +101,7 @@ var doBind = function () {
     directive.scrollEventTarget.removeEventListener('scroll', directive.scrollListener);
   });
 
-  var disabledExpr = element.getAttribute('infinite-scroll-disabled');
+  var disabledExpr = element.getAttribute('infinite-scroll-disabled')
   var disabled = false;
 
   if (disabledExpr) {
@@ -112,6 +112,8 @@ var doBind = function () {
       }
     });
     disabled = Boolean(directive.vm[disabledExpr]);
+
+    console.log(disabled + 'i am here')
   }
   directive.disabled = disabled;
 

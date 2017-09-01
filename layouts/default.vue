@@ -12,9 +12,9 @@
 
           switch-blog-buttons
 
-          post-list(
+          post-list#post_list_block(
             v-infinite-scroll="loadNextPosts",
-            infinite-scroll-disabled="isLoading",
+            infinite-scroll-disabled="isLoadingDisabled",
             :infinite-scroll-distance="500"
             )
 
@@ -51,23 +51,29 @@ export default {
     ...mapState({
       isMobile: state => state.isMobile,
       isAuth: state => state.user.auth.isAuth,
-      isLoading: state => state.blog.posts.isLoading
+      isLoading: state => state.blog.posts.isLoading,
+      isLoadingAllowed: state => state.blog.posts.isLoadingAllowed
     }),
-
     isUserPage () {
       return this.$route.params.username
+    },
+    isLoadingDisabled () { // Check on has loading of next posts to be disabled
+      return this.isLoading || !this.isLoadingAllowed
+      // The first check: Is loading posts already in progress
+      // The second check: Are there more posts to load
+    },
+    distanceToLoad () {
+      if (typeof window !== 'undefined') {
+        //  const lastPostInList = document.getElementById('post_list_block')
+        //  TODO compute distance to load next posts
+      }
     }
   },
 
   methods: {
     ...mapActions({
       loadNextPosts: 'blog/posts/fetch_next_posts'
-    }),
-    computeDistance () {
-      if (window !== undefined) {
-        // TODO implement load triggering when remains 20% until the end of the height.
-      }
-    }
+    })
   }
 }
 </script>

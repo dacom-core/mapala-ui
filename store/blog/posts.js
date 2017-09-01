@@ -29,23 +29,30 @@ export const state = () => ({
     prev_page: null,
     title: ''
   },
-  isLoading: false
+  isLoading: false,
+  isLoadingAllowed: true
 })
 
 export const actions = {
   async fetch_posts ({ commit, state, rootState }) {
-    commit('TOGGLE_POST_LOADING_STATUS')
+    try {
+      commit('TOGGLE_POST_LOADING_STATUS')
 
-    const params = { page: state.postList.page, ...rootState.filters }
+      const params = { page: state.postList.page, ...rootState.filters }
 
-    let { data: { results } } = await Post.query(params) // Retrieving all posts
+      let { data: { results } } = await Post.query(params) // Retrieving all posts
 
-    if (state.postList.page > 1) {
-      results = state.postList.data.concat(results)
+      if (state.postList.page > 1) {
+        results = state.postList.data.concat(results)
+      }
+      commit('SET_POST_LIST', results)
+
+      commit('TOGGLE_POST_LOADING_STATUS')
+    } catch (error) {
+      console.error(error)
+      commit('TOGGLE_POST_LOADING_STATUS')
+      commit('IS_LOADING_ALLOWED', false) // There are no posts (more), loading next ones should be stopped.
     }
-    commit('SET_POST_LIST', results)
-
-    commit('TOGGLE_POST_LOADING_STATUS')
   },
   async fetch_single_post ({ commit }, urlParams) {
     const { data } = await Post.get(urlParams.username + '*@*' + urlParams.slug)
@@ -69,5 +76,14 @@ export const mutations = {
   },
   TOGGLE_POST_LOADING_STATUS (state) {
     state.isLoading = !state.isLoading // Reverse bool
+  },
+  RESET_PAGE (state) { // Reset page variable to 1
+    state.postList.page = 1
+  },
+  NO_MORE_POSTS (state) {
+    state.thereAreNoPosts = true
+  },
+  IS_LOADING_ALLOWED (state, payload) {
+    state.isLoadingAllowed = payload
   }
 }
