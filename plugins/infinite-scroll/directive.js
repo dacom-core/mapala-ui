@@ -112,8 +112,6 @@ var doBind = function () {
       }
     });
     disabled = Boolean(directive.vm[disabledExpr]);
-
-    console.log(disabled + 'i am here')
   }
   directive.disabled = disabled;
 

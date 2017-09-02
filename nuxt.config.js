@@ -26,7 +26,7 @@ module.exports = {
     { src: '~/assets/styles/general.styl', lang: 'stylus' }
   ],
   router: {
-    middleware: ['i18n', 'history-logger', 'mobile'],
+    middleware: ['history-logger', 'mobile'],
     scrollBehavior: function (to, from, savedPosition) {
     }
   },

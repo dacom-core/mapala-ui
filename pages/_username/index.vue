@@ -6,10 +6,10 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   async fetch ({ store: { commit, dispatch, state }, params: { username } }) { // Grab user's name from url.
-    commit('blog/posts/RESET_PAGE') // Reset paginate.
-    commit('blog/posts/IS_LOADING_ALLOWED', true) // Allow making requests for new posts.
+    commit('blog/posts/common/RESET_PAGE') // Reset paginate.
+    commit('blog/posts/post_list/IS_LOADING_ALLOWED', true) // Allow making requests for new posts.
     commit('SET_FILTERS', { author__username: username })
-    await dispatch('blog/posts/fetch_posts')
+    await dispatch('blog/posts/post_list/fetch_posts')
 
     if (state.map.isReady) {
       // 1. If the page is loaded on client-side. (vue-router transition)

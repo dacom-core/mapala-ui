@@ -3,8 +3,8 @@ export const state = () => ({
 })
 
 export const mutations = {
-  FILL_BALANCE (state, { balance }) {
-    state.balance = balance
+  SET_BALANCE (state, payload) {
+    state.balance = payload
   }
 }
 

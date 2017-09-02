@@ -16,7 +16,9 @@
     "@nuxtjs/axios": "^3.1.0",
     "animate.css": "^3.5.2",
     "axios": "^0.16.2",
+    "cookie": "^0.3.1",
     "element-ui": "^1.4.1",
+    "esteem-lib": "^0.4.7",
     "graphenejs-lib": "^0.5.2",
     "graphenejs-ws": "^0.2.2",
     "js-cookie": "^2.1.4",
@@ -27,6 +29,10 @@
     "pug": "^2.0.0-rc.2",
     "query-string": "^5.0.0",
     "sass-loader": "^6.0.6",
+    "slug": "^0.9.1",
+    "steem": "^0.6.3",
+    "steem-rpc": "^0.6.6",
+    "store": "^2.0.12",
     "stylus-loader": "^3.0.1",
     "vue-cookie": "^1.1.4",
     "vue-fontawesome": "0.0.2",
@@ -35,9 +41,11 @@
     "vue-lazyload": "^1.0.6",
     "vue-markdown": "^2.2.4",
     "vue-no-ssr": "^0.2.0",
+    "vue-quill-editor": "^2.3.2",
     "vue-scrollto": "^2.7.2",
     "vue-style-loader": "^3.0.1",
-    "vue2-google-maps": "^0.7.10"
+    "vue2-google-maps": "^0.7.10",
+    "vuelidate": "^0.5.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",

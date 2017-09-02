@@ -2,10 +2,10 @@ import Vue from 'vue'
 import slug from 'slug'
 import steem from 'steem'
 import store from 'store'
-// import auth from '../auth'
+import auth from '../auth'
 import { Client } from 'steem-rpc'
 import { ChainConfig, PrivateKey, TransactionBuilder } from 'esteem-lib'
-// import { User, Comment, Post, UserBlockChain, BlockChain } from '../services'
+import { User, Comment, Post, UserBlockChain, BlockChain } from '../services'
 
 export default {
   // TODO Полностью зарефакторить все методы работы с блокчейном , все проверки блокчейна в 1 месте
@@ -16,13 +16,13 @@ export default {
   app_tag: (process.env.NODE_ENV == 'production' &&
     !window.location.host.includes('develop')) ? 'mapala' : 'testing',
 
-  init () {
+  init (store = '') {
     ChainConfig.expire_in_secs = 30
-    BlockChain.get().then(res => {
-      for (const bc of res.body) {
+    BlockChain.query().then(res => {
+      for (const bc of res.data) {
         this.blockchains[bc.name] = bc
       }
-      this.setBlockchain()
+      this.setBlockchain(undefined, store.state)
     })
   },
 
@@ -151,11 +151,11 @@ export default {
     return JSON.stringify(meta)
   },
 
-  setBlockchain (blockchain) {
+  setBlockchain (blockchain, state) {
     // HACK: На данный момент решено менять блокчейн по локали:
     // en -> steemil, ru -> golos
-    if (blockchain === undefined) {
-      blockchain = Vue.config.lang == 'ru' ? 'golos' : 'steemit'
+    if (typeof blockchain === 'undefined') {
+      blockchain = state.locale === 'ru' ? 'golos' : 'steemit'
     }
 
     this.current = this.blockchains[blockchain]
@@ -183,10 +183,13 @@ export default {
     return store.get(`${blockchain}_${auth.user.username}_posting_key`)
   },
 
-  initBlockchains () {
-    User.initialBlockchains({ username: auth.user.username }).then(res => {
+  async initBlockchains ({ $store: { state, commit } }) {
+    try {
+      const { data } = await User.initialBlockchains(state.user.personal.username)
+
       const bc_list = []
-      for (const bc of res.body) {
+      for (const bc of data) {
+
         if (bc.activated) {
           bc.wif = this.getPostingKey(bc.name)
           bc.blockchain_username = bc.blockchain_username.toLowerCase()
@@ -204,13 +207,18 @@ export default {
         bc_list.push(bc)
         this.blockchains[bc.name] = bc
       }
-
       this.bc_list = bc_list
       if (this.blockchains) {
-        this.setBlockchain()
+        this.setBlockchain(undefined, state)
       }
-      this.getUser().then(res => auth.balance = res.balance)
-    })
+
+      const { balance } = await this.getUser()
+      commit('user/wallet/SET_BALANCE', balance)
+
+    } catch (error) {
+      console.error(error)
+    }
+
   },
 
   getUsernameByKey (key, prefix = this.current.address_prefix) {
@@ -245,7 +253,6 @@ export default {
    * @return {boolean}
    */
   checkPostingKey (key, prefix) {
-    // console.log(key)
     if (key && (prefix === 'GLS')) { return key.startsWith(prefix) }
   },
   /**

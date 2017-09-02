@@ -13,7 +13,7 @@
       }
     },
     async fetch ({ store: { commit, dispatch }, params }) {
-      await dispatch('blog/posts/fetch_single_post', params)
+      await dispatch('blog/posts/post_single/fetch_single_post', params)
     },
     methods: {
       ...mapMutations({

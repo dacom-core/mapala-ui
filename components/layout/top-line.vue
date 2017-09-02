@@ -27,7 +27,6 @@
           span
             | MapalaFest
 
-
         poster
 
         div.username_wrapper(v-if="isAuth")
@@ -45,14 +44,14 @@
         nuxt-link(v-if="!isAuth", :to="'/login'", class="login")
           | {{ $t('log_in') }}
 
-        div.right_button(v-else, v-on-click-outside="closeMenu")
+        div.right_button(v-else, @click.self="closeMenu")
 
-          div(@click="menuOpen", class="open_menu")
+          div(@click="openMenu", class="open_menu")
             | {{ $t('menu') }}
 
           div(
             v-if="isAuth",
-            :class="{active : isMenuOpened, user_menuMobile: isMobile }"
+            :class="{ active : isMenuOpened, user_menuMobile: isMobile }"
             class="user_menu"
             )
 

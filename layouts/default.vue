@@ -1,6 +1,7 @@
 <template lang="pug">
   div
-    top-line
+    keep-alive
+      top-line
     div.gw
       div.wrapper
         //- LEFT COLUMNT
@@ -28,6 +29,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
+import blockchain from '@/api/blockchain'
 import TopLine from '~/components/layout/top-line'
 import ModalWindow from '~/components/modal/modal-window'
 import CreatePostButton from '~/components/blog/__parts__/button-create-post'
@@ -68,6 +70,10 @@ export default {
         //  TODO compute distance to load next posts
       }
     }
+  },
+
+  mounted () {
+    blockchain.init(this.$store)
   },
 
   methods: {

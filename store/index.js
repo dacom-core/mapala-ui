@@ -1,4 +1,6 @@
 import MobileDetect from 'mobile-detect'
+import { get_cookie } from '@/utils/cookies'
+import { set_jwt_header } from '@/api'
 
 export const state = () => ({
   locales: ['en', 'ru'],
@@ -39,13 +41,22 @@ export const getters = {
 }
 
 export const actions = {
-  nuxtServerInit ({ dispatch, commit }, { req, app: { $axios }}) {
-    const cookieHasToken = false
+  async nuxtServerInit ({ dispatch, commit }, { req }) {
     const isMobile = new MobileDetect(req.headers['user-agent']).phone() //  Is the page loaded from a phone
     commit('SET_MOBILE', isMobile)
 
-    if (cookieHasToken) { //  Must be token check.
-      dispatch('user/auth/fetch_user')
+    const JWTtoken = get_cookie('mapala_jwt_token', req)
+
+    if (JWTtoken) {
+      try {
+        set_jwt_header(JWTtoken)
+        await dispatch('user/auth/fetch_user')
+      } catch (error) {
+        // Если токен просрочен или не правильный
+        console.error('Auth error: ', error)
+        commit('user/auth/LOGOUT')
+        commit('user/personal/RESET_USER')
+      }
     }
   }
 }

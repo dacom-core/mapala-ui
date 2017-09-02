@@ -16,7 +16,7 @@ export default {
     }
   },
 
-  computed: mapState('blog/posts', {
+  computed: mapState('blog/posts/post_list', {
     posts: state => state.postList,
     isLoading: state => state.isLoading
   }),

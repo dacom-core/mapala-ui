@@ -1,7 +1,16 @@
 import axios from 'axios'
 import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from './config'
 axios.defaults.baseURL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}`
-// axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com'
+
+export function set_jwt_header (token) {
+  axios.defaults.headers.common = {
+    'Authorization': 'JWT ' + token
+  }
+}
+
+export function reset_jwt_header () {
+  axios.defaults.headers.common = {}
+}
 
 /**
  * create vue-resource's resource like object

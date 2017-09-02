@@ -6,16 +6,18 @@ export const state = () => ({
 })
 
 export const mutations = {
-  SET_AUTH (state, payload) {
+  SET_AUTH_TO (state, payload) {
     state.isAuth = payload
+  },
+  LOGOUT (state) {
+    state.isAuth = false
   }
 }
 
 export const actions = {
   async fetch_user ({ commit }) {
-    const { results } = await User.current()
-    commit('user/personal/FILL_USER', results)
-    commit('user/wallet/FILL_BALANCE', results)
-    commit('user/auth/SET_AUTH', true)
+    const { data } = await User.current()
+    commit('user/personal/FILL_USER', data, { root: true })
+    commit('SET_AUTH_TO', true)
   }
 }
