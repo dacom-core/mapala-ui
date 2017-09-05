@@ -79,8 +79,8 @@ export default {
     pluralizeNoun (count, nounFormOne, nounFormTwo, nounFormThree) {
       return pluralizer(count, nounFormOne, nounFormTwo, nounFormThree)
     },
-    makePath (action, username, permalink) {
-      return linkMaker(action, username, permalink)
+    makePath (action, identifier, permalink) {
+      return linkMaker(action, identifier, permalink)
     }
   },
   components: {

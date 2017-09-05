@@ -69,7 +69,7 @@ export default {
     ...mapState({
       isAuth: state => state.user.auth.isAuth,
       userName: state => state.user.personal.userName,
-      post: state => state.blog.posts.postSingle
+      post: state => state.blog.posts.post_single.postSingle
     }),
 
     postBody () {

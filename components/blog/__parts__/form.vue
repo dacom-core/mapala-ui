@@ -1,74 +1,88 @@
 <template lang="pug">
-  div.gw(v-loading.fullscreen.lock="image_loading", @close="close")
-    div.new_post.pop_back
-      div.write
-        div.close(@click="close")
-        div.top_block
-          div.img_wrap
-            img.user_av(:src="auth.user.avatar")
+  div.new_post
+    div.write
+      div.top_block
+        div.img_wrap
+          img.user_av(:src="userAvatar")
 
-          div.name_block
-            div.name
-              | @{{ auth.user.username }}
+        div.name_block
+          div.name
+            | @{{ userName }}
 
-        span.form-group__message(v-if="!$v.postForm.title.required && $v.postForm.title.$dirty")
-          | {{ $t('field_is_required') }}
+      span.form-group__message(v-if="!$v.form.title.required && $v.form.title.$dirty")
+        | {{ $t('field_is_required') }}
 
-        span.form-group__message(v-if="!$v.postForm.title.minLength")
-          | {{ $t('title_must_have_at_least') }} 2 {{ $t('letters') }}.
+      span.form-group__message(v-if="!$v.form.title.minLength")
+        | {{ $t('title_must_have_at_least') }} 2 {{ $t('letters') }}.
 
-        div.title_heading__Wrapper
-          input.write_header.blank(
-          :placeholder="$t('titile_placeholder')"
-          v-model="postForm.title",
-          @input="$v.postForm.title.$touch()",
+      div.title_heading__Wrapper
+        input.write_header.blank(
+          :placeholder="$t('titile_placeholder')",
+          v-model="form.title",
+          @change="$v.form.title.$touch()",
           :disabled="isEditForm"
-          )
-
-        div.search_location
-          gmap-autocomplete(
-          class="search_field",
-          :value="postForm.position_text",
-          @place_changed="setPlace"
-          )
-
-          <!-- Image loader -->
-          input(ref="inputImage", @change="uploadImage", hidden, type="file")
-
-
-        span.form-group__message(v-if="!$v.postForm.body.required && $v.postForm.body.$dirty")
-          | {{ $t('field_is_required') }}
-
-        quill-editor.write_text(
-        id="write_text",
-        v-model="postForm.body",
-        ref="myQuillEditor",
-        :options="editorOption",
-        @paste="onPaste($event, current, 0)",
-        @input="$v.postForm.body.$touch()"
         )
 
-        div.bottom_block
-          div.icons
-            i.icon.location
-            i.icon.image(@click="imageUploadHandler")
+      div.search_location
+        gmap-autocomplete(
+          class="search_field",
+          :value="form.position_text",
+          @place_changed="setPlace"
+        )
+
+        <!-- Image loader -->
+        input(ref="inputImage", @change="uploadImage", hidden, type="file")
 
 
-          el-button.public_btn(type="primary", :loading="isFormSaving", @click="submit")
-            | {{ $t('publish') }}
+      span.form-group__message(v-if="!$v.form.body.required && $v.form.body.$dirty")
+        | {{ $t('field_is_required') }}
+
+
+      div#write_text
+        div.quill-editor.write_text(
+          v-quill:myQuillEditor="editorOption",
+          ref="myQuillEditor",
+          v-model="form.body",
+          @change="$v.form.body.$touch()"
+          )
+
+
+      div.bottom_block
+        div.icons
+          i.icon.location
+          i.icon.image(@click="imageUploadHandler")
+
+
+        el-button.public_btn(type="primary", :loading="isFormSaving", @click="submit")
+          | {{ $t('publish') }}
 
 </template>
 
 <script>
   import { Post, Image } from '@/api/services'
-  import { quillEditor } from 'vue-quill-editor'
   import { mapState, mapMutations } from 'vuex'
   import { required, minLength } from 'vuelidate/lib/validators'
+  import { validationMixin } from 'vuelidate'
 
   export default {
-    props: ['isEditForm'],
+    props: ['isEditForm', 'isFormSaving', 'resetForm'],
+    mixins: [validationMixin],
     data () {
       return {
+        form: {
+          title: '',
+          body: '',
+          meta: {
+            image: [],
+            location: {
+              name: '',
+              lat: '',
+              lng: ''
+            },
+            group: 'rnd',
+            tags: []
+          }
+        },
         editorOption: {
           theme: 'snow',
           placeholder: this.$t('article_title'),
@@ -88,18 +102,13 @@
             }
           }
         },
-        image_loading: false,
-
-        dynamicTags: ['Tag 1', 'Tag 2', 'Tag 3'],
-        inputVisible: false,
-        newTagInputValue: ''
+        image_loading: false
       }
     },
     computed: {
       ...mapState({
-        isFormSaving: state => state.blog.posts.postForm.isFormSaving,
-        postForm: state => state.blog.posts.postForm.form,
-        modal: state => state.modal
+        userAvatar: state => state.user.personal.avatar,
+        userName: state => state.user.personal.username
       }),
 
       editor () {
@@ -107,7 +116,7 @@
       }
     },
     validations: {
-      postForm: {
+      form: {
         title: {
           required,
           minLength: minLength(2)
@@ -118,59 +127,61 @@
       }
     },
     methods: {
-      ...mapMutations([
-        'setPostSavingStateTo',
-        'hideModal',
-        'redirectBackPath',
-        'SET_LOCATION_NAME',
-        'SET_LOCATION_LNG',
-        'SET_LOCATION_LAT'
-      ]),
+      ...mapMutations({
+        hideModal: 'modal/HIDE_MODAL'
+      }),
 
-      handleClose (tag) {
-        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1)
-      },
+//      updateTitle (e) {
+//        this.$store.commit('blog/posts/post_form/UPDATE_TITLE', e.target.value)
+//      },
 
-      showInput () {
-        this.inputVisible = true
-        this.$nextTick(_ => {
-          this.$refs.saveTagInput.$refs.input.focus()
-        })
-      },
+//      updateBody ({ editor, html, text }) {
+//        this.$store.commit('blog/posts/post_form/UPDATE_BODY', html)
+//        this.$store.commit('blog/posts/post_form/UPDATE_BODY', html)
+//        this.$v.form.body.$touch()
+//      },
+//
+//      handleClose (tag) {
+//        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1)
+//      },
+//
+//      showInput () {
+//        this.inputVisible = true
+//        this.$nextTick(_ => {
+//          this.$refs.saveTagInput.$refs.input.focus()
+//        })
+//      },
+//
+//      handleAddingNewTag () {
+//        const newTagInputValue = this.newTagInputValue
+//        if (newTagInputValue) {
+//          this.form.meta.tags.push(newTagInputValue)
+//        }
+//        this.inputVisible = false
+//        this.newTagInputValue = ''
+//      },
+//
+//      onPaste (e) {
+//        if (e.defaultPrevented || !this.quill.isEnabled()) {
+//          return
+//        }
+//        const range = this.quill.getSelection()
+//        let delta = new Delta().retain(range.index)
+//        this.container.focus()
+//        setTimeout(() => {
+//          this.quill.selection.update(Quill.sources.SILENT)
+//          delta = delta.concat(this.convert()).delete(range.length)
+//          this.quill.updateContents(delta, Quill.sources.USER)
+//          this.quill.setSelection(delta.length() - range.length, Quill.sources.SILENT)
+//          this.quill.selection.scrollIntoView()
+//        }, 1)
+//      },
+//      imageHandler () {
+//        const range = this.editor.getSelection()
+//        const value = prompt('What is the image URL')
+//        this.editor.insertEmbed(range.index, 'image', value, Quill.sources.USER)
+//      },
 
-      handleAddingNewTag () {
-        const newTagInputValue = this.newTagInputValue
-        if (newTagInputValue) {
-          this.postForm.meta.tags.push(newTagInputValue)
-        }
-        this.inputVisible = false
-        this.newTagInputValue = ''
-      },
-
-      onPaste (e) {
-        if (e.defaultPrevented || !this.quill.isEnabled()) {
-          return
-        }
-        const range = this.quill.getSelection()
-        let delta = new Delta().retain(range.index)
-        this.container.focus()
-        setTimeout(() => {
-          this.quill.selection.update(Quill.sources.SILENT)
-          delta = delta.concat(this.convert()).delete(range.length)
-          this.quill.updateContents(delta, Quill.sources.USER)
-          this.quill.setSelection(delta.length() - range.length, Quill.sources.SILENT)
-          this.quill.selection.scrollIntoView()
-        }, 1)
-      },
-      imageHandler () {
-        const range = this.editor.getSelection()
-        const value = prompt('What is the image URL')
-        this.editor.insertEmbed(range.index, 'image', value, Quill.sources.USER)
-      },
-      close () {
-        this.hideModal()
-        this.$router.push(this.modal.redirectBackPath)
-      },
       imageUploadHandler () {
         this.$refs.inputImage.click()
       },
@@ -189,7 +200,7 @@
           this.editor.insertEmbed(range.index + 2, 'block', 'asdf', 'user')
           this.editor.setSelection(range.index + 3, 'silent')
 
-          this.postForm.meta.image.push(imgUrl)
+          this.form.meta.image.push(imgUrl)
           this.image_loading = false
         }, err => {
           this.$notify({ message: err.body, type: 'warning' })
@@ -199,45 +210,48 @@
       submit () {
         if (this.isFormValid()) {
           if (this.isEditForm) {
-            this.$emit('updatePost')
+            this.$emit('updatePost', this.form)
           } else {
-            this.$emit('createPost')
+            this.$emit('createPost', this.form)
           }
         } else {
           this.showErrors()
         }
       },
       showErrors () {
-        this.$v.postForm.$touch()
+        this.$v.form.$touch()
       },
       isFormValid () {
-        if (!this.postForm.meta.location.name) {
-          this.$notify({ message: 'Location field is required', type: 'warning' })
+        if (!this.form.meta.location.name) {
+          this.$notify({ message: this.$t('location_is_required'), type: 'warning' })
           return false
         }
 
-        return !this.$v.postForm.$invalid
+        return !this.$v.form.$invalid
       },
       setPlace (place) {
-        this.SET_LOCATION_NAME(place.formatted_address)
-        this.SET_LOCATION_LAT(place.geometry.location.lat())
-        this.SET_LOCATION_LNG(place.geometry.location.lng())
+        this.form.meta.location.name = place.formatted_address
+        this.form.meta.location.lat = place.geometry.location.lat()
+        this.form.meta.location.lng = place.geometry.location.lng()
       }
     },
     created () {
       if (this.isEditForm) {
         Post.query({ permlink: this.$route.params.author + '*@*' + this.$route.params.permlink }).then(res => {
-          this.postForm.title = res.body.title
-          this.postForm.body = res.body.body
-          this.postForm.position_text = res.body.position_text
-          this.postForm.meta.location.name = res.body.position_text
-          this.postForm.meta.location.lat = res.body.position.latitude
-          this.postForm.meta.location.lng = res.body.position.longitude
+          this.form.title = res.body.title
+          this.form.body = res.body.body
+          this.form.position_text = res.body.position_text
+          this.form.meta.location.name = res.body.position_text
+          this.form.meta.location.lat = res.body.position.latitude
+          this.form.meta.location.lng = res.body.position.longitude
         })
       }
     },
-    components: {
-      quillEditor
+
+    watch: {
+      resetForm () {
+
+      }
     }
   }
 
@@ -250,7 +264,7 @@
 
   .write .close {
     position: absolute;
-    background: url(../../../assets/icon-close-black.svg) no-repeat center center;
+    background: url('~assets/icon-close-black.svg') no-repeat center center;
     top: 20px;
     right: 20px;
     width: 40px;
@@ -258,16 +272,7 @@
     cursor: pointer;
   }
   .write{
-    margin: 0 auto 20px;
-    max-width: 866px;
-    width: 100%;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    border: solid 1px rgba(72, 84, 101, 0.2);
     padding: 20px 18px 18px;
-    box-sizing: border-box;
-    position: relative;
   }
 
   .write .top_block{
@@ -534,5 +539,6 @@
   div#write_text {
     border-radius: 6px;
     border: solid 1px rgba(72, 84, 101, 0.2);
+    margin-bottom: 30px;
   }
 </style>

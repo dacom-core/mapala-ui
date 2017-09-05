@@ -1,27 +1,39 @@
 <template lang="pug">
-  nuxt-link(
-    :to="{ path: '/post/create' }",
-    class="add_post"
-    )
-    div.av_wrap
-      img.user_av(v-if="userAvatar", :src="userAvatar")
-      img.user_av(v-else src="~assets/icon-profile-w.svg")
-    div.write_post
-      | {{ $t('add_post') }}
+  div(v-if="isVisible")
+    nuxt-link(
+      :to="makePath('create', userName)",
+      class="add_post"
+      )
+      div.av_wrap
+        img.user_av(v-if="userAvatar", :src="userAvatar")
+        img.user_av(v-else src="~assets/icon-profile-w.svg")
+
+      div.write_post
+        | {{ $t('add_post') }}
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import linkMaker from '@/utils/router_link_maker'
 
 export default {
-  data () {
-    return {}
+  computed: {
+    ...mapState('user/personal', {
+      userName: state => state.username,
+      userAvatar: state => state.avatar
+    }),
+
+    isVisible () {
+      return this.$route.params.username === this.userName || // Is it user profile page
+             this.$route.name === 'index' // Or main page
+    }
   },
 
-  computed: mapState('user/state', {
-    userName: state => state.userName,
-    userAvatar: state => state.avatar
-  })
+  methods: {
+    makePath (action, identifier, permalink) {
+      return linkMaker(action, identifier, permalink)
+    }
+  }
 }
 </script>
 

@@ -3,7 +3,6 @@
 </template>
 
 <script>
-  import { Post } from '@/api/services'
   import { mapMutations } from 'vuex'
   import PostView from '~/components/blog/post-view'
   export default {
@@ -12,7 +11,7 @@
         class: 'overflowHidden'
       }
     },
-    async fetch ({ store: { commit, dispatch }, params }) {
+    async fetch ({ store: { dispatch }, params }) {
       await dispatch('blog/posts/post_single/fetch_single_post', params)
     },
     methods: {

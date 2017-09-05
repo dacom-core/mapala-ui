@@ -56,5 +56,11 @@ export const mutations = {
   },
   IS_LOADING_ALLOWED (state, payload) {
     state.isLoadingAllowed = payload
+  },
+  RESET_PAGE (state) { // Reset page variable to 1
+    state.postList.page = 1
+  },
+  INSERT_POST_UNSHIFT (state, payload) {
+    state.postList.unshift(payload)
   }
 }

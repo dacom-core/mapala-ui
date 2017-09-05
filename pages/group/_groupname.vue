@@ -1,15 +1,17 @@
 <template lang="pug">
+  div
+
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 
 export default {
-  async fetch ({ store: { commit, dispatch, state }, params: { username } }) { // Grab user's name from url.
+  async fetch ({ store: { commit, dispatch, state }, params: { groupname } }) {
     commit('blog/posts/post_list/RESET_PAGE') // Reset paginate.
     commit('blog/posts/post_list/IS_LOADING_ALLOWED', true) // Allow making requests for new posts.
-    commit('SET_FILTERS', { author__username: username })
-    commit('SET_USER_PROFILE_BLOCK_VISIBILITY_TO', true)
+    commit('SET_FILTERS', { group: groupname })
+    commit('SET_GROUP_PREVIEW_BLOCK_VISIBILITY_TO', true)
     await dispatch('blog/posts/post_list/fetch_posts')
 
     if (state.map.isReady) {
@@ -36,7 +38,7 @@ export default {
 
   beforeDestroy () {
     // If user's post is opened, do not hide the user profile block.
-    this.$store.commit('SET_USER_PROFILE_BLOCK_VISIBILITY_TO', false)
+    this.$store.commit('SET_GROUP_PREVIEW_BLOCK_VISIBILITY_TO', false)
   }
 }
 </script>

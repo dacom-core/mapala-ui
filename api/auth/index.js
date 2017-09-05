@@ -19,7 +19,7 @@ export default {
   },
 
   refreshJWT (token = '') {
-    return axios.post(JWT_REFRESH_URL, { token: token || Vue.cookie.get('mapala_jwt_token') })
+    return axios.post(JWT_REFRESH_URL, { token: token || Vue.cookie.get('jwt') })
   },
 
   update () {
@@ -30,7 +30,7 @@ export default {
     try {
       const { data } = await axios.post(JWT_AUTH_URL, creds)
 
-      Vue.cookie.set('mapala_jwt_token', data.token)
+      Vue.cookie.set('jwt', data.token)
 
       context.$store.commit('user/personal/FILL_USER', data.user)
 
@@ -102,7 +102,7 @@ export default {
     store.remove('jwt')
   },
 
-  checkAuth() {
+  checkAuth () {
     this.isAuth = !store.get('jwt')
 
     // Обновим токен и запросим юзера при старте приложения
@@ -121,7 +121,7 @@ export default {
     }
   },
 
-  getAuthToken() {
+  getAuthToken () {
     let token = store.get('jwt')
     return !!token ? 'JWT ' + token : null
   }

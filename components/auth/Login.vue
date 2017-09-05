@@ -17,6 +17,7 @@
 
 <script>
   import auth from '@/api/auth'
+  import { mapMutations } from 'vuex'
 
   export default {
     name: 'login',
@@ -30,8 +31,12 @@
       }
     },
     methods: {
-      login () {
-        auth.login(this, this.credentials, '/')
+      ...mapMutations({
+        hideModal: 'modal/HIDE_MODAL'
+      }),
+      async login () {
+        await auth.login(this, this.credentials, '/')
+        this.hideModal()
       }
     }
   }

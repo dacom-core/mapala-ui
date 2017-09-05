@@ -8,7 +8,9 @@ export const state = () => ({
   isMobile: false,
   historyStack: [], // All urls(paths) which have been visited.
   backPath: '/', // The Url Before Modal Was Opened
-  filters: {} // Global filters for markers/posts (for example: user/group)
+  filters: {}, // Global filters for markers/posts (for example: user/group)
+  isUserProfileBlockVisible: false,
+  isGroupPreviewBlockVisible: false
 })
 
 export const mutations = {
@@ -28,6 +30,12 @@ export const mutations = {
   },
   SET_FILTERS (state, payload) {
     state.filters = payload
+  },
+  SET_USER_PROFILE_BLOCK_VISIBILITY_TO (state, payload) {
+    state.isUserProfileBlockVisible = payload
+  },
+  SET_GROUP_PREVIEW_BLOCK_VISIBILITY_TO (state, payload) {
+    state.isGroupPreviewBlockVisible = payload
   }
 }
 
@@ -45,7 +53,7 @@ export const actions = {
     const isMobile = new MobileDetect(req.headers['user-agent']).phone() //  Is the page loaded from a phone
     commit('SET_MOBILE', isMobile)
 
-    const JWTtoken = get_cookie('mapala_jwt_token', req)
+    const JWTtoken = get_cookie('jwt', req)
 
     if (JWTtoken) {
       try {

@@ -8,6 +8,7 @@
   "letters": "символов",
   "title_must_have_at_least": "Заголовк должен состоять минимум из ",
   "field_is_required": "Это поле обязательное",
+  "location_is_required": "Заполните локацию",
   "add_new_post_tag": "Добавить тег",
   "blog": "Блог",
   "history": "История",

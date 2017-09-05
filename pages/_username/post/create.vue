@@ -1,5 +1,5 @@
 <template lang="pug">
-  post-form(:isEditForm="false", @createPost="createPost")
+  post-form(:isEditForm="false", @createPost="createPost", :resetForm="resetForm", :isFormSaving="isFormSaving")
 </template>
 
 <script>
@@ -8,29 +8,55 @@ import bc from '@/api/blockchain'
 import { mapMutations, mapState } from 'vuex'
 
 export default {
-  computed: mapState(['blog/posts/form/postForm']),
+  head: {
+    bodyAttrs: {
+      class: 'overflowHidden'
+    }
+  },
+
+  data () {
+    return {
+      resetForm: false,
+      isFormSaving: false
+    }
+  },
 
   methods: {
-    ...mapMutations(['resetPostForm', 'setPostSavingStateTo', 'addPost']),
+    ...mapMutations({
+      showModal: 'modal/SHOW_MODAL',
+      hideModal: 'modal/HIDE_MODAL',
+      insertToPostList: 'blog/posts/post_list/INSERT_POST_UNSHIFT'
+    }),
 
-    async createPost () {
+    async createPost (form) {
       try {
-        this.setPostSavingStateTo(true)
-        const { body } = await bc.createPost(this, this.postForm)
+        this.isFormSaving = true
+        const { body } = await bc.createPost(this, form)
 
-        this.setPostSavingStateTo(false)
-        this.addPost(body)
+        this.isFormSaving = false
+        this.insertToPostList(body)
 
-        this.$parent.closeModal()
-        this.resetPostForm()
+        this.hideModal()
+        this.$router.push(history.back())
+
+        this.resetForm = true
 
         this.$notify({ message: this.$t('published'), type: 'success' })
       } catch (error) {
-        this.setPostSavingStateTo(false)
+        this.isFormSaving = false
         this.$notify({ message: error, type: 'warning' })
       }
     }
   },
+
+  mounted () {
+    this.showModal()
+  },
+
+  beforeDestroy () {
+    this.hideModal()
+  },
+
   components: {
     PostForm
   }

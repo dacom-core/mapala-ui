@@ -1,12 +1,12 @@
-export default function (action, username, permalink = '') {
+export default function (action, identifier, permalink = '') {
   let link
 
   if (action === 'post-view') {
-    link = `/${username}/post/${permalink}/`
+    link = `/${identifier}/post/${permalink}/`
   } else if (action === 'edit') {
-    link = `/${username}/post/${permalink}/edit/`
+    link = `/${identifier}/post/${permalink}/edit/`
   } else if (action === 'create') {
-    link = `/${username}/post/create/`
+    link = `/${identifier}/post/create/`
   }
 
   return link

@@ -23,12 +23,15 @@ module.exports = {
     { src: 'animate.css/animate.min.css' },
     { src: 'font-awesome/css/font-awesome.css' },
     { src: 'element-ui/lib/theme-default/index.css' },
-    { src: '~/assets/styles/general.styl', lang: 'stylus' }
+    { src: '~/assets/styles/general.styl', lang: 'stylus' },
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.bubble.css',
+    'quill/dist/quill.core.css'
   ],
   router: {
-    middleware: ['history-logger', 'mobile'],
-    scrollBehavior: function (to, from, savedPosition) {
-    }
+    middleware: ['history-logger']
+    // scrollBehavior: function (to, from, savedPosition) {
+    // }
   },
   plugins: [
     { src: '~/plugins/element-ui.js', ssr: true },
@@ -38,7 +41,8 @@ module.exports = {
     { src: '~/plugins/vue-lazyload.js', ssr: true },
     { src: '~/plugins/vue-scroll-to.js', ssr: false },
     { src: '~/plugins/infinite-scroll.js', ssr: false },
-    { src: '~/plugins/filters.js', ssr: true }
+    { src: '~/plugins/filters.js', ssr: true },
+    { src: '~plugins/nuxt-quill-plugin.js', ssr: false }
   ],
   /*
   ** Build configuration

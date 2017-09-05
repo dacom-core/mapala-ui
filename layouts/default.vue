@@ -7,11 +7,11 @@
         //- LEFT COLUMNT
         div.tape(v-bind:class="{ tapeMobile: isMobile }")
 
-          user-profile-block(v-if="isUserPage")
+          user-view(v-if="isUserPage")
 
-          create-post-button(v-if="isAuth")
+          group-view(v-else-if="isGroupPage")
 
-          switch-blog-buttons
+          common-view(v-else-if="isCommonPage")
 
           post-list#post_list_block(
             v-infinite-scroll="loadNextPosts",
@@ -32,21 +32,21 @@ import { mapState, mapActions } from 'vuex'
 import blockchain from '@/api/blockchain'
 import TopLine from '~/components/layout/top-line'
 import ModalWindow from '~/components/modal/modal-window'
-import CreatePostButton from '~/components/blog/__parts__/button-create-post'
 import PostList from '~/components/blog/post-list'
 import PostMap from '~/components/blog/post-map'
-import SwitchBlogButtons from '~/components/blog/__parts__/buttons-switch-blog'
-import UserProfileBlock from '~/components/user/user-profile'
+import CommonView from '~/components/layout/common-view'
+import GroupView from '~/components/layout/group-view'
+import UserView from '~/components/layout/user-view'
 
 export default {
   components: {
     TopLine,
     ModalWindow,
-    CreatePostButton,
     PostList,
     PostMap,
-    SwitchBlogButtons,
-    UserProfileBlock
+    CommonView,
+    GroupView,
+    UserView
   },
 
   computed: {
@@ -54,11 +54,8 @@ export default {
       isMobile: state => state.isMobile,
       isAuth: state => state.user.auth.isAuth,
       isLoading: state => state.blog.posts.isLoading,
-      isLoadingAllowed: state => state.blog.posts.isLoadingAllowed
+      isLoadingAllowed: state => state.blog.posts.isLoadingAllowed,
     }),
-    isUserPage () {
-      return this.$route.params.username
-    },
     isLoadingDisabled () { // Check on has loading of next posts to be disabled
       return this.isLoading || !this.isLoadingAllowed
       // The first check: Is loading posts already in progress
@@ -69,6 +66,15 @@ export default {
         //  const lastPostInList = document.getElementById('post_list_block')
         //  TODO compute distance to load next posts
       }
+    },
+    isGroupPage () {
+      return !!this.$route.params.groupname // is it a group's page
+    },
+    isCommonPage () {
+      return this.$route.name === 'index' // is it main page
+    },
+    isUserPage () {
+      return !!this.$route.params.username // is it a user's page
     }
   },
 

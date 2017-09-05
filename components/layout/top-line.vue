@@ -6,7 +6,7 @@
         nuxt-link(
           class="main_logo",
           :class="{ main_logoMobile: isMobile }",
-          :to="'/' + locale",
+          :to="'/'",
           )
           img(src="~assets/MapalaLogo.png")
           span
