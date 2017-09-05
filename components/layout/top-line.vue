@@ -103,7 +103,7 @@ export default {
     }),
 
     openMenu () {
-      this.menu_opened = !this.menu_opened
+      this.isMenuOpened = true
     },
 
     closeMenu () {

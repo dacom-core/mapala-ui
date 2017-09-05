@@ -146,6 +146,8 @@ var doBind = function () {
 
 var doCheck = function (force) {
 
+  console.log('teste')
+
   var scrollEventTarget = this.scrollEventTarget;
   var element = this.el;
   var distance = this.distance;

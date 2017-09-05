@@ -84,7 +84,7 @@ export default {
 
   methods: {
     ...mapActions({
-      loadNextPosts: 'blog/posts/fetch_next_posts'
+      loadNextPosts: 'blog/posts/post_list/fetch_next_posts'
     })
   }
 }
