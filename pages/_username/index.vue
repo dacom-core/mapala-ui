@@ -3,6 +3,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { User } from '@/api/services'
 
 export default {
   async fetch ({ store: { commit, dispatch, state }, params: { username } }) { // Grab user's name from url.
@@ -11,6 +12,9 @@ export default {
     commit('SET_FILTERS', { author__username: username })
     commit('SET_USER_PROFILE_BLOCK_VISIBILITY_TO', true)
     await dispatch('blog/posts/post_list/fetch_posts')
+
+    const { data: user } = await User.query({ username: username })
+    commit('blog/posts/posts_author/SET_PAGE_AUTHOR_BC_USERNAME', user[0].bc_username)
 
     if (state.map.isReady) {
       // 1. If the page is loaded on client-side. (vue-router transition)

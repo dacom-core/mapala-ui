@@ -5,6 +5,7 @@
 <script>
   import { mapMutations } from 'vuex'
   import PostView from '~/components/blog/post-view'
+
   export default {
     head: {
       bodyAttrs: {
@@ -14,6 +15,7 @@
     async fetch ({ store: { dispatch }, params }) {
       await dispatch('blog/posts/post_single/fetch_single_post', params)
     },
+
     methods: {
       ...mapMutations({
         showModal: 'modal/SHOW_MODAL',

@@ -49,10 +49,10 @@
           div(@click="openMenu", class="open_menu")
             | {{ $t('menu') }}
 
-          div(
+          div.user_menu(
             v-if="isAuth",
-            :class="{ active : isMenuOpened, user_menuMobile: isMobile }"
-            class="user_menu"
+            :class="{ active : isMenuOpened, user_menuMobile: isMobile }",
+            @click.self="closeMenu"
             )
 
             nuxt-link(:to="'/wallet'", class="wal")
@@ -107,7 +107,7 @@ export default {
     },
 
     closeMenu () {
-      (this.isMenuOpened) ? this.isMenuOpened = false : false
+      this.isMenuOpened = false
     },
 
     changeLang (locale) {

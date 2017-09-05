@@ -8,9 +8,9 @@
         div.round_av
           img.user_av(:src="userAvatar")
         div.name.verified
-          | {{ this.$route.params.username }}
-      div.bottom_bl(v-if="isAuth && IsUserOwnPage")
-        nuxt-link.but.ic.wal(:to="{ to: '/wallet', params: { user: userName } }")
+          | {{ bc_username }}
+      div.bottom_bl(v-if="isAuth && isUserOwnPage")
+        nuxt-link.but.ic.wal(:to="{ to: '/wallet' }")
           | {{ $t('my_wallett') }}
 
         i.divd
@@ -41,22 +41,15 @@
 
     computed: {
       ...mapState({
-        isAuth: 'user/auth/isAuth',
-        userName: 'user/personal/userName',
-        userAvatar: 'user/personal/avatar',
-        userBalance: 'user/wallet/balance',
-        isMobile: 'isMobile'
+        isAuth: state => state.user.auth.isAuth,
+        userName: state => state.user.personal.username,
+        userAvatar: state => state.user.personal.avatar,
+        isMobile: state => state.isMobile,
+        bc_username: state => state.blog.posts.posts_author.bc_username
       }),
 
       isUserOwnPage () {
         return this.userName === this.$route.params.username // Is it the logged user's page.
-      }
-    },
-
-    methods: {
-      fetchUser () {
-      },
-      changeLang () {
       }
     }
   }

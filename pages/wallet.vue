@@ -1,0 +1,124 @@
+<template>
+  <div>
+    <div class="pop_back" @click.self="close">
+      <div class="wallet">
+        <i class="refresh"></i>
+        <div class="in_wallet">In wallet {{ moment().format('DD.MM.YYYY') }}</div>
+        <div class="coins">{{ wallet.personal_tokens }} Tokens</div>
+        <div class="currency">{{ balance.golos }}</div>
+        <div class="currency">{{ balance.gbg }}</div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import moment from 'moment'
+  import bc from '@/api/blockchain'
+  import api from '@/api/temporary'
+  import { mapState } from 'vuex'
+
+  export default {
+
+    async asyncData ({ commit, state }) {
+      const { balance: golosBalance, sbd_balance: gbgBalance } = await bc.getUser()
+      commit('user/wallet/SET_GOLOS_BALANCE', golosBalance)
+      commit('user/wallet/SET_GBG_BALANCE', gbgBalance)
+
+      api.ico.wallet(state.user.personal.username, function (data) {
+        const wallet = data
+        return wallet
+      })
+    },
+
+    data () {
+      return {
+        moment: moment,
+        error: false
+      }
+    },
+
+    computed: {
+      ...mapState({
+        username: 'user/personal/username',
+        balance: 'user/wallet'
+      })
+    },
+    methods: {
+      close () {
+        this.$router.go(-1)
+      }
+    }
+  }
+</script>
+
+<style>
+  .wallet{
+    margin: 0 auto;
+    max-width: 480px;
+    width: 100%;
+    border-radius: 6px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border: solid 1px rgba(72, 84, 101, 0.2);
+    position: relative;
+  }
+
+  .wallet .refresh{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    display: block;
+    cursor: pointer;
+    right: 35px;
+    top: 35px;
+    background: url(../assets/icon-refresh.svg) no-repeat;
+  }
+
+  .wallet .in_wallet{
+    font-size: 16px;
+    letter-spacing: -0.5px;
+    color: #545454;
+    margin: 55px 0 5px 40px;
+  }
+
+  .wallet .coins{
+    font-size: 40px;
+    letter-spacing: -1.3px;
+    line-height: 50px;
+    margin: 0 0 5px 40px;
+  }
+
+  .wallet .currency{
+    font-size: 20px;
+    letter-spacing: -0.7px;
+    margin-bottom: 50px;
+    margin-left: 40px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .wallet .down{
+    position: absolute;
+    background: url(../assets/icon-arrow-down-circle.svg) no-repeat;
+    width: 19px;
+    height: 19px;
+    cursor: pointer;
+    right: -45px;
+    top: 3px;
+  }
+
+  .wallet .info{
+    font-size: 14px;
+    letter-spacing: -0.5px;
+    color: #6b6b6b;
+    margin-left: 30px;
+    margin-bottom: 45px;
+  }
+
+  .wallet hr{
+    margin: 0 14px 19px;
+    border: 0;
+    border-bottom: solid 1px rgba(72, 84, 101, 0.2);
+  }
+</style>
