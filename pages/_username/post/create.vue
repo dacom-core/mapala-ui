@@ -1,11 +1,17 @@
 <template lang="pug">
-  post-form(:isEditForm="false", @createPost="createPost", :resetForm="resetForm", :isFormSaving="isFormSaving")
+  modal-backdrop
+    modal-box
+      modal-content
+        post-form(:isEditForm="false", @createPost="createPost", :resetForm="resetForm", :isFormSaving="isFormSaving")
 </template>
 
 <script>
+import ModalBackdrop from '@/components/modal/__parts__/_backdrop.vue'
+import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
+import ModalContent from '@/components/modal/__parts__/_modal-content.vue'
 import PostForm from '@/components/blog/__parts__/form'
 import bc from '@/api/blockchain'
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations } from 'vuex'
 
 export default {
   head: {
@@ -58,7 +64,10 @@ export default {
   },
 
   components: {
-    PostForm
+    PostForm,
+    ModalBackdrop,
+    ModalBox,
+    ModalContent
   }
 }
 </script>

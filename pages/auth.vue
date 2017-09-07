@@ -1,52 +1,50 @@
 <template lang="pug">
-  div.login-form
-    div.two.tab_headers
-      nuxt-link.tab_header(:to="{ name: 'login' }")
-        | {{ $t('log_in') }}
+  modal-backdrop
+    modal-box(maxWidth="393")
+      header-box
+        div.login-form
+          div.two.tab_headers
+            nuxt-link.tab_header(:to="{ path: '/auth/login' }")
+              | {{ $t('log_in') }}
 
-      nuxt-link.tab_header(:to="{ name: 'signUp' }")
-        | {{ $t('sign_in') }}
+            nuxt-link.tab_header(:to="{ path: '/auth/sign-up' }")
+              | {{ $t('sign_in') }}
 
-    div.tabs
-      <component v-bind:is="currentTab"></component>
-  </div>
+      modal-content
+        div.tabs
+          nuxt-child
 </template>
 
 <script>
-  import Login from './Login.vue'
-  import SignUp from './SignUp.vue'
-  //  import ResetPassword from './ResetPassword.vue'
+  import { mapMutations } from 'vuex'
+  import Auth from '@/components/auth/Auth'
+  import ModalBackdrop from '@/components/modal/__parts__/_backdrop.vue'
+  import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
+  import HeaderBox from '@/components/modal/__parts__/_header-box.vue'
+  import ModalContent from '@/components/modal/__parts__/_modal-content.vue'
 
   export default {
-    data () {
-      return {
-        currentTab: ''
-      }
-    },
-    mounted () {
-      this.setTab()
-    },
-    watch: {
-      '$route': {
-        handler: function (fo, from) {
-          this.setTab()
-        }
+    head: {
+      bodyAttrs: {
+        class: 'overflowHidden'
       }
     },
     methods: {
-      setTab () {
-        const currentRoute = this.$route
-        if (currentRoute !== null) {
-          this.currentTab = currentRoute.name
-        }
-      }
+      ...mapMutations({
+        showModal: 'modal/SHOW_MODAL'
+      })
+    },
+    mounted () {
+      this.showModal()
     },
     components: {
-      Login,
-      SignUp
+      Auth,
+      ModalBackdrop,
+      ModalBox,
+      HeaderBox,
+      ModalContent
     }
   }
-
 </script>
 
 <style>
@@ -54,22 +52,19 @@
   .login-form {
     max-width: 393px;
     width: 100%;
-    margin: 30px auto;
     border-radius: 6px;
     background-color: #ffffff;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
-    overflow: hidden;
   }
 
   .tab_headers{
     display: flex;
   }
 
-  .tab_headers.two .tab_header{
+  .tab_headers.two .tab_header {
     width: 50%;
   }
 
-  .tab_headers .tab_header{
+  .tab_headers .tab_header {
     height: 65px;
     background-color: #edeef3;
     opacity: 0.74;
@@ -81,7 +76,7 @@
     text-decoration: none;
   }
 
-  .tab_headers .tab_header.active{
+  .tab_headers .tab_header.active {
     background: #ffffff;
     color: #000;
     opacity: 1;
@@ -91,11 +86,11 @@
     padding: 31px 26px 16px;
   }
 
-  .tabs .tab.active{
+  .tabs .tab.active {
     display: block;
   }
 
-  .login-form .inpt{
+  .login-form .inpt {
     border-radius: 6px;
     border: solid 1px rgba(72, 84, 101, 0.2);
     box-sizing: border-box;
@@ -110,18 +105,18 @@
     opacity: 0.87;
   }
 
-  .login-form .inpt:focus{
+  .login-form .inpt:focus {
     box-shadow: 0 0 2px 0 #6d9ee1;
     outline: 0;
     opacity: 1;
   }
 
-  .inpt_w{
+  .inpt_w {
     position: relative;
   }
 
 
-  .login-form .inpt + label:before{
+  .login-form .inpt + label:before {
     position: absolute;
     content: '';
     display: block;
@@ -133,16 +128,16 @@
     background-position: center center;
   }
 
-  .login-form .i-user + label:before{
-    background-image: url('../../assets/icon-user.svg');
+  .login-form .i-user + label:before {
+    background-image: url('~assets/icon-user.svg');
   }
 
-  .login-form .i-pass + label:before{
-    background-image: url('../../assets/icon-pass.svg');
+  .login-form .i-pass + label:before {
+    background-image: url('~assets/icon-pass.svg');
   }
 
-  .login-form .i-key + label:before{
-    background-image: url('../../assets/icon-key.svg');
+  .login-form .i-key + label:before {
+    background-image: url('~assets/icon-key.svg');
   }
 
   .submit-button {
@@ -160,7 +155,7 @@
     cursor: pointer;
   }
 
-  .login-form .forgot{
+  .login-form .forgot {
     color: #545555;
     opacity: 0.87;
     width: 100%;
@@ -172,11 +167,11 @@
     text-decoration: none;
   }
 
-  .login-form .forgot:hover{
+  .login-form .forgot:hover {
     opacity: 1;
   }
 
-  .ivite{
+  .ivite {
     letter-spacing: -0.7px;
     font: 700 20px/60px 'PT Sans';
     padding: 0 41px;
@@ -185,18 +180,18 @@
     margin: 0 0 86px 50px;
   }
 
-  .acc{
+  .acc {
     color: #6a6b6b;
     font: 16px 'PT Sans';
     display: inline-block;
     margin-bottom: 14px;
   }
 
-  .acc .usrname{
+  .acc .usrname {
     font-weight: 700;
     opacity: 0.87;
   }
-  .button{
+  .button {
     opacity: 0.87;
     font: 700 16px/34px 'PT Sans';
     color: #ffffff;

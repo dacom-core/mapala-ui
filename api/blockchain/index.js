@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import slug from 'slug'
 import steem from 'steem'
 import store from 'store'
@@ -218,7 +217,6 @@ export default {
     } catch (error) {
       console.error(error)
     }
-
   },
 
   getUsernameByKey (key, prefix = this.current.address_prefix) {

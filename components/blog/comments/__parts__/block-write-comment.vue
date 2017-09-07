@@ -23,6 +23,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import bc from '@/api/blockchain'
 
 export default {
   data () {

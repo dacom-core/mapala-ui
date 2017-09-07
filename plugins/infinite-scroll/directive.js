@@ -93,6 +93,7 @@ var doBind = function () {
   var directive = this;
   var element = directive.el;
 
+
   directive.scrollEventTarget = getScrollEventTarget(element);
   directive.scrollListener = throttle(doCheck.bind(directive), 200);
   directive.scrollEventTarget.addEventListener('scroll', directive.scrollListener);
@@ -145,8 +146,6 @@ var doBind = function () {
 };
 
 var doCheck = function (force) {
-
-  console.log('teste')
 
   var scrollEventTarget = this.scrollEventTarget;
   var element = this.el;

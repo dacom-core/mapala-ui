@@ -40,7 +40,6 @@
         a.icon.repost(@click="share(post)")
           | {{ $t('share') }}
 
-
       el-button-group.support_block(:class="{ isDisabled: isAuth }")
         el-button(v-if="isAuth", @click="vote(post)")
           img(style="height: 12px" src="~assets/like.png")

@@ -1,7 +1,6 @@
 <template lang="pug">
-  div.className
-
-
+  div
+    slot
 </template>
 
 <script>

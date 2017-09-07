@@ -23,15 +23,13 @@
         post-map
 
         //- CONTENT
-        modal-window
-          nuxt
+        nuxt
 
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
 import blockchain from '@/api/blockchain'
 import TopLine from '~/components/layout/top-line'
-import ModalWindow from '~/components/modal/modal-window'
 import PostList from '~/components/blog/post-list'
 import PostMap from '~/components/blog/post-map'
 import CommonView from '~/components/layout/common-view'
@@ -41,7 +39,6 @@ import UserView from '~/components/layout/user-view'
 export default {
   components: {
     TopLine,
-    ModalWindow,
     PostList,
     PostMap,
     CommonView,
@@ -54,7 +51,7 @@ export default {
       isMobile: state => state.isMobile,
       isAuth: state => state.user.auth.isAuth,
       isLoading: state => state.blog.posts.isLoading,
-      isLoadingAllowed: state => state.blog.posts.isLoadingAllowed,
+      isLoadingAllowed: state => state.blog.posts.isLoadingAllowed
     }),
     isLoadingDisabled () { // Check on has loading of next posts to be disabled
       return this.isLoading || !this.isLoadingAllowed

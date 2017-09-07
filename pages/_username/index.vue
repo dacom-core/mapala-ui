@@ -11,6 +11,7 @@ export default {
     commit('blog/posts/post_list/IS_LOADING_ALLOWED', true) // Allow making requests for new posts.
     commit('SET_FILTERS', { author__username: username })
     commit('SET_USER_PROFILE_BLOCK_VISIBILITY_TO', true)
+
     await dispatch('blog/posts/post_list/fetch_posts')
 
     const { data: user } = await User.query({ username: username })

@@ -1,15 +1,19 @@
-<template>
-  <div>
-    <div class="pop_back" @click.self="close">
-      <div class="wallet">
-        <i class="refresh"></i>
-        <div class="in_wallet">In wallet {{ moment().format('DD.MM.YYYY') }}</div>
-        <div class="coins">{{ wallet.personal_tokens }} Tokens</div>
-        <div class="currency">{{ balance.golos }}</div>
-        <div class="currency">{{ balance.gbg }}</div>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+  div
+    div.pop_back(@click.self="close")
+      div.wallet
+        i.refresh
+        div.in_wallet
+          | In wallet {{ moment().format('DD.MM.YYYY') }}
+        div.coins
+          | {{ wallet.personal_tokens }} Tokens
+
+        div.currency
+          | {{ balance.golos }}
+
+        div.currency
+          | {{ balance.gbg }}
+
 </template>
 
 <script>
@@ -20,17 +24,6 @@
 
   export default {
 
-    async asyncData ({ commit, state }) {
-      const { balance: golosBalance, sbd_balance: gbgBalance } = await bc.getUser()
-      commit('user/wallet/SET_GOLOS_BALANCE', golosBalance)
-      commit('user/wallet/SET_GBG_BALANCE', gbgBalance)
-
-      api.ico.wallet(state.user.personal.username, function (data) {
-        const wallet = data
-        return wallet
-      })
-    },
-
     data () {
       return {
         moment: moment,
@@ -38,10 +31,23 @@
       }
     },
 
+    async mounted () {
+      const { balance } = await bc.getUser()
+
+//      this.$store.commit('user/wallet/SET_GOLOS_BALANCE', golosBalance)
+//      this.$store.commit('user/wallet/SET_GBG_BALANCE', gbgBalance)
+//
+//      api.ico.wallet(state.user.personal.username, function (data) {
+//        const wallet = data
+//        return wallet
+//      })
+    },
+
     computed: {
       ...mapState({
         username: 'user/personal/username',
-        balance: 'user/wallet'
+        golosBalance: 'user/wallet/golos',
+        gbgBalance: 'user/wallet/gbg'
       })
     },
     methods: {

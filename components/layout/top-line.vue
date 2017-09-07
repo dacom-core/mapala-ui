@@ -41,7 +41,7 @@
 
         div.divider
 
-        nuxt-link(v-if="!isAuth", :to="'/login'", class="login")
+        nuxt-link(v-if="!isAuth", :to="'/auth/login'", class="login")
           | {{ $t('log_in') }}
 
         div.right_button(v-else, @click.self="closeMenu")
