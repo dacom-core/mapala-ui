@@ -29,6 +29,9 @@
         class: 'overflowHidden'
       }
     },
+    fetch ({ store: { commit }, from }) {
+      commit('SET_BACK_PATH', from || {})
+    },
     methods: {
       ...mapMutations({
         showModal: 'modal/SHOW_MODAL'

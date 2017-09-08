@@ -21,20 +21,19 @@
         class: 'overflowHidden'
       }
     },
-    async fetch ({ store: { dispatch }, params }) {
+    async fetch ({ store: { dispatch, commit }, params, from }) {
+      commit('SET_BACK_PATH', from || {})
       await dispatch('blog/posts/post_single/fetch_single_post', params)
     },
 
     methods: {
       ...mapMutations({
-        showModal: 'modal/SHOW_MODAL',
-        setBackPath: 'SET_BACK_PATH'
+        showModal: 'modal/SHOW_MODAL'
       })
     },
     mounted () {
       this.showModal()
     },
-
     components: {
       PostView,
       ModalBackdrop,

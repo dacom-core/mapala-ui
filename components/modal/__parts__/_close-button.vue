@@ -11,12 +11,13 @@
     },
     methods: {
       ...mapMutations({
-        hideModal: 'modal/HIDE_MODAL'
+        hideModal: 'modal/HIDE_MODAL',
+        resetBackPath: 'RESET_BACK_PATH'
       }),
-
       closeModal () {
         this.hideModal()
         this.$router.push(this.backPath)
+        this.resetBackPath()
       }
     }
   }

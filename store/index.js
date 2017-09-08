@@ -1,13 +1,15 @@
 import MobileDetect from 'mobile-detect'
 import { get_cookie } from '@/utils/cookies'
 import { set_jwt_header } from '@/api'
+import _ from 'lodash'
 
 export const state = () => ({
   locales: ['en', 'ru'],
   locale: 'ru',
   isMobile: false,
   historyStack: [], // All urls(paths) which have been visited.
-  backPath: '/', // The Url Before Modal Was Opened
+  backPath: '', // The Url Before Modal Was Opened
+  homePage: '/',
   filters: {}, // Global filters for markers/posts (for example: user/group)
   isUserProfileBlockVisible: false,
   isGroupPreviewBlockVisible: false
@@ -22,8 +24,13 @@ export const mutations = {
   SET_MOBILE (state, payload) {
     state.isMobile = payload
   },
-  SET_BACK_PATH (state, url) {
-    state.backPath = url
+  SET_BACK_PATH (state, { path }) {
+    if (_.isEmpty(state.backPath)) {
+      state.backPath = path
+    }
+  },
+  RESET_BACK_PATH (state) {
+    state.backPath = ''
   },
   PUSH_TO_HISTORY_STACK (state, path) {
     state.historyStack.push(path)
@@ -44,7 +51,7 @@ export const getters = {
   * Return the penultimate path from the history stack
   */
   backPath (state) {
-    return state.backPath
+    return state.backPath ? state.backPath : state.homePage
   }
 }
 
