@@ -50,8 +50,8 @@ export default {
     ...mapState({
       isMobile: state => state.isMobile,
       isAuth: state => state.user.auth.isAuth,
-      isLoading: state => state.blog.posts.isLoading,
-      isLoadingAllowed: state => state.blog.posts.isLoadingAllowed
+      isLoading: state => state.blog.posts.post_list.isLoading,
+      isLoadingAllowed: state => state.blog.posts.post_list.isLoadingAllowed
     }),
     isLoadingDisabled () { // Check on has loading of next posts to be disabled
       return this.isLoading || !this.isLoadingAllowed
