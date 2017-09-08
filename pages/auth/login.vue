@@ -20,7 +20,7 @@
 
 <script>
   import auth from '@/api/auth'
-  import { mapMutations } from 'vuex'
+  import { mapMutations, mapGetters } from 'vuex'
 
   export default {
     name: 'login',
@@ -33,12 +33,15 @@
         errors: []
       }
     },
+    computed: {
+      ...mapGetters(['backPath'])
+    },
     methods: {
       ...mapMutations({
         hideModal: 'modal/HIDE_MODAL'
       }),
       async login () {
-        await auth.login(this, this.credentials, '/')
+        await auth.login(this, this.credentials, this.backPath)
         this.hideModal()
       }
     }

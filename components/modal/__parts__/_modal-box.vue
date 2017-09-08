@@ -6,7 +6,7 @@
 <script>
 export default {
   props: {
-    maxWidth : {
+    maxWidth: {
       default: '866'
     }
   },
