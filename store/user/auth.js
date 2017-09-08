@@ -11,6 +11,9 @@ export const mutations = {
   },
   LOGOUT (state) {
     state.isAuth = false
+  },
+  SET_JWT_TOKEN (state, payload) {
+    state.token = payload
   }
 }
 

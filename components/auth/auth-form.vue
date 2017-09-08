@@ -83,7 +83,6 @@ export default {
   },
   created () {
     dacom.init().then(() => {
-      console.log('DACom inited')
     })
   }
 }

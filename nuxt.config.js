@@ -48,7 +48,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    dll: true,
+    // dll: true,
     /*
     ** Run ESLINT on save
     */

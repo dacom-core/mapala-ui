@@ -73,12 +73,12 @@
               nuxt-link(class="m_item", :to="'/ico/'")
                 | ICO
 
-              a(href="#" v-if="isAuth" class="m_item", @click="userLogout")
+              a(href="#" v-if="isAuth" class="m_item", @click="logout")
                 | {{ $t('log_out') }}
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import Poster from '~/components/layout/__parts__/poster'
 
 export default {
@@ -98,9 +98,15 @@ export default {
   }),
 
   methods: {
-    ...mapActions({
-      userLogout: 'user/auth/logout'
+    ...mapMutations({
+      userLogout: 'user/auth/LOGOUT',
+      resetUser: 'user/auth/RESET_USER'
     }),
+
+    logout () {
+      this.userLogout()
+      this.resetUser()
+    },
 
     openMenu () {
       this.isMenuOpened = true

@@ -32,7 +32,6 @@ export const Marker = {
 
 export const Group = {
   ...resource('api/groups/', axios, {
-    // 'markers': { method: 'GET', url: '/api/markers/' }
   })
 }
 

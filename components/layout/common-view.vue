@@ -16,7 +16,7 @@ export default {
     ...mapState({
       isAuth: state => state.user.auth.isAuth,
       isUserProfileBlockVisible: state => state.isUserProfileBlockVisible
-    }),
+    })
   },
   components: {
     UserProfileBlock,

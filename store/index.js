@@ -1,6 +1,5 @@
 import MobileDetect from 'mobile-detect'
 import { get_cookie } from '@/utils/cookies'
-import { set_jwt_header } from '@/api'
 import _ from 'lodash'
 
 export const state = () => ({
@@ -64,7 +63,7 @@ export const actions = {
 
     if (JWTtoken) {
       try {
-        set_jwt_header(JWTtoken)
+        commit('user/auth/SET_JWT_TOKEN', JWTtoken)
         await dispatch('user/auth/fetch_user')
       } catch (error) {
         // Если токен просрочен или не правильный

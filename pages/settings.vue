@@ -1,59 +1,52 @@
 <template lang="pug">
   modal-backdrop
-    modal-box
+    modal-box(max-width="658")
       modal-content
-        div.pop_back(@click.self="close")
-          div.profile
-            div.head_img(style="background-image: url(); background-color: #6d9ee1;")
-              i.back(@click="close")
+        div.profile
+          div.head_img
+            i.back(@click="goBack")
 
           div.user
             div.round_av(v-on:click="switch_edit_avatar()", :class="{ edit_av : edit_av }")
               i.ic.delete(@click="removeAvatar")
               i.ic.edit(@click="$refs.avatarInput.click()")
                 input(ref="avatarInput", @change="setAvatar" hidden type="file")
+              i.close_edit
+              div.av_wrap
+                img(:src="userAvatar")
 
-            i.close_edit
+            div.name.verified
+              | @{{ userName }}
 
-            div.av_wrap
-              img(:src="auth.user.avatar")
+          div.inpt_w
+            label
+              | {{ blockchains.current.name }}
+              span.blue(v-if="blockchains.current.activated")
+                | {{ blockchains.current.blockchain_username }}
 
-        div.name.verified
-          | @{{ auth.user.username }}
+            input(
+              :placeholder="blockchains.current.name + ' private posting key'",
+              @focus="showKey($event, blockchains.current)",
+              @blur="hideKey($event, blockchains.current)"
+              v-model="blockchains.current.wif",
+              :class="blockchains.current.key_valid ? 'icon_good' : 'icon_edit'"
+              )
 
-        div.inpt_w
-          label
-            | Email
-          input(type="email" v-model="auth.user.email")
-
-        div.inpt_w
-          label
-            | {{ blockchains.current.name }}
-            span.blue(v-if="blockchains.current.activated")
-              | {{ blockchains.current.blockchain_username }}
-
-          input(
-            :placeholder="blockchains.current.name + ' private posting key'",
-            @focus="showKey($event, blockchains.current)",
-            @blur="hideKey($event, blockchains.current)"
-            v-model="blockchains.current.wif",
-            :class="blockchains.current.key_valid ? 'icon_good' : 'icon_edit'"
-            )
-
-        button.submit(@click="update()")
-          | {{ $t('update') }}
+            <!--button.submit(@click="update()")-->
+              <!--| {{ $t('update') }}-->
 </template>
 
 <script>
   import blockchains from '@/api/blockchain'
-  import auth from '@/api/auth'
   import { User } from '@/api/services'
+  import ModalBackdrop from '@/components/modal/__parts__/_backdrop.vue'
+  import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
+  import ModalContent from '@/components/modal/__parts__/_modal-content.vue'
+  import { mapMutations, mapState } from 'vuex'
 
   export default {
-    name: 'Profile',
     data () {
       return {
-        auth: auth,
         blockchains: blockchains,
         error: false,
         edit_av: false,
@@ -61,18 +54,32 @@
         new_password: ''
       }
     },
+    computed: mapState({
+      userName: state => state.user.personal.username,
+      userAvatar: state => state.user.personal.avatar
+    }),
+    components: {
+      ModalBackdrop,
+      ModalBox,
+      ModalContent
+    },
+    mounted () {
+      this.showModal()
+    },
+//    beforeDestroy () {
+//      this.hideModal()
+//    },
     methods: {
-      updatePassword () {
-        if (!this.old_password) { return }
-        User.setPassword({ old_password: this.old_password, new_password: this.new_password }).then(res => {
-          this.$notify({ title: this.$t('password_changed'), message: res.body, type: 'success' })
-          this.old_password = ''
-        }, err => {
-          this.$notify({ message: err.body[0], type: 'warning' })
-        })
+      ...mapMutations({
+        showModal: 'modal/SHOW_MODAL',
+        hideModal: 'modal/HIDE_MODAL',
+        setUserAvatar: 'user/personal/SET_USER_AVATAR'
+      }),
 
-        this.new_password = ''
+      goBack () {
+        this.$router.go(-1)
       },
+
       showKey (e, bc) {
         e.target.type = 'text'
       },
@@ -100,36 +107,40 @@
       switch_edit_avatar () {
         this.edit_av = !this.edit_av
       },
-
-      update () {
-        User.update({ username: this.auth.user.username }, this.auth.user).then(res => {
-          this.auth.user = res.body
-          this.$notify({ title: 'Ок', message: this.$t('settings_update'), type: 'success' })
-        }, res => {
-          this.error = res.data.error
-          this.$notify({ title: 'Warning', message: this.error, type: 'warning' })
-        })
-      },
-      removeAvatar () {
-        User.removeAvatar({ username: this.auth.user.username }, {}).then(res => {
+//      async update () {
+//        try {
+//          const { data } = await User.update({ username: this.userName }, { username: this.userName })
+//
+//          this.auth.user = data
+//          this.$notify({ title: 'Ок', message: this.$t('settings_update'), type: 'success' })
+//        } catch (e) {
+//          this.error = e
+//          this.$notify({ title: 'Warning', message: this.error, type: 'warning' })
+//        }
+//      },
+      async removeAvatar () {
+        try {
           this.edit_av = false
-          auth.user.avatar = res.body
-        })
+          const { data } = await User.removeAvatar({ username: this.userName }, {})
+          this.setUserAvatar(data)
+        } catch (e) {
+          this.$notify({ title: 'Update avatar error', message: e, type: 'warning' })
+        }
       },
-      setAvatar (e) {
-        e.preventDefault()
+      async setAvatar (e) {
+        try {
+          e.preventDefault()
+          const formData = new FormData()
+          formData.append('file', this.$refs.avatarInput.files[0])
 
-        const formData = new FormData()
-        formData.append('file', this.$refs.avatarInput.files[0])
-
-        User.setAvatar({ username: this.auth.user.username }, formData).then(res => {
-          auth.user.avatar = res.body
+          const { data } = await User.setAvatar(this.userName, formData)
+          this.setUserAvatar(data)
           this.switch_edit_avatar()
           this.$message({ type: 'info', message: 'Avatar has been updated' })
-        }, res => {
-          this.error = res.data.error
+        } catch (e) {
+          this.error = e
           this.$message({ type: 'error', message: 'Something was wrong..' })
-        })
+        }
       },
 
       deleteAvatar (e) {
@@ -147,22 +158,22 @@
   .keyError .el-form-item__error {
     margin-bottom: 20px;
   }
-  .profile{
-    margin: 0 auto 30px;
-    max-width: 658px;
-    width: 100%;
-    border-radius: 6px;
-    background-color: #ffffff;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    border: solid 1px rgba(72, 84, 101, 0.2);
-    box-sizing: border-box;
-  }
+  /*.profile{*/
+    /*margin: 0 auto 30px;*/
+    /*max-width: 658px;*/
+    /*width: 100%;*/
+    /*border-radius: 6px;*/
+    /*background-color: #ffffff;*/
+    /*box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);*/
+    /*border: solid 1px rgba(72, 84, 101, 0.2);*/
+    /*box-sizing: border-box;*/
+  /*}*/
 
   .profile .head_img{
+    background-color: #6d9ee1;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    background-color: #ddd;
     width: 100%;
     height: 160px;
     position: relative;

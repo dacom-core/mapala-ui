@@ -26,8 +26,9 @@ export const mutations = {
     state.has_avatar = ''
     state.bc_username = ''
     state.locale = ''
+  },
+  SET_USER_AVATAR (state, payload) {
+    state.avatar = payload
   }
 }
 
-export const getters = {
-}
