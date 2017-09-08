@@ -1,18 +1,19 @@
 <template lang="pug">
-  div
-    div.pop_back(@click.self="close")
-      div.wallet
-        i.refresh
-        div.in_wallet
-          | In wallet {{ moment().format('DD.MM.YYYY') }}
-        div.coins
-          | {{ wallet.personal_tokens }} Tokens
+  modal-backdrop
+    modal-box(maxWidth="480")
+      modal-content
+        div.wallet
+          i.refresh
+          div.in_wallet
+            | In wallet {{ moment().format('DD.MM.YYYY') }}
+          div.coins
+            | {{ wallet.personal_tokens }} Tokens
 
-        div.currency
-          | {{ balance.golos }}
+          div.currency
+            | {{ balance.golos }}
 
-        div.currency
-          | {{ balance.gbg }}
+          div.currency
+            | {{ balance.gbg }}
 
 </template>
 
@@ -20,18 +21,25 @@
   import moment from 'moment'
   import bc from '@/api/blockchain'
   import api from '@/api/temporary'
-  import { mapState } from 'vuex'
+  import ModalBackdrop from '@/components/modal/__parts__/_backdrop.vue'
+  import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
+  import ModalContent from '@/components/modal/__parts__/_modal-content.vue'
+  import { mapState, mapMutations } from 'vuex'
 
   export default {
-
+    middleware: ['auth'],
     data () {
       return {
         moment: moment,
-        error: false
+        error: false,
+        wallet: {},
+        balance: {}
       }
     },
 
     async mounted () {
+      this.showModal()
+
       const { balance } = await bc.getUser()
 
 //      this.$store.commit('user/wallet/SET_GOLOS_BALANCE', golosBalance)
@@ -50,10 +58,19 @@
         gbgBalance: 'user/wallet/gbg'
       })
     },
+
     methods: {
+      ...mapMutations({
+        showModal: 'modal/SHOW_MODAL'
+      }),
       close () {
         this.$router.go(-1)
       }
+    },
+    components: {
+      ModalBackdrop,
+      ModalBox,
+      ModalContent
     }
   }
 </script>

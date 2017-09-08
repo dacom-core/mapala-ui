@@ -20,8 +20,8 @@
   import Auth from '@/components/auth/Auth'
   import ModalBackdrop from '@/components/modal/__parts__/_backdrop.vue'
   import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
-  import HeaderBox from '@/components/modal/__parts__/_header-box.vue'
   import ModalContent from '@/components/modal/__parts__/_modal-content.vue'
+  import HeaderBox from '@/components/modal/__parts__/_header-box.vue'
 
   export default {
     head: {
@@ -42,9 +42,9 @@
     },
     components: {
       Auth,
+      HeaderBox,
       ModalBackdrop,
       ModalBox,
-      HeaderBox,
       ModalContent
     }
   }
