@@ -45,6 +45,7 @@
   import { mapMutations, mapState } from 'vuex'
 
   export default {
+    middleware: ['auth'],
     data () {
       return {
         blockchains: blockchains,

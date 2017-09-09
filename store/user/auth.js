@@ -22,5 +22,9 @@ export const actions = {
     const { data } = await User.current()
     commit('user/personal/FILL_USER', data, { root: true })
     commit('SET_AUTH_TO', true)
+  },
+  logout ({ commit }) {
+    commit('LOGOUT')
+    commit('RESET_USER')
   }
 }

@@ -73,13 +73,14 @@
               nuxt-link(class="m_item", :to="'/ico/'")
                 | ICO
 
-              a(href="#" v-if="isAuth" class="m_item", @click="logout")
+              a(href="#" v-if="isAuth" class="m_item", @click.prevent="logout")
                 | {{ $t('log_out') }}
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
 import Poster from '~/components/layout/__parts__/poster'
+import { delete_cookie } from '@/utils/cookies'
 
 export default {
   data () {
@@ -100,12 +101,13 @@ export default {
   methods: {
     ...mapMutations({
       userLogout: 'user/auth/LOGOUT',
-      resetUser: 'user/auth/RESET_USER'
+      resetUser: 'user/personal/RESET_USER'
     }),
 
     logout () {
       this.userLogout()
       this.resetUser()
+      delete_cookie('jwt')
     },
 
     openMenu () {
