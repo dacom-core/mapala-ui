@@ -1,16 +1,16 @@
 import { resource } from '../index'
 import axios from 'axios'
 
-export const User = {
-  ...resource('api/users/', axios, {
-    current: () => axios.get('api/users/current/'),
-    signUp: () => axios.post('/sign-up/'),
-    setPassword: () => axios.post('api/users/set_password/'),
-    resetPassword: () => axios.post('api/users/reset_password/'),
-    existingSignUp: () => axios.post('/existng-sign-up/'),
-    setAvatar: (user_name) => axios.post(`api/users/${user_name}/set_avatar/`),
-    removeAvatar: (user_name) => axios.post(`api/users/${user_name}/remove_avatar/`),
-    initialBlockchains: (user_name) => axios.get(`api/users/${user_name}/initial_blockchains/`)
+export function User (axiosInstance) {
+  return resource('api/users/', axiosInstance, {
+    current: () => axiosInstance.get('api/users/current/'),
+    signUp: () => axiosInstance.post('/sign-up/'),
+    setPassword: () => axiosInstance.post('api/users/set_password/'),
+    resetPassword: () => axiosInstance.post('api/users/reset_password/'),
+    existingSignUp: () => axiosInstance.post('/existng-sign-up/'),
+    setAvatar: (user_name) => axiosInstance.post(`api/users/${user_name}/set_avatar/`),
+    removeAvatar: (user_name) => axiosInstance.post(`api/users/${user_name}/remove_avatar/`),
+    initialBlockchains: (user_name) => axiosInstance.get(`api/users/${user_name}/initial_blockchains/`)
   })
 }
 
@@ -39,9 +39,9 @@ export const BlockChain = {
   ...resource('api/blockchains/', axios, {})
 }
 
-export const UserBlockChain = {
-  ...resource('api/user-blockchains/', axios, {
-    getNameByPostingKey: () => axios.get(`api/user-blockchains/get_name_by_posting_key/`)
+export function UserBlockChain (axiosInstance) {
+  return resource('api/user-blockchains/', axiosInstance, {
+    getNameByPostingKey: () => axiosInstance.get(`api/user-blockchains/get_name_by_posting_key/`)
   })
 }
 
@@ -50,3 +50,8 @@ export const Image = {
     upload: () => axios.post('/post_image/')
   })
 }
+
+export const Locomotive = {
+  ...resource('api/locomotive/', axios, {})
+}
+

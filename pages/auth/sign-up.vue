@@ -79,7 +79,7 @@
           }
         })
 
-        User.get({ username: this.username }).then(res => {
+        User(this.$axios).query({ username: this.username }).then(res => {
           this.config.userExists = true
         })
       }

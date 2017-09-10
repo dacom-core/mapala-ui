@@ -23,10 +23,6 @@
 
       div.top-right-block
 
-        a.el-button.mapala-fest-link(href="https://fest.mapala.net")
-          span
-            | MapalaFest
-
         poster
 
         div.username_wrapper(v-if="isAuth")
@@ -91,7 +87,7 @@ export default {
 
   computed: mapState({
     isAuth: state => state.user.auth.isAuth,
-    userName: state => state.user.personal.userName,
+    userName: state => state.user.personal.username,
     userAvatar: state => state.user.personal.avatar,
     userBalance: state => state.user.wallet.balance,
     isMobile: state => state.isMobile,

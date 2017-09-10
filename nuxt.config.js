@@ -48,7 +48,6 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    // dll: true,
     /*
     ** Run ESLINT on save
     */
@@ -71,11 +70,16 @@ module.exports = {
     redirectError: {
       401: '/'
     },
-    baseURL: 'https://mapala.net/api/',
+    baseURL: 'http://37.59.98.17/',
     requestInterceptor: (config, { store }) => {
       if (store.state.locale) {
         config.headers.common['Locale'] = store.state.locale
       }
+
+      if (store.state.user.auth.token) {
+        config.headers.common['Authorization'] = 'JWT ' + store.state.user.auth.token
+      }
+
       return config
     }
   }

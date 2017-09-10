@@ -6,7 +6,7 @@ import { mapState, mapActions } from 'vuex'
 import { User } from '@/api/services'
 
 export default {
-  async fetch ({ store: { commit, dispatch, state }, params: { username } }) { // Grab user's name from url.
+  async fetch ({ store: { commit, dispatch, state }, params: { username }, $axios }) { // Grab user's name from url.
     commit('blog/posts/post_list/RESET_PAGE') // Reset paginate.
     commit('SET_USER_PROFILE_BLOCK_VISIBILITY_TO', true)
     commit('blog/posts/post_list/IS_LOADING_ALLOWED', true) // Allow making requests for new posts.
@@ -15,7 +15,7 @@ export default {
 
     await dispatch('blog/posts/post_list/fetch_posts')
 
-    const { data: user } = await User.query({ username: username })
+    const { data: user } = await User($axios).query({ username: username })
     commit('blog/posts/posts_author/SET_PAGE_AUTHOR_BC_USERNAME', user[0].bc_username)
 
     if (state.map.isReady) {

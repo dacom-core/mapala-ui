@@ -14,17 +14,16 @@ export const mutations = {
   },
   SET_JWT_TOKEN (state, payload) {
     state.token = payload
+  },
+  RESET_JWT_TOKEN (state) {
+    state.token = ''
   }
 }
 
 export const actions = {
   async fetch_user ({ commit }) {
-    const { data } = await User.current()
+    const { data } = await User(this.$axios).current()
     commit('user/personal/FILL_USER', data, { root: true })
     commit('SET_AUTH_TO', true)
-  },
-  logout ({ commit }) {
-    commit('LOGOUT')
-    commit('RESET_USER')
   }
 }

@@ -22,8 +22,8 @@ export default {
     return axios.post(JWT_REFRESH_URL, { token: token || Vue.cookie.get('jwt') })
   },
 
-  update () {
-    return User.update({ username: this.user.username }, this.user)
+  update (axiosInstance) {
+    return User(axiosInstance).update({ username: this.user.username }, this.user)
   },
 
   async login (context, creds, redirect) {
@@ -45,7 +45,7 @@ export default {
 
   existngSignUp(context, creds, redirect) {
     context.loading = true
-    User.existngSignUp(creds).then(res => {
+    User(context.$axios).existngSignUp(creds).then(res => {
       context.loading = false
       store.clearAll()
 
@@ -55,7 +55,7 @@ export default {
 
       // Добавляем ключ для голоса
       store.set(`golos_${this.user.username}_posting_key`, creds.wif)
-      blockchains.initBlockchains()
+      blockchains.initBlockchains(context)
 
       if (redirect) { context.$router.push(redirect) }
 
@@ -65,9 +65,9 @@ export default {
     })
   },
 
-  signUp(context, creds, redirect) {
+  signUp (context, creds, redirect) {
     context.loading = true
-    User.signUp(creds).then(res => {
+    User(context.$axios).signUp(creds).then(res => {
       context.loading = false
       store.clearAll()
 
@@ -77,7 +77,7 @@ export default {
 
       // Добавляем ключ для голоса
       store.set(`golos_${this.user.username}_posting_key`, res.body.posting_key)
-      blockchains.initBlockchains()
+      blockchains.initBlockchains(context)
 
       context.$alert(
         res.body.posting_key,

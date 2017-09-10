@@ -7,13 +7,13 @@
           div.in_wallet
             | In wallet {{ moment().format('DD.MM.YYYY') }}
           div.coins
-            | {{ wallet.personal_tokens }} Tokens
+            | {{ personalTokens }} Tokens
 
           div.currency
-            | {{ balance.golos }}
+            | {{ golosBalance }}
 
           div.currency
-            | {{ balance.gbg }}
+            | {{ gbgBalance }}
 
 </template>
 
@@ -32,30 +32,27 @@
       return {
         moment: moment,
         error: false,
-        wallet: {},
-        balance: {}
+        personalTokens: 0
       }
     },
-
     async mounted () {
       this.showModal()
+      const { balance: golos, sbd_balance: gbg } = await bc.getUser(this.bc_username)
 
-      const { balance } = await bc.getUser()
+      this.$store.commit('user/wallet/SET_GOLOS_BALANCE', golos)
+      this.$store.commit('user/wallet/SET_GBG_BALANCE', gbg)
 
-//      this.$store.commit('user/wallet/SET_GOLOS_BALANCE', golosBalance)
-//      this.$store.commit('user/wallet/SET_GBG_BALANCE', gbgBalance)
-//
-//      api.ico.wallet(state.user.personal.username, function (data) {
-//        const wallet = data
-//        return wallet
-//      })
+      api.ico.wallet(this.username, function (data) {
+        this.personalTokens = data.personal_tokens
+      })
     },
-
     computed: {
+
       ...mapState({
-        username: 'user/personal/username',
-        golosBalance: 'user/wallet/golos',
-        gbgBalance: 'user/wallet/gbg'
+        username: state => state.user.personal.username,
+        bc_username: state => state.user.personal.bc_username,
+        golosBalance: state => state.user.wallet.golos,
+        gbgBalance: state => state.user.wallet.gbg
       })
     },
 

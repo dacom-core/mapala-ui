@@ -1,8 +1,6 @@
 import axios from 'axios'
-import Vue from 'vue'
 import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from './config'
 axios.defaults.baseURL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}`
-
 
 export function set_jwt_header (token) {
   axios.defaults.headers.common = {
@@ -39,4 +37,3 @@ export function resource (path, http, actions) {
   }
   return Object.assign(obj, actions)
 }
-

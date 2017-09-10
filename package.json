@@ -13,7 +13,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^3.1.0",
+    "@nuxtjs/axios": "^4.2.1",
     "animate.css": "^3.5.2",
     "axios": "^0.16.2",
     "cookie": "^0.3.1",
@@ -36,6 +36,7 @@
     "stylus-loader": "^3.0.1",
     "vue-async-computed": "^3.3.1",
     "vue-cookie": "^1.1.4",
+    "vue-data-tables": "^2.0.4",
     "vue-fontawesome": "0.0.2",
     "vue-i18n": "^7.1.0",
     "vue-infinite-scroll": "^2.0.1",

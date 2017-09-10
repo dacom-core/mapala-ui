@@ -25,6 +25,7 @@
                 | {{ blockchains.current.blockchain_username }}
 
             input(
+              type="text",
               :placeholder="blockchains.current.name + ' private posting key'",
               @focus="showKey($event, blockchains.current)",
               @blur="hideKey($event, blockchains.current)"
@@ -32,13 +33,18 @@
               :class="blockchains.current.key_valid ? 'icon_good' : 'icon_edit'"
               )
 
-            <!--button.submit(@click="update()")-->
+          div.inpt_w(v-if="blockchains.current.key_valid")
+            el-checkbox(v-model="locomotive", @change="loco_update()")
+              | Участвовать в паравозике
+
+
+    <!--button.submit(@click="update()")-->
               <!--| {{ $t('update') }}-->
 </template>
 
 <script>
   import blockchains from '@/api/blockchain'
-  import { User } from '@/api/services'
+  import { User, Locomotive } from '@/api/services'
   import ModalBackdrop from '@/components/modal/__parts__/_backdrop.vue'
   import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
   import ModalContent from '@/components/modal/__parts__/_modal-content.vue'
@@ -49,6 +55,7 @@
     data () {
       return {
         blockchains: blockchains,
+        locomotive: false,
         error: false,
         edit_av: false,
         old_password: '',
@@ -67,15 +74,25 @@
     mounted () {
       this.showModal()
     },
-//    beforeDestroy () {
-//      this.hideModal()
-//    },
+    created () {
+      Locomotive.query().then(res => this.locomotive = res.data)
+    },
     methods: {
       ...mapMutations({
         showModal: 'modal/SHOW_MODAL',
         hideModal: 'modal/HIDE_MODAL',
         setUserAvatar: 'user/personal/SET_USER_AVATAR'
       }),
+
+      loco_update () {
+        if (this.locomotive) {
+          Locomotive.save({ wif: blockchains.current.wif }).then(res => {
+            console.log(res.data)
+          })
+        } else {
+          Locomotive.delete().then(res => console.log(res.data))
+        }
+      },
 
       goBack () {
         this.$router.go(-1)
@@ -86,7 +103,7 @@
       },
       hideKey (e, bc) {
         if (bc.wif && !this.keyInValid) {
-          this.blockchains.setPostingKey(this, bc).then(res => {
+          this.blockchains.setPostingKey(this, bc, this.userName, this.$axios).then(res => {
             this.$notify({ title: 'Оk', message: this.$t('key_registered'), type: 'success' })
           }, err => {
             bc.wif = ''
@@ -122,7 +139,7 @@
       async removeAvatar () {
         try {
           this.edit_av = false
-          const { data } = await User.removeAvatar({ username: this.userName }, {})
+          const { data } = await User(this.$axios).removeAvatar({ username: this.userName }, {})
           this.setUserAvatar(data)
         } catch (e) {
           this.$notify({ title: 'Update avatar error', message: e, type: 'warning' })
@@ -134,7 +151,7 @@
           const formData = new FormData()
           formData.append('file', this.$refs.avatarInput.files[0])
 
-          const { data } = await User.setAvatar(this.userName, formData)
+          const { data } = await User(this.$axios).setAvatar(this.userName, formData)
           this.setUserAvatar(data)
           this.switch_edit_avatar()
           this.$message({ type: 'info', message: 'Avatar has been updated' })

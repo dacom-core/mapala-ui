@@ -182,9 +182,9 @@ export default {
     return store.get(`${blockchain}_${auth.user.username}_posting_key`)
   },
 
-  async initBlockchains ({ $store: { state, commit } }) {
+  async initBlockchains (ctx = {}) {
     try {
-      const { data } = await User.initialBlockchains(state.user.personal.username)
+      const { data } = await User.initialBlockchains(ctx.$store.state.user.personal.username)
 
       const bc_list = []
       for (const bc of data) {
@@ -212,7 +212,9 @@ export default {
       }
 
       const { balance } = await this.getUser()
-      commit('user/wallet/SET_BALANCE', balance)
+      // commit('user/wallet/SET_BALANCE', balance)
+
+      // TODO SET_BALANCE GOLOS/GBG
 
     } catch (error) {
       console.error(error)
@@ -232,13 +234,13 @@ export default {
     })
   },
 
-  setPostingKey (context, blockchain) {
+  setPostingKey (context, blockchain, username = '', axios) {
     return new Promise((resolve, reject) => {
-      UserBlockChain.save({ blockchain: blockchain.name, wif: blockchain.wif }).then(res => {
-        store.set(`${blockchain.name}_${auth.user.username}_posting_key`, blockchain.wif)
+      UserBlockChain(context.$axios).save({ blockchain: blockchain.name, wif: blockchain.wif }).then(res => {
+        store.set(`${blockchain.name}_${username || auth.user.username}_posting_key`, blockchain.wif)
 
         this.blockchains = []
-        this.initBlockchains()
+        this.initBlockchains(context)
 
         resolve(res)
       }, err => reject(err))
