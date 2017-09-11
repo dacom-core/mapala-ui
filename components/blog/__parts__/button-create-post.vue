@@ -1,15 +1,14 @@
 <template lang="pug">
-  div(v-if="isVisible")
-    nuxt-link(
-      :to="makePath('create', userName)",
-      class="add_post"
-      )
-      div.av_wrap
-        img.user_av(v-if="userAvatar", :src="userAvatar")
-        img.user_av(v-else src="~assets/icon-profile-w.svg")
+  nuxt-link(
+    :to="makePath('create', userName)",
+    class="add_post"
+    )
+    div.av_wrap
+      img.user_av(v-if="userAvatar", :src="userAvatar")
+      img.user_av(v-else src="~assets/icon-profile-w.svg")
 
-      div.write_post
-        | {{ $t('add_post') }}
+    div.write_post
+      | {{ $t('add_post') }}
 </template>
 
 <script>
@@ -21,12 +20,7 @@ export default {
     ...mapState('user/personal', {
       userName: state => state.username,
       userAvatar: state => state.avatar
-    }),
-
-    isVisible () {
-      return this.$route.params.username === this.userName || // Is it user profile page
-             this.$route.name === 'index' // Or main page
-    }
+    })
   },
 
   methods: {

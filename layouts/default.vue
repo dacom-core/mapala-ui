@@ -7,11 +7,11 @@
         //- LEFT COLUMNT
         div.tape(v-bind:class="{ tapeMobile: isMobile }")
 
-          user-view(v-if="isUserPage")
+          user-view(v-if="isUserViewVisible")
 
-          group-view(v-else-if="isGroupPage")
+          group-view(v-else-if="isGroupViewVisible")
 
-          common-view(v-else-if="isCommonPage")
+          common-view(v-else-if="isCommonViewVisible")
 
           post-list#post_list_block(
             v-infinite-scroll="loadNextPosts",
@@ -51,7 +51,10 @@ export default {
       isMobile: state => state.isMobile,
       isAuth: state => state.user.auth.isAuth,
       isLoading: state => state.blog.posts.post_list.isLoading,
-      isLoadingAllowed: state => state.blog.posts.post_list.isLoadingAllowed
+      isLoadingAllowed: state => state.blog.posts.post_list.isLoadingAllowed,
+      isUserViewVisible: state => state.layout.isUserViewVisible,
+      isGroupViewVisible: state => state.layout.isGroupViewVisible,
+      isCommonViewVisible: state => state.layout.isCommonViewVisible
     }),
     isLoadingDisabled () { // Check on has loading of next posts to be disabled
       return this.isLoading || !this.isLoadingAllowed

@@ -18,11 +18,6 @@
         nuxt-link.but.ic.set(:to="{ to: '/settings', params: { user: userName } }")
           | {{ $t('setting') }}
 
-
-    create-post-button(v-if="isAuth && isUserOwnPage")
-
-
-
 </template>
 
 <script>

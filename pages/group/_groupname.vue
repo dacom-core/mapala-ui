@@ -6,10 +6,10 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
   async fetch ({ store: { commit, dispatch, state }, params: { groupname } }) {
+    commit('layout/SET_GROUP_BLOCK_VISIBLE')
     commit('blog/posts/post_list/RESET_PAGE') // Reset paginate.
     commit('blog/posts/post_list/IS_LOADING_ALLOWED', true) // Allow making requests for new posts.
     commit('SET_FILTERS', { group: groupname })
-    commit('SET_GROUP_PREVIEW_BLOCK_VISIBILITY_TO', true)
     await dispatch('blog/posts/post_list/fetch_posts')
 
     if (state.map.isReady) {

@@ -1,6 +1,5 @@
 <template lang="pug">
   div
-    user-profile-block(v-if="isUserProfileBlockVisible")
     create-post-button(v-if="isAuth")
     switch-blog-buttons
 </template>
