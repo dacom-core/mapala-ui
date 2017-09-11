@@ -21,6 +21,7 @@
 <script>
   import auth from '@/api/auth'
   import { mapMutations, mapGetters } from 'vuex'
+  import { set_cookie } from '@/utils/cookies'
 
   export default {
     name: 'login',
@@ -47,7 +48,6 @@
         } catch (e) {
           this.hideModal()
         }
-
       }
     }
   }

@@ -90,7 +90,7 @@ export default {
 
       this.signTr(tr).then(tr => {
         Post(context.$axios).save({ tx: tr, blockchain: this.current.name })
-          .then(res => resolve(res), err => reject(err.body))
+          .then(res => resolve(res), err => reject(err.data))
       }, err => reject(err))
     })
   },
@@ -176,22 +176,24 @@ export default {
     steem.config.set('chain_id', this.current.chain_id)
   },
 
-  getPostingKey (blockchain) {
+  getPostingKey (blockchain, username) {
     if (blockchain === undefined) {
       return this.getPostingKey(this.current.name)
     }
-    return store.get(`${blockchain}_${auth.user.username}_posting_key`)
+    return store.get(`${blockchain}_${username}_posting_key`)
   },
 
   async initBlockchains (ctx = {}) {
     try {
-      const { data } = await User.initialBlockchains(ctx.$store.state.user.personal.username)
+      const username = ctx.$store.state.user.personal.username
+      const { data } = await User(ctx.$axios).initialBlockchains(username)
 
       const bc_list = []
       for (const bc of data) {
 
         if (bc.activated) {
-          bc.wif = this.getPostingKey(bc.name)
+          bc.wif = this.getPostingKey(bc.name, username)
+
           bc.blockchain_username = bc.blockchain_username.toLowerCase()
 
           try {
@@ -209,7 +211,7 @@ export default {
       }
       this.bc_list = bc_list
       if (this.blockchains) {
-        this.setBlockchain(undefined, state)
+        this.setBlockchain(undefined, ctx.$store.state)
       }
 
       const { balance } = await this.getUser()

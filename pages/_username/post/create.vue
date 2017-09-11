@@ -30,17 +30,15 @@ export default {
   methods: {
     ...mapMutations({
       showModal: 'modal/SHOW_MODAL',
-      hideModal: 'modal/HIDE_MODAL',
-      insertToPostList: 'blog/posts/post_list/INSERT_POST_UNSHIFT'
+      hideModal: 'modal/HIDE_MODAL'
     }),
 
     async createPost (form) {
       try {
         this.isFormSaving = true
-        const { body } = await bc.createPost(this, form)
+        await bc.createPost(this, form)
 
         this.isFormSaving = false
-        this.insertToPostList(body)
 
         this.hideModal()
         this.$router.push(history.back())

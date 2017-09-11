@@ -78,8 +78,9 @@ export default {
     }
   },
 
-  mounted () {
-    blockchain.init(this.$store)
+  async mounted () {
+    await blockchain.init(this.$store)
+    await blockchain.initBlockchains(this)
   },
 
   methods: {
