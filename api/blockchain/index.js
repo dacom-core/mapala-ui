@@ -40,7 +40,7 @@ export default {
 
   checkValidKey (context, reject) {
     if (!this.current.key_valid) {
-      reject(context.$t('add_key_err', { bc: this.current.name }))
+      throw new Error(context.$t('add_key_err', { bc: this.current.name }))
     }
   },
 
@@ -66,18 +66,17 @@ export default {
 
     if (await this.postExists(this.current.blockchain_username, post.permlink)) {
       // TODO Добавить автоинкремент для пермлинка, если он повторяется
-      return Promise.reject('Post with this title already exists')
+      throw new Error('Post with this title already exists')
     }
-    return this.updatePost(context, post)
+
+    return await this.updatePost(context, post)
   },
 
-  updatePost (context, post) {
-    return new Promise((resolve, reject) => {
-      this.checkValidKey(context, reject)
-      const tr = new TransactionBuilder()
+  async updatePost (context, post) {
+    this.checkValidKey(context)
+    const tr = new TransactionBuilder()
 
-      post.permlink = this.getPermlink(post.title)
-
+    post.permlink = this.getPermlink(post.title)
       tr.add_type_operation('comment', {
         parent_author: '',
         parent_permlink: this.app_tag,
@@ -88,16 +87,18 @@ export default {
         json_metadata: this.getJsonMeta(post.meta)
       })
 
-      this.signTr(tr).then(tr => {
-        Post(context.$axios).save({ tx: tr, blockchain: this.current.name })
-          .then(res => resolve(res), err => reject(err.data))
-      }, err => reject(err))
-    })
+    let signedTr = await this.signTr(tr)
+
+    try {
+      return await Post(context.$axios).save({ tx: signedTr, blockchain: this.current.name })
+    } catch (err) {
+      throw new Error(err.response.data)
+    }
   },
 
   createComment (context, comm) {
     return new Promise((resolve, reject) => {
-      this.checkValidKey(context, reject)
+      this.checkValidKey(context)
 
       const tr = new TransactionBuilder()
       tr.add_type_operation('comment', {
@@ -237,17 +238,18 @@ export default {
     })
   },
 
-  setPostingKey (context, blockchain, username = '') {
-    return new Promise((resolve, reject) => {
-      UserBlockChain(context.$axios).save({ blockchain: blockchain.name, wif: blockchain.wif }).then(res => {
-        store.set(`${blockchain.name}_${username || auth.user.username}_posting_key`, blockchain.wif)
+  async setPostingKey (context, blockchain, username = '') {
+    try {
+      var res = await UserBlockChain(context.$axios).save({ blockchain: blockchain.name, wif: blockchain.wif })
+    } catch (err) {
+      throw new Error(err.response.status === 404 ? this.$t('has_not_user_with_key') : err.response.data)
+    }
 
-        this.blockchains = []
-        this.initBlockchains(context)
+    store.set(`${blockchain.name}_${username || auth.user.username}_posting_key`, blockchain.wif)
+    this.blockchains = []
+    this.initBlockchains(context)
 
-        resolve(res)
-      }, err => reject(err))
-    })
+    return res
   },
 
   /**

@@ -100,22 +100,15 @@
       showKey (e, bc) {
         e.target.type = 'text'
       },
-      hideKey (e, bc) {
+      async hideKey (e, bc) {
         if (bc.wif && !this.keyInValid) {
-          this.blockchains.setPostingKey(this, bc, this.userName).then(res => {
-            this.$notify({ title: 'Оk', message: this.$t('key_registered'), type: 'success' })
-          }, err => {
+          try {
+            let res = await this.blockchains.setPostingKey(this, bc, this.userName)
+          } catch (err) {
             bc.wif = ''
-            if (err.status === 404) {
-              this.$notify({
-                title: 'Key error',
-                message: this.$t('has_not_user_with_key'),
-                type: 'warning'
-              })
-            } else {
-              this.$notify({ title: 'Key error', message: err.body, type: 'warning' })
-            }
-          })
+
+            this.$notify({ title: 'Key error', message: err.message, type: 'warning' })
+          }
         }
       },
       close () {
