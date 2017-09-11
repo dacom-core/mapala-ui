@@ -150,6 +150,7 @@ export default {
     return JSON.stringify(meta)
   },
 
+
   setBlockchain (blockchain, state) {
     // HACK: На данный момент решено менять блокчейн по локали:
     // en -> steemil, ru -> golos

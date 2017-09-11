@@ -26,8 +26,8 @@ export const Comment = {
   ...resource('api/comments/', axios, {})
 }
 
-export const Marker = {
-  ...resource('api/markers/', axios, {})
+export function Marker (axiosInstance) {
+  return resource('api/markers/', axiosInstance, {})
 }
 
 export const Group = {
