@@ -48,7 +48,7 @@ export default {
         this.$notify({ message: this.$t('published'), type: 'success' })
       } catch (error) {
         this.isFormSaving = false
-        this.$notify({ message: error, type: 'warning' })
+        this.$notify({ message: error.message, type: 'warning' })
       }
     }
   },
