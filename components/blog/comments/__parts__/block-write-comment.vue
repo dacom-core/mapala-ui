@@ -6,10 +6,10 @@
 
       div.write_w
         div.txt(
-        @blur="stopEdit",
-        @keyup.enter="addComment",
-        contenteditable="true",
-        ref="text"
+          @blur="stopEdit",
+          @keyup.enter="addComment",
+          contenteditable="true",
+          ref="text"
         )
         div.placeholder(v-show="!isEdit", @click="startComment")
           | {{ $t('add_comment') }}
@@ -96,25 +96,26 @@ export default {
       //  Ставим заглушку пока ждем ответ блокчейна
       new_comment.isGag = true
 
-//      new_comment.author = {}
-//      new_comment.author.bc_username =
-//      new_comment.author.avatar = auth.user.avatar
-
-      this.post.comments.push(new_comment)
+      new_comment.author = {}
+      new_comment.author.bc_username = this.$store.state.user.personal.bc_username || 'username'
+      new_comment.author.avatar = this.$store.state.user.personal.avatar
 
       bc.createComment(this, new_comment).then(res => {
-        // Убираем заглушку
-        this.clearGag()
 
-        this.post.comments.push(res.body)
+        console.log(res.data)
+
+        this.$store.commit('blog/posts/post_list/PUSH_NEW_COMMENT', {
+          id: this.post.id, comment: res.data
+        })
+
         this.cancelReply()
+
       }, err => {
         this.$notify({ message: err, type: 'warning'})
-        this.clearGag()
       })
     },
 
-    clearGag() {
+    clearGag () {
       this.post.comments = this.post.comments.filter(i => i.isGag != true)
     },
 
@@ -125,7 +126,7 @@ export default {
       if(this.$refs.text.innerText.length == 0)
         this.endEdit()
     },
-    startComment(){
+    startComment (){
       this.isEdit = true
       this.$refs.text.focus()
     },

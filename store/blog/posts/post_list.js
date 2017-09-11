@@ -62,5 +62,13 @@ export const mutations = {
   },
   INSERT_POST_UNSHIFT (state, payload) {
     state.postList.unshift(payload)
+  },
+  PUSH_NEW_COMMENT (state, structure) {
+    for (const post in state.postList.data) {
+      if (post.id === structure.id) {
+        console.log(post)
+        post.comments.push(structure.comment)
+      }
+    }
   }
 }
