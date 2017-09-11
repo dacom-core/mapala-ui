@@ -26,6 +26,7 @@ import { mapState } from 'vuex'
 import bc from '@/api/blockchain'
 
 export default {
+  props: ['post'],
   data () {
     return {
       isEdit: false,
@@ -85,9 +86,9 @@ export default {
       if (err) { return this.$notify({ message: err, type: 'warning' }) }
 
       if (!new_comment.parentPermlink) {
-        new_comment.parentAuthor = this.page.author.bc_username
-        new_comment.parentPermlink = this.page.permlink
-        new_comment.permlink = 're-' + bc.current.blockchain_username + this.page.permlink + '-' + Number(new Date())
+        new_comment.parentAuthor = this.post.author.bc_username
+        new_comment.parentPermlink = this.post.permlink
+        new_comment.permlink = 're-' + bc.current.blockchain_username + this.post.permlink + '-' + Number(new Date())
       } else {
         new_comment.permlink = 're-' + bc.current.blockchain_username + this.new_comment.parentPermlink + '-' + Number(new Date())
       }
@@ -95,17 +96,17 @@ export default {
       //  Ставим заглушку пока ждем ответ блокчейна
       new_comment.isGag = true
 
-      new_comment.author = {}
-      new_comment.author.bc_username = auth.user.username
-      new_comment.author.avatar = auth.user.avatar
+//      new_comment.author = {}
+//      new_comment.author.bc_username =
+//      new_comment.author.avatar = auth.user.avatar
 
-      this.page.comments.push(new_comment)
+      this.post.comments.push(new_comment)
 
       bc.createComment(this, new_comment).then(res => {
         // Убираем заглушку
         this.clearGag()
 
-        this.page.comments.push(res.body)
+        this.post.comments.push(res.body)
         this.cancelReply()
       }, err => {
         this.$notify({ message: err, type: 'warning'})
@@ -114,7 +115,7 @@ export default {
     },
 
     clearGag() {
-      this.page.comments = this.page.comments.filter(i => i.isGag != true)
+      this.post.comments = this.post.comments.filter(i => i.isGag != true)
     },
 
     changeText (value) {

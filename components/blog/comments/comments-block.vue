@@ -3,7 +3,7 @@
 
     comments-list(:post="post")
 
-    write-comment-block
+    write-comment-block(:post="post")
 
 </template>
 
