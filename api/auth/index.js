@@ -32,6 +32,8 @@ export default {
 
       Vue.cookie.set('jwt', data.token)
 
+      context.$store.commit('user/auth/SET_JWT_TOKEN', data.token)
+
       context.$store.commit('user/personal/FILL_USER', data.user)
 
       context.$store.commit('user/auth/SET_AUTH_TO', true)
