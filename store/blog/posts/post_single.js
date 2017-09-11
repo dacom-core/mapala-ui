@@ -21,7 +21,7 @@ export const state = () => ({
 
 export const actions = {
   async fetch_single_post ({ commit }, urlParams) {
-    const { data } = await Post.get(urlParams.username + '*@*' + urlParams.slug)
+    const { data } = await Post(this.$axios).get(urlParams.username + '*@*' + urlParams.slug)
     commit('SET_POST_SINGLE', data)
   }
 }

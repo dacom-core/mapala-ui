@@ -4,6 +4,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import { User } from '@/api/services'
+import _ from 'lodash'
 
 export default {
   async fetch ({ app: { $axios }, store: { commit, dispatch, state }, params: { username } }) { // Grab user's name from url.
@@ -16,10 +17,13 @@ export default {
     await dispatch('blog/posts/post_list/fetch_posts')
 
     const { data: user } = await User($axios).query({ username: username })
-    commit('blog/posts/posts_author/SET_PAGE_AUTHOR_BC_USERNAME', user[0].bc_username)
+
+    if (!_.isEmpty(user)) {
+      commit('blog/posts/posts_author/SET_PAGE_AUTHOR_BC_USERNAME', user[0].bc_username)
+    }
 
     if (state.map.isReady) {
-      // 1. If the page is loaded on client-side. (vue-router transition)
+      //  1. If the page is loaded on client-side. (vue-router transition)
       dispatch('map/fetch_markers')
     }
   },

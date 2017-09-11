@@ -16,7 +16,7 @@
           post-list#post_list_block(
             v-infinite-scroll="loadNextPosts",
             infinite-scroll-disabled="isLoadingDisabled",
-            :infinite-scroll-distance="500"
+            :infinite-scroll-distance="10"
             )
 
         //- RIGHT COLUMNT

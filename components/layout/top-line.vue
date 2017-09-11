@@ -13,11 +13,11 @@
             | MAPALA
 
         div.change_lang
-          input(type="radio" value="ru" id="rus" v-model="locale")
-          label(for="rus", @click="changeLang('ru')")
+          input(type="radio" value="ru" id="rus")
+          label(for="rus", @click="switchBlockchain('ru')")
             | rus/golos
-          input(type="radio" value="en" id="eng" v-model="locale")
-          label(for="eng", @click="changeLang('en')")
+          input(type="radio" value="en" id="eng")
+          label(for="eng", @click="switchBlockchain('en')")
             | eng/steem
 
 
@@ -40,15 +40,14 @@
         nuxt-link(v-if="!isAuth", :to="'/auth/login'", class="login")
           | {{ $t('log_in') }}
 
-        div.right_button(v-else, @click.self="closeMenu")
+        div.right_button(v-else)
 
-          div(@click="openMenu", class="open_menu")
+          div(@click="openMenu", class="open_menu", v-on-clickaway="closeMenu" )
             | {{ $t('menu') }}
 
           div.user_menu(
             v-if="isAuth",
-            :class="{ active : isMenuOpened, user_menuMobile: isMobile }",
-            @click.self="closeMenu"
+            :class="{ active : isMenuOpened, user_menuMobile: isMobile }"
             )
 
             nuxt-link(:to="'/wallet'", class="wal")
@@ -77,14 +76,16 @@
 import { mapState, mapMutations } from 'vuex'
 import Poster from '~/components/layout/__parts__/poster'
 import { delete_cookie } from '@/utils/cookies'
+import bc from '@/api/blockchain'
+import { mixin as clickaway } from 'vue-clickaway'
 
 export default {
+  mixins: [ clickaway ],
   data () {
     return {
       isMenuOpened: false
     }
   },
-
   computed: mapState({
     isAuth: state => state.user.auth.isAuth,
     userName: state => state.user.personal.username,
@@ -99,6 +100,14 @@ export default {
       userLogout: 'user/auth/LOGOUT',
       resetUser: 'user/personal/RESET_USER'
     }),
+
+    async switchBlockchain (locale) {
+      this.$i18n.locale = locale
+      this.$store.commit('SET_LANG', locale)
+      this.$store.commit('blog/posts/post_list/RESET_PAGE')
+      await this.$store.dispatch('blog/posts/post_list/fetch_posts')
+      bc.setBlockchain(this.$store.state)
+    },
 
     logout () {
       this.userLogout()

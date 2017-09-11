@@ -41,8 +41,13 @@
         hideModal: 'modal/HIDE_MODAL'
       }),
       async login () {
-        await auth.login(this, this.credentials, this.backPath)
-        this.hideModal()
+        try {
+          await auth.login(this, this.credentials, this.backPath)
+          this.hideModal()
+        } catch (e) {
+          this.hideModal()
+        }
+
       }
     }
   }

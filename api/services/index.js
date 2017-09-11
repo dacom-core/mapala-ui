@@ -14,11 +14,11 @@ export function User (axiosInstance) {
   })
 }
 
-export const Post = {
-  ...resource('api/pages/', axios, {
-    commentsTree: (permalink) => axios.get(`api/pages/${permalink}/comments_tree/`),
-    updatePost: (payload) => axios.post('api/pages/update_post/', payload),
-    trPost: () => axios.post('api/pages/tr_post/')
+export function Post (axiosInstance) {
+  return resource('api/pages/', axiosInstance, {
+    commentsTree: (permalink) => axiosInstance.get(`api/pages/${permalink}/comments_tree/`),
+    updatePost: (payload) => axiosInstance.post('api/pages/update_post/', payload),
+    trPost: () => axiosInstance.post('api/pages/tr_post/')
   })
 }
 
@@ -51,7 +51,7 @@ export const Image = {
   })
 }
 
-export const Locomotive = {
-  ...resource('api/locomotive/', axios, {})
+export function Locomotive (axiosInstance) {
+  return resource('api/locomotive/', axiosInstance, {})
 }
 

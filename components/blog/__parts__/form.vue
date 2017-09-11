@@ -237,7 +237,7 @@
     },
     created () {
       if (this.isEditForm) {
-        Post.query({ permlink: this.$route.params.author + '*@*' + this.$route.params.permlink }).then(res => {
+        Post(this.$axios).query({ permlink: this.$route.params.author + '*@*' + this.$route.params.permlink }).then(res => {
           this.form.title = res.body.title
           this.form.body = res.body.body
           this.form.position_text = res.body.position_text

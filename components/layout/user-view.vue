@@ -1,6 +1,6 @@
 <template lang="pug">
   div
-    user-profile-block(v-if="isUserProfileBlockVisible")
+    user-profile-block(v-if="isVisible && !isMapalaPage")
     create-post-button(v-if="isAuth")
 </template>
 
@@ -13,8 +13,11 @@
     computed: {
       ...mapState({
         isAuth: state => state.user.auth.isAuth,
-        isUserProfileBlockVisible: state => state.isUserProfileBlockVisible
-      })
+        isVisible: state => state.isUserProfileBlockVisible
+      }),
+      isMapalaPage () {
+        return this.$route.path === '/mapala'
+      }
     },
     components: {
       UserProfileBlock,

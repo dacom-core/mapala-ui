@@ -71,11 +71,10 @@
       ModalBox,
       ModalContent
     },
-    mounted () {
+    async mounted () {
       this.showModal()
-    },
-    created () {
-      Locomotive.query().then(res => this.locomotive = res.data)
+      const { data } = await Locomotive(this.$axios).query()
+      this.locomotive = data
     },
     methods: {
       ...mapMutations({
@@ -103,7 +102,7 @@
       },
       hideKey (e, bc) {
         if (bc.wif && !this.keyInValid) {
-          this.blockchains.setPostingKey(this, bc, this.userName, this.$axios).then(res => {
+          this.blockchains.setPostingKey(this, bc, this.userName).then(res => {
             this.$notify({ title: 'Оk', message: this.$t('key_registered'), type: 'success' })
           }, err => {
             bc.wif = ''

@@ -89,7 +89,7 @@ export default {
       })
 
       this.signTr(tr).then(tr => {
-        Post.save({ tx: tr, blockchain: this.current.name })
+        Post(context.$axios).save({ tx: tr, blockchain: this.current.name })
           .then(res => resolve(res), err => reject(err.body))
       }, err => reject(err))
     })
@@ -234,7 +234,7 @@ export default {
     })
   },
 
-  setPostingKey (context, blockchain, username = '', axios) {
+  setPostingKey (context, blockchain, username = '') {
     return new Promise((resolve, reject) => {
       UserBlockChain(context.$axios).save({ blockchain: blockchain.name, wif: blockchain.wif }).then(res => {
         store.set(`${blockchain.name}_${username || auth.user.username}_posting_key`, blockchain.wif)

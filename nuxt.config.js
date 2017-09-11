@@ -29,7 +29,7 @@ module.exports = {
     'quill/dist/quill.core.css'
   ],
   router: {
-    middleware: ['history-logger', '404']
+    middleware: ['history-logger', '404', 'i18n']
     // scrollBehavior: function (to, from, savedPosition) {
     // }
   },
