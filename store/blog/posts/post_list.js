@@ -21,21 +21,21 @@ export const actions = {
   async fetch_posts ({ commit, state, rootState }) {
     try {
       commit('TOGGLE_POSTS_LOADING_STATUS')
-
       const params = { page: state.postList.page, ...rootState.filters }
 
-      let { data: { results } } = await Post(this.$axios).query(params) // Retrieving all posts
+      let { data } = await Post(this.$axios).query(params) // Retrieving all posts
 
-      if (state.postList.page > 1) {
-        results = state.postList.data.concat(results)
+      if (state.postList.page > 1) { // Then combine with existing post list
+        data.results = state.postList.data.concat(data.results)
       }
-      commit('SET_POST_LIST', results)
+      if (!data.next) { // There are no more posts to load
+        commit('IS_LOADING_ALLOWED', false)
+      }
+      commit('SET_POST_LIST', data.results)
 
       commit('TOGGLE_POSTS_LOADING_STATUS')
     } catch (error) {
-      console.log('There are no posts more')
       commit('TOGGLE_POSTS_LOADING_STATUS')
-      commit('IS_LOADING_ALLOWED', false) // There are no posts (more), loading next ones should be stopped.
     }
   },
   async fetch_next_posts ({ commit, dispatch }) {
@@ -66,7 +66,6 @@ export const mutations = {
   PUSH_NEW_COMMENT (state, structure) {
     for (const post in state.postList.data) {
       if (post.id === structure.id) {
-        console.log(post)
         post.comments.push(structure.comment)
       }
     }
