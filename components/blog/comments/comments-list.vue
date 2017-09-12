@@ -11,7 +11,6 @@
 <script>
 import { Comment } from '@/api/services'
 import CommentsItem from './comments-list-item'
-import _ from 'lodash'
 
 export default {
   props: ['post'],

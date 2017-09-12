@@ -45,9 +45,9 @@ export function UserBlockChain (axiosInstance) {
   })
 }
 
-export const Image = {
-  ...resource('api/images/', axios, {
-    upload: () => axios.post('/post_image/')
+export function Image (axiosInstance) {
+  return resource('api/images/', axiosInstance, {
+    upload: (data) => axiosInstance.post('/post_image/', data)
   })
 }
 
