@@ -1,7 +1,8 @@
 export const state = () => ({
   isUserViewVisible: false,
   isGroupViewVisible: false,
-  isCommonViewVisible: false
+  isCommonViewVisible: false,
+  rightColumn: null
 })
 
 export const actions = {
@@ -24,5 +25,9 @@ export const mutations = {
     state.isUserViewVisible = false
     state.isGroupViewVisible = false
     state.isCommonViewVisible = true
+  },
+
+  SET_RIGHT_COLUMN (state, payload) {
+    state.rightColumn = payload
   }
 }

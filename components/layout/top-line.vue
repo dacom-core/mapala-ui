@@ -104,7 +104,7 @@ export default {
     switchBlockchain (locale) {
       this.$i18n.locale = locale
       this.$store.commit('SET_LANG', locale)
-      this.$store.commit('blog/posts/post_list/RESET_PAGE')
+      this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
       this.$store.dispatch('blog/posts/post_list/fetch_posts')
       this.$store.dispatch('map/fetch_markers')
       bc.setBlockchain(this.$store.state)

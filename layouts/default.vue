@@ -20,7 +20,7 @@
             )
 
         //- RIGHT COLUMNT
-        post-map
+        component(v-if="!isMobile", :is="rightComponent")
 
         //- CONTENT
         nuxt
@@ -33,7 +33,8 @@ import { mapState, mapActions } from 'vuex'
 import blockchain from '@/api/blockchain'
 import TopLine from '~/components/layout/top-line'
 import PostList from '~/components/blog/post-list'
-import PostMap from '~/components/blog/post-map'
+import Map from '~/components/blog/post-map'
+import BlogDesk from '~/components/blog/blog-desk'
 import CommonView from '~/components/layout/common-view'
 import GroupView from '~/components/layout/group-view'
 import UserView from '~/components/layout/user-view'
@@ -43,13 +44,13 @@ export default {
   components: {
     TopLine,
     PostList,
-    PostMap,
+    Map,
+    BlogDesk,
     CommonView,
     GroupView,
     UserView,
     Chat
   },
-
   computed: {
     ...mapState({
       isMobile: state => state.isMobile,
@@ -58,7 +59,8 @@ export default {
       isLoadingAllowed: state => state.blog.posts.post_list.isLoadingAllowed,
       isUserViewVisible: state => state.layout.isUserViewVisible,
       isGroupViewVisible: state => state.layout.isGroupViewVisible,
-      isCommonViewVisible: state => state.layout.isCommonViewVisible
+      isCommonViewVisible: state => state.layout.isCommonViewVisible,
+      rightColumn: state => state.layout.rightColumn
     }),
     isLoadingDisabled () { // Check on has loading of next posts to be disabled
       return this.isLoading || !this.isLoadingAllowed
@@ -71,14 +73,13 @@ export default {
         //  TODO compute distance to load next posts
       }
     },
-    isGroupPage () {
-      return !!this.$route.params.groupname // is it a group's page
-    },
-    isCommonPage () {
-      return this.$route.name === 'index' // is it main page
-    },
-    isUserPage () {
-      return !!this.$route.params.username // is it a user's page
+
+    rightComponent () {
+      if (this.rightColumn === 'desk') {
+        return BlogDesk
+      } else if (this.rightColumn === 'map') {
+        return Map
+      }
     }
   },
 
