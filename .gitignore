@@ -10,5 +10,8 @@ npm-debug.log
 # Nuxt generate
 dist
 
-# Next cache
+# Nuxt cache
 .cache
+
+# Yarn logs
+yarn-error.log
