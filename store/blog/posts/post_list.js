@@ -83,15 +83,22 @@ export const mutations = {
   RESET_PAGINATE (state) { // Reset page variable to 1
     state.postList.page = 1
   },
+  SET_COMMENTS (state, data) { // Reset page variable to 1
+    state.postList.data.forEach((item) => {
+      if (item.id === data.id) {
+        item.comments = data.comments
+      }
+    })
+  },
   INSERT_POST_UNSHIFT (state, payload) {
     state.postList.unshift(payload)
   },
   PUSH_NEW_COMMENT (state, structure) {
-    for (const post in state.postList.data) {
-      if (post.id === structure.id) {
-        post.comments.push(structure.comment)
+    state.postList.data.forEach((item) => {
+      if (item.id === structure.id) {
+        item.comments.push(structure.comment)
       }
-    }
+    })
   },
   SET_TAGS (state, tags) {
     state.postList.tags = tags

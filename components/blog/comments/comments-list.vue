@@ -3,7 +3,7 @@
     div.show_more_comments_button(v-if="hasPostMoreComments", @click="fetchAllComments()")
       | {{ $t('show_comments') }}
 
-    comments-item(v-for="comment of comments", :comment="comment", :key="comment.id")
+    comments-item(v-for="comment of post.comments", :comment="comment", :key="comment.id")
 
 
 </template>
@@ -19,7 +19,6 @@ export default {
   data () {
     return {
       isShowMoreCommentsClicked: false,
-      comments: _.cloneDeep(this.post.comments)
     }
   },
 
@@ -27,13 +26,16 @@ export default {
     hasPostMoreComments () {
       // return true if the quantity of all comments for this post is bigger than
       // the quantity of comments preloaded with post (By default 3 if there is)
-      return this.post.comments_count > this.comments.length
+      return this.post.comments_count > this.post.comments.length
     }
   },
   methods: {
     async fetchAllComments () {
       const { data } = await Comment.query({ 'page': this.post.id })
-      this.comments = data
+      this.$store.commit('blog/posts/post_list/SET_COMMENTS', {
+        id: this.post.id,
+        comments: data
+      })
     }
   },
 

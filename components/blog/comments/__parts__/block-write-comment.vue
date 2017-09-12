@@ -93,16 +93,12 @@ export default {
         new_comment.permlink = 're-' + bc.current.blockchain_username + this.new_comment.parentPermlink + '-' + Number(new Date())
       }
 
-      //  Ставим заглушку пока ждем ответ блокчейна
-      new_comment.isGag = true
 
       new_comment.author = {}
       new_comment.author.bc_username = this.$store.state.user.personal.bc_username || 'username'
       new_comment.author.avatar = this.$store.state.user.personal.avatar
 
       bc.createComment(this, new_comment).then(res => {
-
-        console.log(res.data)
 
         this.$store.commit('blog/posts/post_list/PUSH_NEW_COMMENT', {
           id: this.post.id, comment: res.data
