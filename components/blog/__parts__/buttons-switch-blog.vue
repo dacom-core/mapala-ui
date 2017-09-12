@@ -11,7 +11,7 @@
             | {{ $t('travel_blogs') }}
 
       el-col(:span="11")
-        router-link(:to="'/mapala'")
+        nuxt-link(:to="'/mapala'")
           el-button(:plain="true" size="large" type="info")
             | {{ $t('mapala_blogs') }}
 
@@ -62,7 +62,7 @@ export default {
   .blog-nav button {
     width: 100%;
   }
-  .blog-nav .router-link-exact-active button {
+  .blog-nav .nuxt-link-exact-active button {
     border-color: #50bfff;
     color: #50bfff;
   }
