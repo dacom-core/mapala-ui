@@ -237,13 +237,13 @@
     },
     created () {
       if (this.isEditForm) {
-        Post(this.$axios).query({ permlink: this.$route.params.author + '*@*' + this.$route.params.permlink }).then(res => {
-          this.form.title = res.body.title
-          this.form.body = res.body.body
-          this.form.position_text = res.body.position_text
-          this.form.meta.location.name = res.body.position_text
-          this.form.meta.location.lat = res.body.position.latitude
-          this.form.meta.location.lng = res.body.position.longitude
+        Post(this.$axios).get(this.$route.params.username + '*@*' + this.$route.params.slug).then(res => {
+          this.form.title = res.data.title
+          this.form.body = res.data.body
+          this.form.position_text = res.data.position_text
+          this.form.meta.location.name = res.data.position_text
+          this.form.meta.location.lat = res.data.position.latitude
+          this.form.meta.location.lng = res.data.position.longitude
         })
       }
     },

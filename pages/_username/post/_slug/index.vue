@@ -2,7 +2,6 @@
   modal-backdrop
     modal-box
       modal-close-button
-
       modal-content
         post-view
 </template>

@@ -68,7 +68,7 @@ export default {
   computed: {
     ...mapState({
       isAuth: state => state.user.auth.isAuth,
-      userName: state => state.user.personal.userName,
+      userName: state => state.user.personal.username,
       post: state => state.blog.posts.post_single.postSingle
     }),
 
@@ -157,7 +157,7 @@ export default {
     padding: 0 16px;
     cursor: pointer;
     user-select: none;
-    margin-right: 30px;
+    margin-right: 50px;
     margin-left: 20px;
     width: 123px;
     height: 40px;
