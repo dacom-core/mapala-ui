@@ -25,6 +25,8 @@
         //- CONTENT
         nuxt
 
+    chat
+
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
@@ -35,6 +37,7 @@ import PostMap from '~/components/blog/post-map'
 import CommonView from '~/components/layout/common-view'
 import GroupView from '~/components/layout/group-view'
 import UserView from '~/components/layout/user-view'
+import Chat from '~/components/other/chat'
 
 export default {
   components: {
@@ -43,7 +46,8 @@ export default {
     PostMap,
     CommonView,
     GroupView,
-    UserView
+    UserView,
+    Chat
   },
 
   computed: {
