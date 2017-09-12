@@ -4,10 +4,10 @@
       header-box
         div.login-form
           div.two.tab_headers
-            nuxt-link.tab_header(:to="{ path: '/auth/login' }")
+            nuxt-link.tab_header(:to="{ path: '/auth/login' }", :class="{ active: isLoginPage }")
               | {{ $t('log_in') }}
 
-            nuxt-link.tab_header(:to="{ path: '/auth/sign-up' }")
+            nuxt-link.tab_header(:to="{ path: '/auth/sign-up' }", :class="{ active: isSignUpPage }")
               | {{ $t('sign_in') }}
 
       modal-content
@@ -31,6 +31,14 @@
     },
     fetch ({ store: { commit }, from }) {
       commit('SET_BACK_PATH', from || {})
+    },
+    computed: {
+      isLoginPage () {
+        return this.$route.name === 'auth-login'
+      },
+      isSignUpPage () {
+        return this.$route.name === 'auth-sign-up'
+      }
     },
     methods: {
       ...mapMutations({
