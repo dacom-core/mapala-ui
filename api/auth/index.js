@@ -27,22 +27,19 @@ export default {
   },
 
   async login (context, creds, redirect) {
-    try {
-      const { data } = await axios.post(JWT_AUTH_URL, creds)
+    const { data } = await axios.post(JWT_AUTH_URL, creds)
 
-      Vue.cookie.set('jwt', data.token)
+    Vue.cookie.set('jwt', data.token)
 
-      context.$store.commit('user/auth/SET_JWT_TOKEN', data.token)
+    context.$store.commit('user/auth/SET_JWT_TOKEN', data.token)
 
-      context.$store.commit('user/personal/FILL_USER', data.user)
+    context.$store.commit('user/personal/FILL_USER', data.user)
 
-      context.$store.commit('user/auth/SET_AUTH_TO', true)
+    context.$store.commit('user/auth/SET_AUTH_TO', true)
 
-      blockchains.initBlockchains(context)
-      if (redirect) { context.$router.push(redirect) }
-    } catch (error) {
-      showErrors(error, context)
-    }
+    blockchains.initBlockchains(context)
+
+    if (redirect) { context.$router.push(redirect) }
   },
 
   existngSignUp (context, creds, redirect) {
@@ -63,7 +60,7 @@ export default {
 
     }, res => {
       context.loading = false
-      showErrors(res.body, context)
+      showErrors(res.data, context)
     })
   },
 
@@ -97,7 +94,7 @@ export default {
       )
     } catch (error) {
       context.loading = false
-      showErrors(error, context)
+      showErrors(error.response.data, context)
     }
   },
 

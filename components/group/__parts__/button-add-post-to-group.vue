@@ -1,5 +1,5 @@
 <template lang="pug">
-  nuxt-link.add_post_to_group(:to="makePath('create', getGroupName)")
+  nuxt-link.add_post_to_group(:to="makePath('create-post-group', getGroupName)")
     div.av_wrap
       img.user_av(v-if="userAvatar", :src="userAvatar")
       img.user_av(v-else src="~assets/icon-profile-w.svg")

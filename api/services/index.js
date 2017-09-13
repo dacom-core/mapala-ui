@@ -6,7 +6,7 @@ export function User (axiosInstance) {
     current: () => axiosInstance.get('api/users/current/'),
     signUp: (data) => axiosInstance.post('/sign-up/', data),
     setPassword: () => axiosInstance.post('api/users/set_password/'),
-    resetPassword: () => axiosInstance.post('api/users/reset_password/'),
+    resetPassword: (data) => axiosInstance.post('api/users/reset_password/', data),
     existingSignUp: () => axiosInstance.post('/existng-sign-up/'),
     setAvatar: (user_name) => axiosInstance.post(`api/users/${user_name}/set_avatar/`),
     removeAvatar: (user_name) => axiosInstance.post(`api/users/${user_name}/remove_avatar/`),

@@ -7,6 +7,8 @@ export default function (action, identifier, permalink = '') {
     link = `/${identifier}/post/${permalink}/edit/`
   } else if (action === 'create') {
     link = `/${identifier}/post/create/`
+  } else if (action === 'create-post-group') {
+    link = `/group/${identifier}/post/create/`
   }
 
   return link

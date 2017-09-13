@@ -14,14 +14,13 @@
     </div>
     <button class="submit-button">{{ $t('log_in') }}</button>
 
-    <router-link class="forgot" :to="{ name: 'resetPassword'} ">{{ $t('forgot_password') }}</router-link>
+    <router-link class="forgot" :to="{ name: 'auth-reset-password'} ">{{ $t('forgot_password') }}</router-link>
   </form>
 </template>
 
 <script>
   import auth from '@/api/auth'
   import { mapMutations, mapGetters } from 'vuex'
-  import { set_cookie } from '@/utils/cookies'
 
   export default {
     name: 'login',
@@ -46,7 +45,7 @@
           await auth.login(this, this.credentials, this.backPath)
           this.hideModal()
         } catch (e) {
-          this.hideModal()
+          console.log(e)
         }
       }
     }

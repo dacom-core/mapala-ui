@@ -80,7 +80,7 @@
               lat: '',
               lng: ''
             },
-            group: 'rnd',
+            group: this.groupName || null,
             tags: []
           }
         },
@@ -112,6 +112,9 @@
         userAvatar: state => state.user.personal.avatar,
         userName: state => state.user.personal.username
       }),
+      groupName () {
+        return this.$route.params.groupname
+      }
     },
     validations: {
       form: {
@@ -146,21 +149,21 @@
   //        })
   //      },
   //
-        onPaste (e) {
-          if (e.defaultPrevented || !this.quill.isEnabled()) {
-            return
-          }
-          const range = this.quill.getSelection()
-          let delta = new Delta().retain(range.index)
-          this.container.focus()
-          setTimeout(() => {
-            this.quill.selection.update(Quill.sources.SILENT)
-            delta = delta.concat(this.convert()).delete(range.length)
-            this.quill.updateContents(delta, Quill.sources.USER)
-            this.quill.setSelection(delta.length() - range.length, Quill.sources.SILENT)
-            this.quill.selection.scrollIntoView()
-          }, 1)
-        },
+      onPaste (e) {
+        if (e.defaultPrevented || !this.quill.isEnabled()) {
+          return
+        }
+        const range = this.quill.getSelection()
+        let delta = new Delta().retain(range.index)
+        this.container.focus()
+        setTimeout(() => {
+          this.quill.selection.update(Quill.sources.SILENT)
+          delta = delta.concat(this.convert()).delete(range.length)
+          this.quill.updateContents(delta, Quill.sources.USER)
+          this.quill.setSelection(delta.length() - range.length, Quill.sources.SILENT)
+          this.quill.selection.scrollIntoView()
+        }, 1)
+      },
       imageHandler () {
         const range = this.editor.getSelection()
         const value = prompt('What is the image URL')
@@ -235,9 +238,26 @@
       }
     },
 
+    mounted () {
+      console.log(this.$route.params)
+    },
+
     watch: {
       resetForm () {
-
+        this.form = {
+          title: '',
+          body: '',
+          meta: {
+            image: [],
+            location: {
+              name: '',
+              lat: '',
+              lng: ''
+            },
+            group: this.groupName || null,
+            tags: []
+          }
+        }
       }
     }
   }

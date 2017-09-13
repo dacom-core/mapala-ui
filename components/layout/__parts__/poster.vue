@@ -42,14 +42,11 @@
 
         <ul v-for="city in cities" style="margin: 0;padding: 0;">
           <li style="list-style: none;font-size: 12px;color: #6984a8;">
-            <router-link :to="{ path: '/' + city.name }" class="poster_link">{{ city.city }}</router-link>
+            <router-link :to="{ path: '/group/' + city.name }" class="poster_link">{{ city.city }}</router-link>
           </li>
         </ul>
       </div>
     </el-popover>
-
-
-
 
 
     <el-button v-popover:popover4>
