@@ -4,7 +4,7 @@ import axios from 'axios'
 export function User (axiosInstance) {
   return resource('api/users/', axiosInstance, {
     current: () => axiosInstance.get('api/users/current/'),
-    signUp: () => axiosInstance.post('/sign-up/'),
+    signUp: (data) => axiosInstance.post('/sign-up/', data),
     setPassword: () => axiosInstance.post('api/users/set_password/'),
     resetPassword: () => axiosInstance.post('api/users/reset_password/'),
     existingSignUp: () => axiosInstance.post('/existng-sign-up/'),

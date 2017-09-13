@@ -33,7 +33,6 @@
 </template>
 
 <script>
-  import Vue from 'vue'
   import auth from '@/api/auth'
   import bc from '@/api/blockchain'
   import { User } from '@/api/services'
@@ -50,7 +49,7 @@
         bc_username: '',
         wif: '',
         errors: [],
-        golosAlreadyReg: Vue.config.lang === 'ru' ? null : true
+        golosAlreadyReg: this.$store.state.locale === 'ru' ? null : true
       }
     },
     methods: {

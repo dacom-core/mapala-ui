@@ -45,7 +45,7 @@ export default {
     }
   },
 
-  existngSignUp(context, creds, redirect) {
+  existngSignUp (context, creds, redirect) {
     context.loading = true
     User(context.$axios).existngSignUp(creds).then(res => {
       context.loading = false
@@ -67,22 +67,27 @@ export default {
     })
   },
 
-  signUp (context, creds, redirect) {
-    context.loading = true
-    User(context.$axios).signUp(creds).then(res => {
-      context.loading = false
+  async signUp (context, creds, redirect) {
+    try {
+      context.loading = true
       store.clearAll()
 
-      store.set('jwt', res.body.token)
-      this.isAuth = true
-      this.user = res.body.user
+      const { data } = await User(context.$axios).signUp(creds)
 
-      // Добавляем ключ для голоса
-      store.set(`golos_${this.user.username}_posting_key`, res.body.posting_key)
+      Vue.cookie.set('jwt', data.token)
+
+      context.$store.commit('user/auth/SET_JWT_TOKEN', data.token)
+
+      context.$store.commit('user/personal/FILL_USER', data.user)
+
+      context.$store.commit('user/auth/SET_AUTH_TO', true)
+
+      store.set(`golos_${data.user.username}_posting_key`, data.posting_key)
+
       blockchains.initBlockchains(context)
 
       context.$alert(
-        res.body.posting_key,
+        data.posting_key,
         'Сохраните ваш приватный постинг ключ от golos.io', {
           confirmButtonText: 'Я сохранил ключ',
           callback: () => {
@@ -90,14 +95,13 @@ export default {
           }
         }
       )
-
-    }, res => {
+    } catch (error) {
       context.loading = false
-      showErrors(res.body, context)
-    })
+      showErrors(error, context)
+    }
   },
 
-  logout(context) {
+  logout (context) {
     this.isAuth = false
     this.user = {}
 
