@@ -85,11 +85,11 @@
 
       loco_update () {
         if (this.locomotive) {
-          Locomotive.save({ wif: blockchains.current.wif }).then(res => {
+          Locomotive(this.$axios).save({ wif: blockchains.current.wif }).then(res => {
             console.log(res.data)
           })
         } else {
-          Locomotive.delete().then(res => console.log(res.data))
+          Locomotive(this.$axios).delete().then(res => console.log(res.data))
         }
       },
 

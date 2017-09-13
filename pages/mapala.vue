@@ -5,17 +5,17 @@
   export default {
     async fetch ({ store: { dispatch, commit, state } }) {
       // LAYOUT BLOCK
-      commit('layout/SET_RIGHT_COLUMN', 'map')
+      commit('layout/SET_RIGHT_COLUMN', 'desk')
       commit('layout/SET_COMMON_BLOCK_VISIBLE')
 
       // RESET BLOCK
-      commit('blog/posts/post_list/RESET_PAGINATE')
       commit('blog/posts/post_list/RESET_TAGS')
+      commit('blog/posts/post_list/RESET_PAGINATE')
       commit('blog/posts/post_list/RESET_RANGE')
 
       // FILTERS BLOCK
       commit('blog/posts/post_list/IS_LOADING_ALLOWED', true) // Allow making requests for new posts.
-      commit('SET_FILTERS', {}) // Reset filters for markers/post
+      commit('SET_FILTERS', { author__username: 'mapala' }) // Filters for markers/post
 
       // ACTIONS BLOCK
       await dispatch('blog/posts/post_list/fetch_posts')
@@ -27,3 +27,6 @@
     }
   }
 </script>
+
+<style lang="stylus" scoped>
+</style>

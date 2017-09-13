@@ -7,14 +7,22 @@ import { User } from '@/api/services'
 import _ from 'lodash'
 
 export default {
-  async fetch ({ app: { $axios }, store: { commit, dispatch, state }, params: { username } }) { // Grab user's name from url.
+  async fetch ({ app: { $axios }, store: { commit, dispatch, state }, params: { username } }) {
+    // LAYOUT BLOCK
+    commit('layout/SET_RIGHT_COLUMN', 'map')
     commit('layout/SET_USER_BLOCK_VISIBLE')
-    commit('blog/posts/post_list/RESET_PAGE') // Reset paginate.
+
+    // RESET BLOCK
+    commit('blog/posts/post_list/RESET_TAGS')
+    commit('blog/posts/post_list/RESET_PAGINATE')
+    commit('blog/posts/post_list/RESET_RANGE')
+
+    // FILTERS BLOCK
     commit('blog/posts/post_list/IS_LOADING_ALLOWED', true) // Allow making requests for new posts.
-    commit('SET_FILTERS', { author__username: username })
+    commit('SET_FILTERS', { author__username: username }) // Filters for markers/post
 
+    // ACTIONS BLOCK
     await dispatch('blog/posts/post_list/fetch_posts')
-
     const { data: user } = await User($axios).query({ username: username })
 
     if (!_.isEmpty(user)) {

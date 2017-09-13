@@ -49,7 +49,6 @@ export default {
 
     return new Promise((resolve, reject) => {
       tr.finalize().then(() => {
-        tr.sign()
         resolve(tr.toObject())
       }, err => reject(err))
     })
@@ -74,6 +73,7 @@ export default {
 
   async updatePost (context, post) {
     this.checkValidKey(context)
+
     const tr = new TransactionBuilder()
 
     post.permlink = this.getPermlink(post.title)
@@ -88,6 +88,7 @@ export default {
       })
 
     let signedTr = await this.signTr(tr)
+
 
     try {
       return await Post(context.$axios).save({ tx: signedTr, blockchain: this.current.name })

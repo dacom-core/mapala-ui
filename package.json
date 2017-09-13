@@ -45,6 +45,7 @@
     "vue-markdown": "^2.2.4",
     "vue-no-ssr": "^0.2.0",
     "vue-quill-editor": "^2.3.2",
+    "vue-recaptcha": "^0.4.0",
     "vue-scrollto": "^2.7.2",
     "vue-style-loader": "^3.0.1",
     "vue2-google-maps": "^0.7.10",

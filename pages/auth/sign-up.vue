@@ -24,35 +24,40 @@
           <input placeholder="Желаемый Golos.io username" v-model="bc_username" class="inpt i-user"><label></label>
         </div>
       </div>
+
+      <vue-recaptcha ref="recaptcha" sitekey="6LfKfS8UAAAAAHEecRYjwgsL7p2SDXriEC5m0Otc" @verify="success"></vue-recaptcha>
+
       <el-button class="submit-button" :loading="loading" @click="signUp">{{ $t('sign_in') }}</el-button>
     </div>
   </form>
 </template>
 
 <script>
-  import Vue from 'vue'
   import auth from '@/api/auth'
   import bc from '@/api/blockchain'
   import { User } from '@/api/services'
+  import VueRecaptcha from 'vue-recaptcha'
 
   export default {
     data () {
       return {
         bc: bc,
+        recaptcha: '',
         loading: false,
         username: '',
         password: '',
         bc_username: '',
         wif: '',
         errors: [],
-        golosAlreadyReg: Vue.config.lang === 'ru' ? null : true
+        golosAlreadyReg: this.$store.state.locale === 'ru' ? null : true
       }
     },
     methods: {
       signUp () {
         const creds = {
           username: this.username,
-          password: this.password
+          password: this.password,
+          g_recaptcha_response: this.recaptcha
         }
 
         if (this.golosAlreadyReg === true) {
@@ -62,6 +67,11 @@
           creds.bc_username = this.bc_username
           auth.signUp(this, creds, { name: 'index' })
         }
+        this.$refs.recaptcha.reset()
+      },
+
+      success(res) {
+        this.recaptcha = res
       },
 
       // TODO Сделать подсказки по доступности логина/блокчейн юзернейма
@@ -88,6 +98,17 @@
       'username' () {
         // this.checkLogin()
       }
+    },
+    components: { VueRecaptcha },
+
+    mounted () {
+      const s = document.createElement('script')
+      s.type = 'text/javascript'
+      s.async = true
+      s.defer = true
+      s.src = 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit';
+
+      document.getElementsByTagName('head')[0].appendChild(s)
     }
   }
 </script>

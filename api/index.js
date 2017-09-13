@@ -33,7 +33,7 @@ export function resource (path, http, actions) {
     save: obj => http.post(path, obj),
     query: params => http.get(path, { params }),
     update: (id, obj) => http.put(path + '/' + id, obj),
-    delete: id => http.delete(path + '/' + id)
+    delete: (id = '') => http.delete(path + '/' + id)
   }
   return Object.assign(obj, actions)
 }

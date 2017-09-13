@@ -42,6 +42,7 @@
         div.quill-editor.write_text(
           v-quill:myQuillEditor="editorOption",
           ref="myQuillEditor",
+          @ready="onEditorReady($event)"
           v-model="form.body",
           @change="$v.form.body.$touch()"
           )
@@ -79,7 +80,7 @@
               lat: '',
               lng: ''
             },
-            group: 'rnd',
+            group: this.groupName || null,
             tags: []
           }
         },
@@ -102,7 +103,8 @@
             }
           }
         },
-        image_loading: false
+        image_loading: false,
+        editor: null
       }
     },
     computed: {
@@ -110,9 +112,8 @@
         userAvatar: state => state.user.personal.avatar,
         userName: state => state.user.personal.username
       }),
-
-      editor () {
-        return this.$refs.myQuillEditor.quill
+      groupName () {
+        return this.$route.params.groupname
       }
     },
     validations: {
@@ -130,57 +131,44 @@
       ...mapMutations({
         hideModal: 'modal/HIDE_MODAL'
       }),
-
-//      updateTitle (e) {
-//        this.$store.commit('blog/posts/post_form/UPDATE_TITLE', e.target.value)
-//      },
-
-//      updateBody ({ editor, html, text }) {
-//        this.$store.commit('blog/posts/post_form/UPDATE_BODY', html)
-//        this.$store.commit('blog/posts/post_form/UPDATE_BODY', html)
-//        this.$v.form.body.$touch()
-//      },
-//
-//      handleClose (tag) {
-//        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1)
-//      },
-//
-//      showInput () {
-//        this.inputVisible = true
-//        this.$nextTick(_ => {
-//          this.$refs.saveTagInput.$refs.input.focus()
-//        })
-//      },
-//
-//      handleAddingNewTag () {
-//        const newTagInputValue = this.newTagInputValue
-//        if (newTagInputValue) {
-//          this.form.meta.tags.push(newTagInputValue)
-//        }
-//        this.inputVisible = false
-//        this.newTagInputValue = ''
-//      },
-//
-//      onPaste (e) {
-//        if (e.defaultPrevented || !this.quill.isEnabled()) {
-//          return
-//        }
-//        const range = this.quill.getSelection()
-//        let delta = new Delta().retain(range.index)
-//        this.container.focus()
-//        setTimeout(() => {
-//          this.quill.selection.update(Quill.sources.SILENT)
-//          delta = delta.concat(this.convert()).delete(range.length)
-//          this.quill.updateContents(delta, Quill.sources.USER)
-//          this.quill.setSelection(delta.length() - range.length, Quill.sources.SILENT)
-//          this.quill.selection.scrollIntoView()
-//        }, 1)
-//      },
-//      imageHandler () {
-//        const range = this.editor.getSelection()
-//        const value = prompt('What is the image URL')
-//        this.editor.insertEmbed(range.index, 'image', value, Quill.sources.USER)
-//      },
+      onEditorReady (editor) {
+        this.editor = editor
+      },
+  //      updateTitle (e) {
+  //        this.$store.commit('blog/posts/post_form/UPDATE_TITLE', e.target.value)
+  //      },
+  //      updateBody ({ editor, html, text }) {
+  //        this.$store.commit('blog/posts/post_form/UPDATE_BODY', html)
+  //        this.$store.commit('blog/posts/post_form/UPDATE_BODY', html)
+  //        this.$v.form.body.$touch()
+  //      },
+  //      showInput () {
+  //        this.inputVisible = true
+  //        this.$nextTick(_ => {
+  //          this.$refs.saveTagInput.$refs.input.focus()
+  //        })
+  //      },
+  //
+      onPaste (e) {
+        if (e.defaultPrevented || !this.quill.isEnabled()) {
+          return
+        }
+        const range = this.quill.getSelection()
+        let delta = new Delta().retain(range.index)
+        this.container.focus()
+        setTimeout(() => {
+          this.quill.selection.update(Quill.sources.SILENT)
+          delta = delta.concat(this.convert()).delete(range.length)
+          this.quill.updateContents(delta, Quill.sources.USER)
+          this.quill.setSelection(delta.length() - range.length, Quill.sources.SILENT)
+          this.quill.selection.scrollIntoView()
+        }, 1)
+      },
+      imageHandler () {
+        const range = this.editor.getSelection()
+        const value = prompt('What is the image URL')
+        this.editor.insertEmbed(range.index, 'image', value, Quill.sources.USER)
+      },
 
       imageUploadHandler () {
         this.$refs.inputImage.click()
@@ -192,8 +180,10 @@
         const formData = new FormData()
         formData.append('file', this.$refs.inputImage.files[0])
 
-        Image.upload(formData).then(res => {
-          const imgUrl = res.body
+        Image(this.$axios).upload(formData).then(res => {
+          const imgUrl = res.data
+
+          console.log(this.editor)
 
           const range = this.editor.getSelection(true)
           this.editor.insertEmbed(range.index + 1, 'image', imgUrl, 'user')
@@ -237,20 +227,37 @@
     },
     created () {
       if (this.isEditForm) {
-        Post(this.$axios).query({ permlink: this.$route.params.author + '*@*' + this.$route.params.permlink }).then(res => {
-          this.form.title = res.body.title
-          this.form.body = res.body.body
-          this.form.position_text = res.body.position_text
-          this.form.meta.location.name = res.body.position_text
-          this.form.meta.location.lat = res.body.position.latitude
-          this.form.meta.location.lng = res.body.position.longitude
+        Post(this.$axios).get(this.$route.params.username + '*@*' + this.$route.params.slug).then(res => {
+          this.form.title = res.data.title
+          this.form.body = res.data.body
+          this.form.position_text = res.data.position_text
+          this.form.meta.location.name = res.data.position_text
+          this.form.meta.location.lat = res.data.position.latitude
+          this.form.meta.location.lng = res.data.position.longitude
         })
       }
     },
 
+    mounted () {
+      console.log(this.$route.params)
+    },
+
     watch: {
       resetForm () {
-
+        this.form = {
+          title: '',
+          body: '',
+          meta: {
+            image: [],
+            location: {
+              name: '',
+              lat: '',
+              lng: ''
+            },
+            group: this.groupName || null,
+            tags: []
+          }
+        }
       }
     }
   }

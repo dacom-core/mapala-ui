@@ -21,26 +21,49 @@ export const actions = {
   async fetch_posts ({ commit, state, rootState }) {
     try {
       commit('TOGGLE_POSTS_LOADING_STATUS')
+      const params = {
+        page: state.postList.page,
+        created_at__lte: state.postList.range.lte,
+        created_at__gte: state.postList.range.gte,
+        tags: state.postList.tags,
+        ...rootState.filters }
 
-      const params = { page: state.postList.page, ...rootState.filters }
+      const { data } = await Post(this.$axios).query(params) // Retrieving all posts
 
-      let { data: { results } } = await Post(this.$axios).query(params) // Retrieving all posts
-
-      if (state.postList.page > 1) {
-        results = state.postList.data.concat(results)
+      if (state.postList.page > 1) { // Then combine with existing post list
+        data.results = state.postList.data.concat(data.results)
       }
-      commit('SET_POST_LIST', results)
+      if (!data.next) { // There are no more posts to load
+        commit('IS_LOADING_ALLOWED', false)
+      }
+      commit('SET_POST_LIST', data.results)
 
       commit('TOGGLE_POSTS_LOADING_STATUS')
     } catch (error) {
-      console.log('There are no posts more')
       commit('TOGGLE_POSTS_LOADING_STATUS')
-      commit('IS_LOADING_ALLOWED', false) // There are no posts (more), loading next ones should be stopped.
     }
   },
   async fetch_next_posts ({ commit, dispatch }) {
     commit('SET_NEXT_PAGE')
     return dispatch('fetch_posts')
+  },
+  async setRange ({ dispatch, commit }, range) {
+    commit('RESET_PAGINATE')
+    commit('RESET_TAGS')
+    if (range.lte) { commit('SET_LTE', range.lte) }
+    commit('SET_GTE', range.gte)
+    return dispatch('fetch_posts')
+  },
+  async setTags ({ dispatch, commit, state }, tag) {
+    commit('RESET_RANGE')
+    commit('RESET_PAGINATE')
+    commit('SET_TAGS', tag)
+
+    const params = {
+      tag: tag
+    }
+
+    return dispatch('fetch_posts', params)
   }
 }
 
@@ -57,10 +80,40 @@ export const mutations = {
   IS_LOADING_ALLOWED (state, payload) {
     state.isLoadingAllowed = payload
   },
-  RESET_PAGE (state) { // Reset page variable to 1
+  RESET_PAGINATE (state) { // Reset page variable to 1
     state.postList.page = 1
+  },
+  SET_COMMENTS (state, data) { // Reset page variable to 1
+    state.postList.data.forEach((item) => {
+      if (item.id === data.id) {
+        item.comments = data.comments
+      }
+    })
   },
   INSERT_POST_UNSHIFT (state, payload) {
     state.postList.unshift(payload)
+  },
+  PUSH_NEW_COMMENT (state, structure) {
+    state.postList.data.forEach((item) => {
+      if (item.id === structure.id) {
+        item.comments.push(structure.comment)
+      }
+    })
+  },
+  SET_TAGS (state, tags) {
+    state.postList.tags = tags
+  },
+  RESET_TAGS (state) {
+    state.postList.tags = null
+  },
+  SET_LTE (state, date) {
+    state.postList.range.lte = date
+  },
+  SET_GTE (state, date) {
+    state.postList.range.gte = date
+  },
+  RESET_RANGE (state) {
+    state.postList.range.gte = null
+    state.postList.range.lte = null
   }
 }
