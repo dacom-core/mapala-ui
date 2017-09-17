@@ -1,4 +1,4 @@
-import slug from 'slug'
+import slug from '../../utils/slugify.js'
 import steem from 'steem'
 import store from 'store'
 import auth from '../auth'
@@ -12,8 +12,9 @@ export default {
   current: {},
   bc_list: [],
   blockchains: {},
-  app_tag: (process.env.NODE_ENV == 'production' &&
-    !window.location.host.includes('develop')) ? 'mapala' : 'testing',
+  // app_tag: (process.env.NODE_ENV === 'production' &&
+  //   !window.location.host.includes('develop')) ? 'mapala' : 'testing',
+  app_tag: 'mapala',
 
   init (store = '') {
     ChainConfig.expire_in_secs = 30
