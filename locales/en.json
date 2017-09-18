@@ -116,5 +116,9 @@
   "watch": "Watch",
   "sign_up": "Registration",
   "login": "Login",
-  "replied": "answered"
+  "replied": "answered",
+  "join_trail": "Join trail",
+  "balance": "Steem",
+  "rostov_na_donu": "Rostov-on-Don",
+  "stable_currency": "SBD"
 }

@@ -14,6 +14,7 @@
 <script>
 import { mapState } from 'vuex'
 import linkMaker from '@/utils/router_link_maker'
+import bc from '@/api/blockchain'
 
 export default {
   computed: {

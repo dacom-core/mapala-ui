@@ -20,6 +20,8 @@ export default {
     }
   },
 
+  middleware: ['hasPostingKey'],
+
   data () {
     return {
       resetForm: false,

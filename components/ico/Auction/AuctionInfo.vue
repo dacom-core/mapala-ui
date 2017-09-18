@@ -29,7 +29,7 @@
                         <div class="stat">
                             <h4>{{ $t('investments') }}</h4>
                             <span>{{wallet.personal_btc}} BTC</span>
-                            <span>{{wallet.personal_gbg}} GBG</span>
+                            <span>{{wallet.personal_gbg}} {{ stable_currency }}</span>
                         </div>
                         <div class="stat">
                           <h4>{{ $t('tokens') }}</h4>

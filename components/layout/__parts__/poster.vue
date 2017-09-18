@@ -12,7 +12,7 @@
 
         <ul v-for="city in cities" style="margin: 0;padding: 0;">
           <li style="list-style: none;font-size: 12px;color:#8DAFE1;padding: 3px 1px 3px 1px;">
-            {{ city.city }}
+            {{ $t('rostov_na_donu') }}
           </li>
         </ul>
       </div>
@@ -22,7 +22,8 @@
 
         <ul v-for="city in cities" style="margin: 0;padding: 0;">
           <li style="list-style: none;font-size: 12px;color: #6984a8;">
-            <a :href="city.chanel_link" class="poster_link">{{ city.city }}</a>
+            <!--<a :href="city.chanel_link" class="poster_link">{{ city.city }}</a>-->
+            <a :href="city.chat_link" class="poster_link">{{ $t('rostov_na_donu') }}</a>
           </li>
         </ul>
       </div>
@@ -32,7 +33,8 @@
 
         <ul v-for="city in cities" style="margin: 0;padding: 0;">
           <li style="list-style: none;font-size: 12px;color: #6984a8;">
-            <a :href="city.chat_link" class="poster_link">{{ city.city }}</a>
+            <!--<a :href="city.chat_link" class="poster_link">{{ city.city }}</a>-->
+            <a :href="city.chat_link" class="poster_link">{{ $t('rostov_na_donu') }}</a>
           </li>
         </ul>
       </div>
@@ -42,7 +44,7 @@
 
         <ul v-for="city in cities" style="margin: 0;padding: 0;">
           <li style="list-style: none;font-size: 12px;color: #6984a8;">
-            <router-link :to="{ path: '/group/' + city.name }" class="poster_link">{{ city.city }}</router-link>
+            <router-link :to="{ path: '/group/' + city.name }" class="poster_link">{{ $t('rostov_na_donu') }}</router-link>
           </li>
         </ul>
       </div>

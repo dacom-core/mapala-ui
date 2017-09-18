@@ -4,10 +4,10 @@ import axios from 'axios'
 export function User (axiosInstance) {
   return resource('api/users/', axiosInstance, {
     current: () => axiosInstance.get('api/users/current/'),
-    signUp: (data) => axiosInstance.post('/sign-up/', data),
+    signUp: (data) => axiosInstance.post('/api/auth/sign-up/', data),
     setPassword: () => axiosInstance.post('api/users/set_password/'),
     resetPassword: (data) => axiosInstance.post('api/users/reset_password/', data),
-    existingSignUp: () => axiosInstance.post('/existng-sign-up/'),
+    existingSignUp: () => axiosInstance.post('api/auth/existng-sign-up/'),
     setAvatar: (user_name) => axiosInstance.post(`api/users/${user_name}/set_avatar/`),
     removeAvatar: (user_name) => axiosInstance.post(`api/users/${user_name}/remove_avatar/`),
     initialBlockchains: (user_name) => axiosInstance.get(`api/users/${user_name}/initial_blockchains/`)
@@ -47,7 +47,7 @@ export function UserBlockChain (axiosInstance) {
 
 export function Image (axiosInstance) {
   return resource('api/images/', axiosInstance, {
-    upload: (data) => axiosInstance.post('/post_image/', data)
+    upload: (data) => axiosInstance.post('post_image/', data)
   })
 }
 

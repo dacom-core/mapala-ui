@@ -1,5 +1,5 @@
 export const state = () => ({
-  golos: '0 GOLOS',
+  golos: '0',
   gbg: '0'
 })
 

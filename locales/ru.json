@@ -72,7 +72,7 @@
   "average_rate": "Средний курс",
   "comment | comments": "комментарий комментария комментариев",
   "current_rate": "текущий курс",
-  "distributed_tokens": "распределеннный токены",
+  "distributed_tokens": "распределеннные токены",
   "edit": "Редактировать",
   "email": "Email",
   "enter_location": "Введите местоположение",
@@ -117,5 +117,9 @@
   "watch": "Смотреть",
   "sign_up": "Регистрация",
   "login": "Вход",
-  "replied": "ответил"
+  "replied": "ответил",
+  "join_trail": "Участвовать в паравозике",
+  "balance": "Golos",
+  "rostov_na_donu": "Ростов-на-Дону",
+  "stable_currency": "GBG"
 }

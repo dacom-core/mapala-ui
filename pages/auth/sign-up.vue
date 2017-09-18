@@ -16,7 +16,7 @@
 
       <div v-if="golosAlreadyReg">
         <div class="inpt_w">
-          <input placeholder="private posting key" v-model="wif" class="inpt i-key"><label></label>
+          <input type="password" placeholder="private posting key" v-model="wif" class="inpt i-key"><label></label>
         </div>
       </div>
       <div v-else>
@@ -37,6 +37,7 @@
   import bc from '@/api/blockchain'
   import { User } from '@/api/services'
   import VueRecaptcha from 'vue-recaptcha'
+  import { showErrors } from '@/utils/show_errors'
 
   export default {
     data () {
@@ -54,20 +55,24 @@
     },
     methods: {
       signUp () {
-        const creds = {
-          username: this.username,
-          password: this.password,
-          g_recaptcha_response: this.recaptcha
-        }
+        try {
+          const creds = {
+            username: this.username,
+            password: this.password,
+            g_recaptcha_response: this.recaptcha
+          }
 
-        if (this.golosAlreadyReg === true) {
-          creds.wif = this.wif
-          auth.existngSignUp(this, creds, { name: 'index' })
-        } else {
-          creds.bc_username = this.bc_username
-          auth.signUp(this, creds, { name: 'index' })
+          if (this.golosAlreadyReg === true) {
+            creds.wif = this.wif
+            auth.existngSignUp(this, creds, {name: 'index'})
+          } else {
+            creds.bc_username = this.bc_username
+            auth.signUp(this, creds, {name: 'index'})
+          }
+          this.$refs.recaptcha.reset()
+        } catch (e) {
+          showErrors(e.response.data)
         }
-        this.$refs.recaptcha.reset()
       },
 
       success(res) {

@@ -54,7 +54,7 @@
               i.purce
               span.txt_i
                 | {{ $t('Wallet') }}
-              span(class="amount", v-text="userBalance")
+              span(class="amount" v-text="userBalance")
 
             div.divd
             div.mn
@@ -80,21 +80,30 @@ import bc from '@/api/blockchain'
 import { mixin as clickaway } from 'vue-clickaway'
 
 export default {
-  mixins: [ clickaway ],
+  mixins: [clickaway],
   data () {
     return {
       isMenuOpened: false
     }
   },
-  computed: mapState({
-    isAuth: state => state.user.auth.isAuth,
-    userName: state => state.user.personal.username,
-    userAvatar: state => state.user.personal.avatar,
-    userBalance: state => state.user.wallet.balance,
-    isMobile: state => state.isMobile,
-    locale: state => state.locale
-  }),
-
+  computed: {
+    ...mapState({
+      isAuth: state => state.user.auth.isAuth,
+      userName: state => state.user.personal.username,
+      userAvatar: state => state.user.personal.avatar,
+      golosBalance: state => state.user.wallet.golos,
+      gbgBalance: state => state.user.wallet.gbg,
+      isMobile: state => state.isMobile,
+      locale: state => state.locale
+    }),
+    userBalance () {
+      if (this.$store.state.locale === 'ru') {
+        return `${this.golosBalance} ${this.$t('balance')}`
+      } else if (this.$store.state.locale === 'en') {
+        return `${this.gbgBalance} ${this.$t('balance')}`
+      }
+    }
+  },
   methods: {
     ...mapMutations({
       userLogout: 'user/auth/LOGOUT',

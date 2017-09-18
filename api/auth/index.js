@@ -5,8 +5,8 @@ import { showErrors } from '@/utils/show_errors'
 import axios from 'axios'
 import Vue from 'vue'
 
-const JWT_AUTH_URL = '/api-auth/'
-const JWT_REFRESH_URL = '/api-auth-refresh/'
+const JWT_AUTH_URL = '/api/auth/login/'
+const JWT_REFRESH_URL = '/api/auth/refresh/'
 
 export default {
   // TODO Выпилить всю логику с блокчейнами в отдельный модуль

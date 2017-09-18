@@ -35,7 +35,7 @@
 
           div.inpt_w(v-if="blockchains.current.key_valid")
             el-checkbox(v-model="locomotive", @change="loco_update()")
-              | Участвовать в паравозике
+              | {{ $t('join_trail') }}
 
 
     <!--button.submit(@click="update()")-->

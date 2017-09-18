@@ -1,26 +1,34 @@
-<template>
+<template lang="pug">
 
-  <form class="tab" action="" method="post" @submit.prevent="login">
-    <div class="inpt_w">
-      <input placeholder="Login" v-model="credentials.username" class="inpt i-user" required><label></label>
-    </div>
+  form(class="tab", action="", method="post", @submit.prevent="login")
+    div.inpt_w
+      input.inpt.i-user(placeholder="Login", v-model="credentials.username", required)
+      label
 
-    <div class="inpt_w">
-      <input type="password" placeholder="Password" v-model="credentials.password" class="inpt i-pass" required><label></label>
-    </div>
+    div.inpt_w
+      input(
+        type="password",
+        placeholder="Password",
+        v-model="credentials.password",
+        class="inpt i-pass"
+        required
+        )
 
-    <div v-for="error in Object.keys(errors)">
-      <i class="el-icon-warning"></i> {{error}}: {{errors[error][0]}}
-    </div>
-    <button class="submit-button">{{ $t('log_in') }}</button>
+    div(v-for="error in Object.keys(errors)")
+      i.el-icon-warning
+        | {{error}}: {{errors[error][0]}}
 
-    <router-link class="forgot" :to="{ name: 'auth-reset-password'} ">{{ $t('forgot_password') }}</router-link>
-  </form>
+    button.submit-button
+      | {{ $t('log_in') }}
+
+    router-link.forgot(:to="{ name: 'auth-reset-password' }")
+      | {{ $t('forgot_password') }}
 </template>
 
 <script>
   import auth from '@/api/auth'
   import { mapMutations, mapGetters } from 'vuex'
+  import { showErrors } from '@/utils/show_errors'
 
   export default {
     name: 'login',
@@ -45,7 +53,7 @@
           await auth.login(this, this.credentials, this.backPath)
           this.hideModal()
         } catch (e) {
-          console.log(e)
+          showErrors(e.response.data, this)
         }
       }
     }

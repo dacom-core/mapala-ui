@@ -78,18 +78,17 @@ export default {
     const tr = new TransactionBuilder()
 
     post.permlink = this.getPermlink(post.title)
-      tr.add_type_operation('comment', {
-        parent_author: '',
-        parent_permlink: this.app_tag,
-        author: this.current.blockchain_username,
-        permlink: post.permlink,
-        title: post.title,
-        body: post.body,
-        json_metadata: this.getJsonMeta(post.meta)
-      })
+    tr.add_type_operation('comment', {
+      parent_author: '',
+      parent_permlink: this.app_tag,
+      author: this.current.blockchain_username,
+      permlink: post.permlink,
+      title: post.title,
+      body: post.body,
+      json_metadata: this.getJsonMeta(post.meta)
+    })
 
-    let signedTr = await this.signTr(tr)
-
+    const signedTr = await this.signTr(tr)
 
     try {
       return await Post(context.$axios).save({ tx: signedTr, blockchain: this.current.name })
