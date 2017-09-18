@@ -54,4 +54,3 @@ export function Image (axiosInstance) {
 export function Locomotive (axiosInstance) {
   return resource('api/locomotive/', axiosInstance, {})
 }
-

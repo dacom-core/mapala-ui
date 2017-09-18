@@ -8,7 +8,7 @@ export default function (action, identifier, permalink = '') {
   } else if (action === 'create') {
     link = `/${identifier}/post/create/`
   } else if (action === 'create-post-group') {
-    link = `/group/${identifier}/post/create/`
+    link = `/group/${identifier}/create/`
   }
 
   return link

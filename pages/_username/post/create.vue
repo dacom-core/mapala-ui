@@ -20,7 +20,7 @@ export default {
     }
   },
 
-  middleware: ['hasPostingKey'],
+  middleware: ['has-posting-key'],
 
   data () {
     return {

@@ -5,7 +5,7 @@
   import { mapState, mapActions } from 'vuex'
 
   export default {
-    async fetch ({ store: { commit, dispatch, state }, params: { groupname } }) {
+    fetch ({ store: { commit, dispatch, state }, params: { groupname } }) {
       // LAYOUT BLOCK
       commit('layout/SET_RIGHT_COLUMN', 'map')
       commit('layout/SET_GROUP_BLOCK_VISIBLE')
@@ -20,7 +20,8 @@
       commit('blog/posts/post_list/IS_LOADING_ALLOWED', true) // Allow making requests for new posts.
 
       // ACTIONS BLOCK
-      await dispatch('blog/posts/post_list/fetch_posts')
+      dispatch('group/fetch_group', groupname)
+      dispatch('blog/posts/post_list/fetch_posts')
 
       if (state.map.isReady) {
         // 1. If the page is loaded on client-side. (vue-router transition)
