@@ -20,12 +20,23 @@
       }
     },
 
+    middleware: ['has-posting-key'],
+
     data () {
       return {
         resetForm: false,
         isFormSaving: false
       }
     },
+
+//    mounted () {
+//      const username = this.$store.state.user.personal.username
+//
+//      if (!bc.getPostingKey(undefined, username)) {
+//        this.$router.push('/')
+//        this.$notify({ message: this.$t('add_key'), type: 'warning' })
+//      }
+//    },
 
     methods: {
       ...mapMutations({
@@ -51,10 +62,6 @@
           this.$notify({ message: error.message, type: 'warning' })
         }
       }
-    },
-
-    mounted () {
-      this.showModal()
     },
 
     beforeDestroy () {

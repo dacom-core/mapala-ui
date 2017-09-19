@@ -1,14 +1,10 @@
-export default function ({ app, store, route, params, error, redirect, hotReload }) {
-  // Check if middleware called from hot-reloading, ignore
-  if (hotReload) { return }
+import { User, Group } from '@/api/services'
+
+export default function ({ app: { $axios }, store, route, params, error, redirect, hotReload }) {
 
   if (typeof params.username !== 'undefined') {
-    if (typeof params.slug !== 'undefined') {
-
-    }
-  }
-
-  if (typeof params.groupname !== 'undefined') {
-
+    return User($axios).get(params.username).catch(() => redirect(store.getters.backPath))
+  } else if (typeof params.groupname !== 'undefined') {
+    return Group($axios).get(params.groupname).catch(() => redirect(store.getters.backPath))
   }
 }

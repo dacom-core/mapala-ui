@@ -57,6 +57,15 @@ export default {
 
   mounted () {
     this.showModal()
+
+    const username = this.$store.state.user.personal.username
+
+    console.log(username)
+
+    if (!bc.getPostingKey(undefined, username)) {
+      this.$router.push('/')
+      this.$notify({ message: this.$t('add_key'), type: 'warning' })
+    }
   },
 
   beforeDestroy () {
