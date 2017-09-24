@@ -1,6 +1,6 @@
 <template lang="pug">
   div.group_avatar
-    img(:src="groupAvatar")
+    img(:src="avatar")
     p
       | {{ groupTitle }}
 </template>
@@ -22,6 +22,11 @@ export default {
     avatar () {
       return this.groupAvatar || 'https://cdns.klimg.com/merdeka.com/i/w/news/2017/01/24/804491/670x335/polisi-usut-sebab-kematian-3-mahasiswa-uii-usai-ikut-diksar-mapala.jpg'
     }
+  },
+
+  mounted () {
+    console.log(this.groupAvatar)
+    console.log(this.avatar)
   }
 }
 </script>

@@ -16,8 +16,7 @@ export const mutations = {
 
 export const actions = {
   async fetch_group ({ commit }, groupname) {
-    const { data } = await Group.get({ groupname })
-
+    const { data } = await Group.get({ name: groupname })
     commit('SET_AVATAR', data.logo)
     commit('SET_TITLE', data.title)
   }

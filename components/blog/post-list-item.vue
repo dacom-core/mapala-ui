@@ -40,12 +40,7 @@
         a.icon.repost(@click="share(post)")
           | {{ $t('share') }}
 
-      el-button-group.support_block(:class="{ isDisabled: isAuth }")
-        el-button(v-if="isAuth", @click="vote(post)")
-          img(style="height: 12px" src="~assets/like.png")
-        el-button(v-else :plain="true", :disabled="true" icon="check")
-        el-button(type="primary" class="support")
-          | {{ post.payout | toRub }} ₽
+      upvote(:post="post")
 
     comments-block(:post="post")
 
@@ -57,6 +52,7 @@ import shareVK from '@/utils/share_vk'
 import pluralizer from '@/utils/pluralizer'
 import linkMaker from '@/utils/router_link_maker'
 import CommentsBlock from './comments/comments-block'
+import Upvote from '@/components/blog/__parts__/upvote'
 
 export default {
 
@@ -83,7 +79,8 @@ export default {
     }
   },
   components: {
-    CommentsBlock
+    CommentsBlock,
+    Upvote
   }
 }
 </script>
