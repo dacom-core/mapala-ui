@@ -116,7 +116,7 @@ export default {
       this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
       this.$store.dispatch('blog/posts/post_list/fetch_posts')
       this.$store.dispatch('map/fetch_markers')
-      bc.setBlockchain(this.$store.state)
+      locale === 'en' ? bc.setBlockchain('steemit') : bc.setBlockchain('golos')
     },
 
     logout () {

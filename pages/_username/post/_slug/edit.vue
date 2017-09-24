@@ -19,6 +19,7 @@
         class: 'overflowHidden'
       }
     },
+
     data () {
       return {
         resetForm: false,

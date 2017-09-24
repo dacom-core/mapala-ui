@@ -73,8 +73,8 @@
     },
     async mounted () {
       this.showModal()
-      const { data } = await Locomotive.get()
-      this.locomotive = data
+//      const { data } = await Locomotive.get()
+//      this.locomotive = data
     },
     methods: {
       ...mapMutations({

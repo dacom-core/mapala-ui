@@ -16,7 +16,6 @@ export default {
  // app_tag: (process.env.NODE_ENV === 'production' &&
  //   !window.location.host.includes('develop')) ? 'mapala' : 'testing',
   app_tag: 'testing',
-
   init (store = '') {
     ChainConfig.expire_in_secs = 30
     BlockChain.query().then(res => {
