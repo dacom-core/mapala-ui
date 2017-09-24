@@ -1,9 +1,9 @@
 <template lang="pug">
   div.comments_block
 
-    comments-list(:post="post")
+    comments-list(:post="post", @reply="reply")
 
-    write-comment-block(:post="post")
+    write-comment-block(:post="post", :replied-comment="repliedComment")
 
 </template>
 
@@ -14,10 +14,29 @@ import CommentsList from './comments-list'
 export default {
   props: ['post'],
 
+  data () {
+    return {
+      repliedComment: ''
+    }
+  },
+
   components: {
     WriteCommentBlock,
     CommentsList
+  },
+
+  methods: {
+    reply (comment) {
+      this.repliedComment = comment
+    }
   }
+
+//  mounted () {
+//    this.$on('reply', function (comment) {
+//      console.log(comment)
+//      console.log('fdfsdfsdfs commment adsfadsfas')
+//    })
+//  }
 }
 </script>
 

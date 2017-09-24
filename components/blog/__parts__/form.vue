@@ -80,7 +80,7 @@
               lat: '',
               lng: ''
             },
-            group: this.groupName || null,
+            group: null,
             tags: []
           }
         },
@@ -236,9 +236,8 @@
     },
 
     mounted () {
-      console.log(this.$route.params)
+      this.form.meta.group = this.groupName
     },
-
     watch: {
       resetForm () {
         this.form = {
@@ -251,7 +250,7 @@
               lat: '',
               lng: ''
             },
-            group: this.groupName || null,
+            group: null,
             tags: []
           }
         }

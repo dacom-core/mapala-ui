@@ -66,7 +66,6 @@ export default {
     post.permlink = this.getPermlink(post.title)
 
     if (await this.postExists(this.current.blockchain_username, post.permlink)) {
-      // TODO Добавить автоинкремент для пермлинка, если он повторяется
       throw new Error('Post with this title already exists')
     }
 
@@ -74,11 +73,14 @@ export default {
   },
 
   async updatePost (context, post) {
+
+    console.log('1')
     this.checkValidKey(context)
-
+    console.log('2')
     const tr = new TransactionBuilder()
-
+    console.log('3')
     post.permlink = this.getPermlink(post.title)
+    console.log('4')
 
     tr.add_type_operation('comment', {
       parent_author: '',
@@ -89,6 +91,8 @@ export default {
       body: post.body,
       json_metadata: this.getJsonMeta(post.meta)
     })
+
+    console.log('5')
 
     const signedTr = await this.signTr(tr)
 
@@ -118,12 +122,19 @@ export default {
 
       this.signTr(tr).then(tr => {
         Comment.save({ tx: tr, blockchain: this.current.name })
-          .then(res => resolve(res), err => reject(err))
-      }, err => reject(err))
+          .then(res => resolve(res))
+          .catch(err => reject(err.data))
+      }).catch(err => reject(err))
     })
   },
 
   vote (page) {
+    console.log('blockchain/index.js/vote()/128')
+    console.log(this.current.wif)
+    console.log(this.current.blockchain_username)
+    console.log(page.author.bc_username)
+    console.log(page.permlink)
+
     return new Promise((resolve, reject) => {
       steem.broadcast.vote(
         this.current.wif, this.current.blockchain_username, page.author.bc_username, page.permlink, 10000, function (err, result) {
@@ -152,10 +163,8 @@ export default {
     } else if (!meta.tags.includes(this.app_tag)) {
       meta.tags.unshift(this.app_tag)
     }
-
     return JSON.stringify(meta)
   },
-
 
   setBlockchain (blockchain, state) {
     // HACK: На данный момент решено менять блокчейн по локали:

@@ -39,6 +39,9 @@ export default {
   },
 
   methods: {
+    reply (comment) {
+      this.$emit('reply', comment)
+    }
   },
 
   components: {

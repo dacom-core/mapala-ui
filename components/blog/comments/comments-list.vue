@@ -3,8 +3,7 @@
     div.show_more_comments_button(v-if="hasPostMoreComments", @click="fetchAllComments()")
       | {{ $t('show_comments') }}
 
-    comments-item(v-for="comment of post.comments", :comment="comment", :key="comment.id")
-
+    comments-item(v-for="comment of post.comments", :comment="comment", :key="comment.id", @reply="reply")
 
 </template>
 
@@ -40,6 +39,9 @@ export default {
           comments: data
         })
       }
+    },
+    reply (comment) {
+      this.$emit('reply', comment)
     }
   },
 

@@ -26,7 +26,7 @@ import { mapState } from 'vuex'
 import bc from '@/api/blockchain'
 
 export default {
-  props: ['post'],
+  props: ['post', 'repliedComment'],
   data () {
     return {
       isEdit: false,
@@ -125,15 +125,17 @@ export default {
     changeText (value) {
       this.$emit('input', value)
     },
-    stopEdit(){
+    stopEdit() {
       if(this.$refs.text.innerText.length == 0)
         this.endEdit()
     },
-    startComment (){
+    startComment () {
       this.isEdit = true
+      console.log('block-write-comment.vue/startComment() 135')
+      console.log(this.$refs)
       this.$refs.text.focus()
     },
-    endEdit() {
+    endEdit () {
       this.$refs.text.innerText = ''
       this.$refs.text.blur()
       this.isEdit = false
@@ -143,6 +145,14 @@ export default {
         author: '',
         parentAuthor: '',
         parentPermlink: '',
+      }
+    }
+  },
+
+  watch: {
+    repliedComment () {
+      if (this.repliedComment !== undefined) {
+        this.reply(this.repliedComment)
       }
     }
   }
