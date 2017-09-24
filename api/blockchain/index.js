@@ -123,7 +123,7 @@ export default {
       this.signTr(tr).then(tr => {
         Comment.save({ tx: tr, blockchain: this.current.name })
           .then(res => resolve(res))
-          .catch(err => reject(err.data))
+          .catch(err => reject(err.response.data))
       }).catch(err => reject(err))
     })
   },
