@@ -36,7 +36,12 @@ export default {
   },
 
   getPermlink (text) {
-    return slug(text).toLowerCase()
+
+    console.log(slug(text))
+
+    throw new Error('test')
+    // return slug(text)
+
   },
 
   checkValidKey (context, reject) {
