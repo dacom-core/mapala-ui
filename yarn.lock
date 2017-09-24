@@ -5836,9 +5836,19 @@ ultron@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ultron/-/ultron-1.1.0.tgz#b07a2e6a541a815fc6a34ccd4533baec307ca864"
 
+unicode-slug@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/unicode-slug/-/unicode-slug-0.0.2.tgz#8bd6ef4c148c852db1a7a7461cf4828ecf414bfd"
+  dependencies:
+    unidecode "~0.1.3"
+
 "unicode@>= 0.3.1":
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/unicode/-/unicode-10.0.0.tgz#e5d51c1db93b6c71a0b879e0b0c4af7e6fdf688e"
+
+unidecode@~0.1.3:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/unidecode/-/unidecode-0.1.8.tgz#efbb301538bc45246a9ac8c559d72f015305053e"
 
 uniq@^1.0.1:
   version "1.0.1"

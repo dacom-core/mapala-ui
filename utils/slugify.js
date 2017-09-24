@@ -1,5 +1,5 @@
 export default function (st) {
-  st = this.toLowerCase()
+  st = st.toLowerCase()
   st = st.replace(/[\u00C0-\u00C5]/ig, 'a')
   st = st.replace(/[\u00C8-\u00CB]/ig, 'e')
   st = st.replace(/[\u00CC-\u00CF]/ig, 'i')

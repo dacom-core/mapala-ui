@@ -34,6 +34,7 @@
     "steem-rpc": "^0.6.6",
     "store": "^2.0.12",
     "stylus-loader": "^3.0.1",
+    "unicode-slug": "^0.0.2",
     "vue-async-computed": "^3.3.1",
     "vue-clickaway": "^2.1.0",
     "vue-cookie": "^1.1.4",

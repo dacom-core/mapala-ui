@@ -1,10 +1,11 @@
-import slug from '../../utils/slugify.js'
+// import slug from 'unicode-slug'
 import steem from 'steem'
 import store from 'store'
 import auth from '../auth'
 import { Client } from 'steem-rpc'
 import { ChainConfig, PrivateKey, TransactionBuilder } from 'esteem-lib'
 import { User, Comment, Post, UserBlockChain, BlockChain } from '../services'
+const slugify = require('unicode-slug')
 
 export default {
   // TODO Полностью зарефакторить все методы работы с блокчейном , все проверки блокчейна в 1 месте
@@ -36,12 +37,7 @@ export default {
   },
 
   getPermlink (text) {
-
-    console.log(slug(text))
-
-    throw new Error('test')
-    // return slug(text)
-
+    return slugify(text)
   },
 
   checkValidKey (context, reject) {
@@ -79,13 +75,9 @@ export default {
 
   async updatePost (context, post) {
 
-    console.log('1')
     this.checkValidKey(context)
-    console.log('2')
     const tr = new TransactionBuilder()
-    console.log('3')
     post.permlink = this.getPermlink(post.title)
-    console.log('4')
 
     tr.add_type_operation('comment', {
       parent_author: '',
@@ -96,8 +88,6 @@ export default {
       body: post.body,
       json_metadata: this.getJsonMeta(post.meta)
     })
-
-    console.log('5')
 
     const signedTr = await this.signTr(tr)
 

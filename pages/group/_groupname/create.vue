@@ -48,11 +48,13 @@
       async createPost (form) {
         try {
           this.isFormSaving = true
+
           await bc.createPost(this, form)
 
           this.isFormSaving = false
 
           this.hideModal()
+
           this.$router.push(history.back())
 
           this.resetForm = true

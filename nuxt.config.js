@@ -86,6 +86,7 @@ module.exports = {
       'bluebird',
       'katex',
       'unorm',
+      'unicode-slug',
       'uslug',
       'markdown-it',
       'markdown-it-katex',
