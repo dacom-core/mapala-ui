@@ -38,7 +38,7 @@
           this.isFormSaving = false
 
           this.hideModal()
-          this.$router.push(history.back())
+          this.$router.go(-1)
           this.resetForm = true
 
           this.$notify({ message: this.$t('post_updated'), type: 'success' })

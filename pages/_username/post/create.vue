@@ -43,7 +43,8 @@ export default {
         this.isFormSaving = false
 
         this.hideModal()
-        this.$router.push(history.back())
+
+        this.$router.go(-1)
 
         this.resetForm = true
 

@@ -55,9 +55,13 @@
 
           this.hideModal()
 
-          this.$router.push(history.back())
+          this.$router.go(-1)
+
+          console.log('1')
 
           this.resetForm = true
+
+          console.log('2')
 
           this.$notify({ message: this.$t('published'), type: 'success' })
         } catch (error) {
