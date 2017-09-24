@@ -12,9 +12,9 @@ export default {
   current: {},
   bc_list: [],
   blockchains: {},
-  // app_tag: (process.env.NODE_ENV === 'production' &&
-  //   !window.location.host.includes('develop')) ? 'mapala' : 'testing',
-  app_tag: 'mapala',
+ // app_tag: (process.env.NODE_ENV === 'production' &&
+ //   !window.location.host.includes('develop')) ? 'mapala' : 'testing',
+  app_tag: 'testing',
 
   init (store = '') {
     ChainConfig.expire_in_secs = 30
@@ -50,6 +50,7 @@ export default {
 
     return new Promise((resolve, reject) => {
       tr.finalize().then(() => {
+        tr.sign()
         resolve(tr.toObject())
       }, err => reject(err))
     })
@@ -78,6 +79,7 @@ export default {
     const tr = new TransactionBuilder()
 
     post.permlink = this.getPermlink(post.title)
+
     tr.add_type_operation('comment', {
       parent_author: '',
       parent_permlink: this.app_tag,
@@ -90,8 +92,10 @@ export default {
 
     const signedTr = await this.signTr(tr)
 
+    console.log(this.current)
+
     try {
-      return await Post(context.$axios).save({ tx: signedTr, blockchain: this.current.name })
+      return await Post.save({ tx: signedTr, blockchain: this.current.name })
     } catch (err) {
       throw new Error(err.response.data)
     }
@@ -114,7 +118,7 @@ export default {
 
       this.signTr(tr).then(tr => {
         Comment.save({ tx: tr, blockchain: this.current.name })
-          .then(res => resolve(res), err => reject(err.body))
+          .then(res => resolve(res), err => reject(err))
       }, err => reject(err))
     })
   },
@@ -188,7 +192,7 @@ export default {
   async initBlockchains (ctx = {}) {
     try {
       const username = ctx.$store.state.user.personal.username
-      const { data } = await User(ctx.$axios).initialBlockchains(username)
+      const { data } = await User.initialBlockchains({ username })
 
       const bc_list = []
       for (const bc of data) {
@@ -241,7 +245,7 @@ export default {
 
   async setPostingKey (context, blockchain, username = '') {
     try {
-      var res = await UserBlockChain(context.$axios).save({ blockchain: blockchain.name, wif: blockchain.wif })
+      var res = await UserBlockChain.save({ blockchain: blockchain.name, wif: blockchain.wif })
     } catch (err) {
       throw new Error(err.response.status === 404 ? this.$t('has_not_user_with_key') : err.response.data)
     }

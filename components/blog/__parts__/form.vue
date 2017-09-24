@@ -180,11 +180,8 @@
         const formData = new FormData()
         formData.append('file', this.$refs.inputImage.files[0])
 
-        Image(this.$axios).upload(formData).then(res => {
+        Image.upload(formData).then(res => {
           const imgUrl = res.data
-
-          console.log(this.editor)
-
           const range = this.editor.getSelection(true)
           this.editor.insertEmbed(range.index + 1, 'image', imgUrl, 'user')
           this.editor.insertEmbed(range.index + 2, 'block', 'asdf', 'user')
@@ -227,7 +224,7 @@
     },
     created () {
       if (this.isEditForm) {
-        Post(this.$axios).get(this.$route.params.username + '*@*' + this.$route.params.slug).then(res => {
+        Post.get(this.$route.params.username + '*@*' + this.$route.params.slug).then(res => {
           this.form.title = res.data.title
           this.form.body = res.data.body
           this.form.position_text = res.data.position_text

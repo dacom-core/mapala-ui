@@ -20,7 +20,7 @@ export default {
     }
   },
 
-  middleware: ['has-posting-key'],
+//  middleware: ['has-posting-key'],
 
   data () {
     return {
@@ -58,14 +58,12 @@ export default {
   mounted () {
     this.showModal()
 
-    const username = this.$store.state.user.personal.username
+//    const username = this.$store.state.user.personal.username
 
-    console.log(username)
-
-    if (!bc.getPostingKey(undefined, username)) {
-      this.$router.push('/')
-      this.$notify({ message: this.$t('add_key'), type: 'warning' })
-    }
+//    if (!bc.getPostingKey(undefined, username)) {
+//      this.$router.push('/')
+//      this.$notify({ message: this.$t('add_key'), type: 'warning' })
+//    }
   },
 
   beforeDestroy () {

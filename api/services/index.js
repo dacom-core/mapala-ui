@@ -1,56 +1,47 @@
-import { resource } from '../index'
-import axios from 'axios'
+import { Resource } from '@/utils/axiosModule'
 
-export function User (axiosInstance) {
-  return resource('api/users/', axiosInstance, {
-    current: () => axiosInstance.get('api/users/current/'),
-    signUp: (data) => axiosInstance.post('/api/auth/sign-up/', data),
-    setPassword: () => axiosInstance.post('api/users/set_password/'),
-    resetPassword: (data) => axiosInstance.post('api/users/reset_password/', data),
-    existingSignUp: () => axiosInstance.post('api/auth/existng-sign-up/'),
-    setAvatar: (user_name) => axiosInstance.post(`api/users/${user_name}/set_avatar/`),
-    removeAvatar: (user_name) => axiosInstance.post(`api/users/${user_name}/remove_avatar/`),
-    initialBlockchains: (user_name) => axiosInstance.get(`api/users/${user_name}/initial_blockchains/`)
-  })
-}
+export const Post = Resource('/api/pages{/permlink}/', {}, {
+  'comments_tree': { method: 'GET', url: '/api/pages{/permlink}/comments_tree/' },
+  'updatePost': { method: 'POST', url: '/api/pages/update_post/' },
+  'trPost': { method: 'POST', url: '/api/pages/tr_post/' }
+})
+export const Locomotive = Resource('/api/locomotive/')
+export const Tag = Resource('/api/tags{/id}/')
+export const Comment = Resource('/api/comments{/id}/')
+export const BlockChain = Resource('/api/blockchains{/id}/')
+export const Marker = Resource('/api/markers{/id}/')
 
-export function Post (axiosInstance) {
-  return resource('api/pages/', axiosInstance, {
-    commentsTree: (permalink) => axiosInstance.get(`api/pages/${permalink}/comments_tree/`),
-    updatePost: (payload) => axiosInstance.post('api/pages/update_post/', payload),
-    trPost: () => axiosInstance.post('api/pages/tr_post/')
-  })
-}
+export const UserBlockChain = Resource('/api/user-blockchains{/id}/', {}, {
+  'getNameByPostingKey': {
+    method: 'GET', url: '/api/user-blockchains/get_name_by_posting_key/'
+  }
+})
 
-export const Comment = {
-  ...resource('api/comments/', axios, {})
-}
+export const MasterTag = Resource('/api/master-tags{/id}/', {}, {
+  'tree': {
+    method: 'GET', url: '/api/master-tags/tree/'
+  },
+  'ancestors': {
+    method: 'GET', url: '/api/master-tags{/id}/ancestors/'
+  }
+})
 
-export function Marker (axiosInstance) {
-  return resource('api/markers/', axiosInstance, {})
-}
+export const User = Resource('/api/users{/username}/', {}, {
+  'current': { method: 'GET', url: '/api/users/current/' },
+  'signUp': { method: 'POST', url: '/sign-up/' },
+  'setPassword': { method: 'POST', url: '/api/users/set_password/' },
+  'resetPassword': { method: 'POST', url: '/api/users/reset_password/' },
+  'existngSignUp': { method: 'POST', url: '/existng-sign-up/' },
+  'setAvatar': { method: 'POST', url: '/api/users{/username}/set_avatar/' },
+  'removeAvatar': { method: 'POST', url: '/api/users{/username}/remove_avatar/' },
+  'initialBlockchains': { method: 'GET', url: '/api/users{/username}/initial_blockchains/' },
+  'markers': { method: 'GET', url: '/api/users{/username}/markers/' }
+})
 
-export const Group = {
-  ...resource('api/groups/', axios, {
-  })
-}
+export const Image = Resource('/api/images{/id}/', {}, {
+  'upload': { method: 'POST', url: '/post_image/' }
+})
 
-export const BlockChain = {
-  ...resource('api/blockchains/', axios, {})
-}
-
-export function UserBlockChain (axiosInstance) {
-  return resource('api/user-blockchains/', axiosInstance, {
-    getNameByPostingKey: () => axiosInstance.get(`api/user-blockchains/get_name_by_posting_key/`)
-  })
-}
-
-export function Image (axiosInstance) {
-  return resource('api/images/', axiosInstance, {
-    upload: (data) => axiosInstance.post('post_image/', data)
-  })
-}
-
-export function Locomotive (axiosInstance) {
-  return resource('api/locomotive/', axiosInstance, {})
-}
+export const Group = Resource('/api/groups{/name}/', {}, {
+  'markers': { method: 'GET', url: '/api/markers/' }
+})

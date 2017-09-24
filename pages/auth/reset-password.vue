@@ -30,7 +30,7 @@
     },
     methods: {
       reset () {
-        User(this.$axios).resetPassword(this.data).then(res => {
+        User.resetPassword(this.data).then(res => {
           this.data.username = res.data
         }, err => {
           showErrors(err.response.data, this)

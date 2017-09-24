@@ -29,7 +29,7 @@ module.exports = {
     'quill/dist/quill.core.css'
   ],
   router: {
-    middleware: ['history-logger', '404']
+    middleware: ['history-logger']
     // scrollBehavior: function (to, from, savedPosition) {
     // }
   },
@@ -42,6 +42,7 @@ module.exports = {
     { src: '~/plugins/vue-scroll-to.js', ssr: false },
     { src: '~/plugins/infinite-scroll.js', ssr: false },
     { src: '~/plugins/filters.js', ssr: true },
+    { src: '~/plugins/http.js', ssr: true },
     { src: '~/plugins/nuxt-quill-plugin.js', ssr: false }
   ],
   /*
@@ -110,25 +111,5 @@ module.exports = {
       '~/plugins/vue-lazyload.js',
       '~/plugins/vue-scroll-to.js'
     ]
-  },
-  modules: [
-    '@nuxtjs/axios'
-  ],
-  axios: {
-    redirectError: {
-      401: '/'
-    },
-    baseURL: 'http://37.59.98.17/',
-    requestInterceptor: (config, { store }) => {
-      if (store.state.locale) {
-        config.headers.common['Locale'] = store.state.locale
-      }
-
-      if (store.state.user.auth.token) {
-        config.headers.common['Authorization'] = 'JWT ' + store.state.user.auth.token
-      }
-
-      return config
-    }
   }
 }

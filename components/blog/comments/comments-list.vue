@@ -17,7 +17,7 @@ export default {
 
   data () {
     return {
-      isShowMoreCommentsClicked: false,
+      isShowMoreCommentsClicked: false
     }
   },
 
@@ -31,10 +31,15 @@ export default {
   methods: {
     async fetchAllComments () {
       const { data } = await Comment.query({ 'page': this.post.id })
-      this.$store.commit('blog/posts/post_list/SET_COMMENTS', {
-        id: this.post.id,
-        comments: data
-      })
+
+      if (this.$route.name === 'username-post-slug') {
+        this.$store.commit('blog/posts/post_single/SET_COMMENT', data)
+      } else {
+        this.$store.commit('blog/posts/post_list/SET_COMMENTS', {
+          id: this.post.id,
+          comments: data
+        })
+      }
     }
   },
 

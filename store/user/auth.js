@@ -22,7 +22,7 @@ export const mutations = {
 
 export const actions = {
   async fetch_user ({ commit }) {
-    const { data } = await User(this.$axios).current()
+    const { data } = await User.current()
     commit('user/personal/FILL_USER', data, { root: true })
     commit('SET_AUTH_TO', true)
   }

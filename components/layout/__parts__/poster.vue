@@ -63,7 +63,7 @@
 
   export default {
     mounted () {
-      Group.query().then(response => {
+      Group.get().then(response => {
         this.cities = response.data
       })
     },

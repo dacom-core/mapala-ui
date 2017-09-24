@@ -1,5 +1,5 @@
 <template lang="pug">
-  div(v-if="isAuth")
+  div(v-if="isAuth", :class="{ comment_storing: isStoring }", class="write_comment_wrapper")
     div.write_comment
       div.ca_w
         img.user_av(:src="userAvatar")
@@ -35,7 +35,8 @@ export default {
         author: '',
         parentAuthor: '',
         parentPermlink: ''
-      }
+      },
+      isStoring: false
     }
   },
 
@@ -76,6 +77,7 @@ export default {
       }
 
       this.new_comment.body = this.$refs.text.innerText
+
       const new_comment = Object.assign({}, this.new_comment)
       this.endEdit()
 
@@ -92,22 +94,27 @@ export default {
       } else {
         new_comment.permlink = 're-' + bc.current.blockchain_username + this.new_comment.parentPermlink + '-' + Number(new Date())
       }
-
-
       new_comment.author = {}
       new_comment.author.bc_username = this.$store.state.user.personal.bc_username || 'username'
       new_comment.author.avatar = this.$store.state.user.personal.avatar
 
+      this.isStoring = true
+
       bc.createComment(this, new_comment).then(res => {
-
-        this.$store.commit('blog/posts/post_list/PUSH_NEW_COMMENT', {
-          id: this.post.id, comment: res.data
-        })
-
+        if (this.$route.name === 'username-post-slug') {
+          this.$store.commit('blog/posts/post_single/PUSH_NEW_COMMENT', res.data)
+        } else {
+          this.$store.commit('blog/posts/post_list/PUSH_NEW_COMMENT', {
+            id: this.post.id, comment: res.data
+          })
+        }
         this.cancelReply()
-
+        this.isStoring = false
+        this.$notify({ message: this.$t('comments_added'), type: 'success' })
       }, err => {
-        this.$notify({ message: err, type: 'warning'})
+        this.isStoring = false
+        console.log(err)
+        this.$notify({ message: err, type: 'warning' })
       })
     },
 
@@ -204,5 +211,15 @@ export default {
     margin: 10px;
     overflow: hidden;
     border-radius: 50%;
+  }
+
+  .write_comment_wrapper {
+    transition: all 1s;
+    -webkit-transition: all 1s;
+  }
+
+  .comment_storing {
+    background: rgba(0,0,0,0.1);
+    opacity: 0.4;
   }
 </style>

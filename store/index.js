@@ -1,6 +1,7 @@
-import MobileDetect from 'mobile-detect'
 import { get_cookie } from '@/utils/cookies'
+import MobileDetect from 'mobile-detect'
 import _ from 'lodash'
+import axios from 'axios'
 
 export const state = () => ({
   locales: ['en', 'ru'],
@@ -55,24 +56,20 @@ export const getters = {
 }
 
 export const actions = {
-  async nuxtServerInit ({ dispatch, commit }, { req }) {
+  async nuxtServerInit ({ dispatch, commit, state }, { req }) {
     const isMobile = new MobileDetect(req.headers['user-agent']).phone() //  Is the page loaded from a phone
     commit('SET_MOBILE', isMobile)
 
     const JWTtoken = get_cookie('jwt', req)
 
     if (JWTtoken) {
-      try {
-        commit('user/auth/SET_JWT_TOKEN', JWTtoken)
-        await dispatch('user/auth/fetch_user')
-      } catch (error) {
-        // console.log(error.request)
-        // Если токен просрочен или не правильный
-        // console.error('Auth error: ', error.response)
-        commit('user/auth/LOGOUT')
-        commit('user/personal/RESET_USER')
-        commit('user/auth/RESET_JWT_TOKEN')
-      }
+      commit('user/auth/SET_JWT_TOKEN', JWTtoken)
+      // axios.defaults.headers.common['Authorization'] = 'JWT ' + JWTtoken
+      await dispatch('user/auth/fetch_user')
+    } else {
+      commit('user/auth/LOGOUT')
+      commit('user/personal/RESET_USER')
+      commit('user/auth/RESET_JWT_TOKEN')
     }
   }
 }

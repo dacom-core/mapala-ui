@@ -8,26 +8,11 @@
 </template>
 
 <script>
-//  import bc from '@/api/blockchain'
 import WriteCommentBlock from './__parts__/block-write-comment'
 import CommentsList from './comments-list'
 
 export default {
   props: ['post'],
-
-  methods: {
-    // TODO доделать после релиза
-    /**
-     * Scroll page to selected comment
-     * @param  {string} comment Comment id
-     */
-  //    toComment (comment) {
-  //      if (this.page.comments_count > this.page.comments.length) {
-  //        this.fetchComments()
-  //      }
-  //      this.$scrollTo(comment, 500, { easing: 'linear' })
-  //    }
-  },
 
   components: {
     WriteCommentBlock,

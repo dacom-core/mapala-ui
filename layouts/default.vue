@@ -30,6 +30,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
+import Vue from 'vue'
 import blockchain from '@/api/blockchain'
 import TopLine from '~/components/layout/top-line'
 import PostList from '~/components/blog/post-list'
@@ -39,6 +40,7 @@ import CommonView from '~/components/layout/common-view'
 import GroupView from '~/components/layout/group-view'
 import UserView from '~/components/layout/user-view'
 import Chat from '~/components/other/chat'
+import { get_cookie } from '@/utils/cookies'
 
 export default {
   components: {
@@ -84,6 +86,8 @@ export default {
   },
 
   async mounted () {
+    console.log(Vue.axios)
+    this.$store.dispatch('user/auth/fetch_user')
     await blockchain.init(this.$store)
     await blockchain.initBlockchains(this)
   },
@@ -91,7 +95,10 @@ export default {
   methods: {
     ...mapActions({
       loadNextPosts: 'blog/posts/post_list/fetch_next_posts'
-    })
+    }),
+    setAuthHeader () {
+//      this.$axios.defaults.headers.common['Authorization'] = get_cookie('jwt')
+    }
   }
 }
 </script>

@@ -4,6 +4,7 @@ import { User } from '../services'
 import { showErrors } from '@/utils/show_errors'
 import axios from 'axios'
 import Vue from 'vue'
+import { HTTP } from '@/api'
 
 const JWT_AUTH_URL = '/api/auth/login/'
 const JWT_REFRESH_URL = '/api/auth/refresh/'
@@ -27,7 +28,7 @@ export default {
   },
 
   async login (context, creds, redirect) {
-    const { data } = await axios.post(JWT_AUTH_URL, creds)
+    const { data } = await Vue.axios.post(JWT_AUTH_URL, creds)
 
     Vue.cookie.set('jwt', data.token)
 

@@ -20,7 +20,7 @@
       }
     },
 
-    middleware: ['has-posting-key'],
+//    middleware: ['has-posting-key'],
 
     data () {
       return {

@@ -8,7 +8,7 @@ export const state = () => ({
 
 export const actions = {
   async fetch_markers ({ commit, state, rootState }) {
-    const { data: { results } } = await Marker(this.$axios).query({
+    const { data: { results } } = await Marker.query({
       bbox: state.boundingBox,
       ...rootState.filters
     })

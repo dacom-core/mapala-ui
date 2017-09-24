@@ -7,7 +7,7 @@ import { User } from '@/api/services'
 import _ from 'lodash'
 
 export default {
-  async fetch ({ app: { $axios }, store: { commit, dispatch, state }, params: { username } }) {
+  async fetch ({ store: { commit, dispatch, state }, params: { username } }) {
     // LAYOUT BLOCK
     commit('layout/SET_RIGHT_COLUMN', 'map')
     commit('layout/SET_USER_BLOCK_VISIBLE')
@@ -23,10 +23,10 @@ export default {
 
     // ACTIONS BLOCK
     await dispatch('blog/posts/post_list/fetch_posts')
-    const { data: user } = await User($axios).query({ username: username })
+    const { data: user } = await User.get({ username })
 
     if (!_.isEmpty(user)) {
-      commit('blog/posts/posts_author/SET_PAGE_AUTHOR_BC_USERNAME', user[0].bc_username)
+      commit('blog/posts/posts_author/SET_PAGE_AUTHOR_BC_USERNAME', user.bc_username)
     }
 
     if (state.map.isReady) {

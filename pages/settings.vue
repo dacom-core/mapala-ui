@@ -73,7 +73,7 @@
     },
     async mounted () {
       this.showModal()
-      const { data } = await Locomotive(this.$axios).query()
+      const { data } = await Locomotive.get()
       this.locomotive = data
     },
     methods: {
@@ -85,11 +85,11 @@
 
       loco_update () {
         if (this.locomotive) {
-          Locomotive(this.$axios).save({ wif: blockchains.current.wif }).then(res => {
+          Locomotive.save({ wif: blockchains.current.wif }).then(res => {
             console.log(res.data)
           })
         } else {
-          Locomotive(this.$axios).delete().then(res => console.log(res.data))
+          Locomotive.delete().then(res => console.log(res.data))
         }
       },
 
@@ -131,7 +131,7 @@
       async removeAvatar () {
         try {
           this.edit_av = false
-          const { data } = await User(this.$axios).removeAvatar({ username: this.userName }, {})
+          const { data } = await User.removeAvatar({ username: this.userName }, {})
           this.setUserAvatar(data)
         } catch (e) {
           this.$notify({ title: 'Update avatar error', message: e, type: 'warning' })
@@ -143,7 +143,7 @@
           const formData = new FormData()
           formData.append('file', this.$refs.avatarInput.files[0])
 
-          const { data } = await User(this.$axios).setAvatar(this.userName, formData)
+          const { data } = await User.setAvatar(this.userName, formData)
           this.setUserAvatar(data)
           this.switch_edit_avatar()
           this.$message({ type: 'info', message: 'Avatar has been updated' })

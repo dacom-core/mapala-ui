@@ -73,7 +73,6 @@ export default {
     signUp () {
       dacom.signUp(this.reg.accName, this.reg.password).then(res => {
         this.$axios.post('/auth/sign_up/', res).then(res => {
-          console.log(res)
           this.regResult = res.body.account
         })
       }, err => {

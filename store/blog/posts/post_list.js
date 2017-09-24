@@ -28,7 +28,7 @@ export const actions = {
         tags: state.postList.tags,
         ...rootState.filters }
 
-      const { data } = await Post(this.$axios).query(params) // Retrieving all posts
+      const { data } = await Post.query(params) // Retrieving all posts
 
       if (state.postList.page > 1) { // Then combine with existing post list
         data.results = state.postList.data.concat(data.results)
