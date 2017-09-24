@@ -4,8 +4,11 @@ import Vue from 'vue'
 import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from '../api/config'
 
 export default ({ req, isServer, isClient, store }) => {
+
+  const host = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}`
+
   const config = {
-    baseURL: `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}`,
+    baseURL: host,
     withCredentials: true,
     headers: {}
   }
@@ -19,6 +22,7 @@ export default ({ req, isServer, isClient, store }) => {
   Vue.use(http)
 
   Vue.axios.interceptors.request.use((request) => {
+    request.baseURL = isServer ? 'localhost:3000' : host
     if (isServer && get_cookie('jwt', req)) {
       Object.assign(
         Vue.prototype.$axios.defaults.headers.common,

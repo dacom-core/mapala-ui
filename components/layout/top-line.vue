@@ -1,7 +1,6 @@
 <template lang="pug">
   div
     header.main_header
-
       div.top_left_block
         nuxt-link(
           class="main_logo",

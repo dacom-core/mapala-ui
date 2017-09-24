@@ -1,7 +1,6 @@
 <template lang="pug">
   div
-    keep-alive
-      top-line
+    top-line
     div.gw
       div.wrapper
         //- LEFT COLUMNT
