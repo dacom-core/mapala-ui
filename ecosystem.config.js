@@ -22,7 +22,7 @@ module.exports = {
       path : '/var/www/mapala-ui',
       'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env production'
     },
-    dev : {
+    development : {
       user : 'root',
       host : '37.59.98.17',
       ref  : 'origin/dev',
@@ -30,7 +30,7 @@ module.exports = {
       path : '/var/www/mapala-ui',
       'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env development',
       env  : {
-        NODE_ENV: 'dev'
+        NODE_ENV: 'development'
       }
     }
   }
