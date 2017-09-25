@@ -73,9 +73,9 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-//import Poster from '~/components/layout/__parts__/poster'
+import Poster from '~/components/layout/__parts__/poster'
 import { delete_cookie } from '@/utils/cookies'
-//import bc from '@/api/blockchain'
+import bc from '@/api/blockchain'
 import { mixin as clickaway } from 'vue-clickaway'
 
 export default {
@@ -110,12 +110,12 @@ export default {
     }),
 
     switchBlockchain (locale) {
-//      this.$i18n.locale = locale
-//      this.$store.commit('SET_LANG', locale)
-//      this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
-//      this.$store.dispatch('blog/posts/post_list/fetch_posts')
-//      this.$store.dispatch('map/fetch_markers')
-//      locale === 'en' ? bc.setBlockchain('steemit') : bc.setBlockchain('golos')
+      this.$i18n.locale = locale
+      this.$store.commit('SET_LANG', locale)
+      this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
+      this.$store.dispatch('blog/posts/post_list/fetch_posts')
+      this.$store.dispatch('map/fetch_markers')
+      locale === 'en' ? bc.setBlockchain('steemit') : bc.setBlockchain('golos')
     },
 
     logout () {
@@ -137,7 +137,7 @@ export default {
     }
   },
   components: {
-//    Poster
+    Poster
   }
 }
 </script>
