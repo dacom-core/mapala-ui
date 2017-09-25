@@ -63,8 +63,8 @@ export const actions = {
     const JWTtoken = get_cookie('jwt', req)
 
     if (JWTtoken) {
+      console.log(JWTtoken)
       commit('user/auth/SET_JWT_TOKEN', JWTtoken)
-      // axios.defaults.headers.common['Authorization'] = 'JWT ' + JWTtoken
       await dispatch('user/auth/fetch_user')
     } else {
       commit('user/auth/LOGOUT')
