@@ -89,8 +89,6 @@ export default {
 
     const signedTr = await this.signTr(tr)
 
-    console.log(this.current)
-
     try {
       return await Post.save({ tx: signedTr, blockchain: this.current.name })
     } catch (err) {
@@ -194,7 +192,7 @@ export default {
   async initBlockchains (ctx = {}) {
     try {
       const username = ctx.$store.state.user.personal.username
-      const { data } = await User.initialBlockchains(username ? { username: username } : '')
+      const { data } = await User.initialBlockchains({ username: username })
 
       const bc_list = []
       for (const bc of data) {

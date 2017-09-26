@@ -85,11 +85,10 @@ export default {
   },
 
   async mounted () {
-//    this.$store.dispatch('user/auth/fetch_user')
     await blockchain.init(this.$store)
-    await blockchain.initBlockchains(this)
-    
-    console.log(this.$store.state.user.auth.token + ' I AM HERE CLIENT')
+    if (this.isAuth) {
+      await blockchain.initBlockchains(this)
+    }
   },
 
   methods: {
