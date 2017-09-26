@@ -14,10 +14,6 @@
   export default {
     props: ['post'],
 
-    mounted () {
-      console.log(this.isAuth)
-    },
-
     data () {
       return {
         loading: false

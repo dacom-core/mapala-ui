@@ -453,19 +453,9 @@ export function Resource (url, params, actions, options) {
       const method = action.method
       const data = options.body
       const url = Url(options.url, options.params)
-
-      // console.log(Vue.axios.defaults)
       return Vue.axios({ method, url, data })
     }
   })
 
   return resource
 }
-
-// const User = Resource('http://dev.mapala.net/api/users{/username}/')
-
-// User.query({ username: 'avral', qwe: '111' }).then(res => {
-//   console.log(res.data)
-// }, err => {
-//   console.log(err)
-// })

@@ -3,8 +3,6 @@
  * @param  {array} errors erros array for display
  */
 export function showErrors (errors, context) {
-  console.log(errors)
-  console.log('dfsdfs')
   if (typeof errors === 'string') {
     context.$notify(
       {
@@ -13,7 +11,6 @@ export function showErrors (errors, context) {
         type: 'warning'
       })
   } else {
-    console.log('dfs')
     let offset = 0
     for (const error in errors) {
       const err = errors[error]
@@ -31,7 +28,7 @@ export function showErrors (errors, context) {
           title: 'Error :',
           message: message,
           type: 'warning',
-          offset: offset,
+          offset: offset
         })
       offset += 100
     }

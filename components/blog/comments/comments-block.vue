@@ -30,13 +30,6 @@ export default {
       this.repliedComment = comment
     }
   }
-
-//  mounted () {
-//    this.$on('reply', function (comment) {
-//      console.log(comment)
-//      console.log('fdfsdfsdfs commment adsfadsfas')
-//    })
-//  }
 }
 </script>
 

@@ -40,19 +40,16 @@
             {
               title: this.$t('distributed_tokens'),
               value: this.$parent.ico.total_tokens.toFixed() + ' MPL'
-            },
+            }
           ]
-          // console.log(this.ico.investors)
           return sections
         }
       },
       created () {
-        // this.error = this.ico = null
         let that = this
-        api.ico.investors(function(data) {
-          // console.log(data)
+        api.ico.investors(function (data) {
           that.investors = data.data_provider.allModels
-        });
+        })
       }
     }
 </script>

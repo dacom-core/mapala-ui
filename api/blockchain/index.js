@@ -120,12 +120,6 @@ export default {
   },
 
   vote (page) {
-    console.log('blockchain/index.js/vote()/128')
-    console.log(this.current.wif)
-    console.log(this.current.blockchain_username)
-    console.log(page.author.bc_username)
-    console.log(page.permlink)
-
     return new Promise((resolve, reject) => {
       steem.broadcast.vote(
         this.current.wif, this.current.blockchain_username, page.author.bc_username, page.permlink, 10000, function (err, result) {
@@ -219,12 +213,9 @@ export default {
       if (this.blockchains) {
         this.setBlockchain(undefined, ctx.$store.state)
       }
-
       const { balance } = await this.getUser()
       // commit('user/wallet/SET_BALANCE', balance)
-
       // TODO SET_BALANCE GOLOS/GBG
-
     } catch (error) {
       console.error(error)
     }

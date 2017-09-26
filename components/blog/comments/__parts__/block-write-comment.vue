@@ -131,8 +131,6 @@ export default {
     },
     startComment () {
       this.isEdit = true
-      console.log('block-write-comment.vue/startComment() 135')
-      console.log(this.$refs)
       this.$refs.text.focus()
     },
     endEdit () {
