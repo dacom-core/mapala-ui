@@ -186,7 +186,7 @@ export default {
 
   getPostingKey (blockchain, username) {
     if (blockchain === undefined) {
-      return this.getPostingKey(this.current.name)
+      return this.getPostingKey(this.current.name, username)
     }
     return store.get(`${blockchain}_${username}_posting_key`)
   },

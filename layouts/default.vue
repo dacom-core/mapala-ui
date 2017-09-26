@@ -85,19 +85,17 @@ export default {
   },
 
   async mounted () {
-    console.log(Vue.axios)
-    this.$store.dispatch('user/auth/fetch_user')
+//    this.$store.dispatch('user/auth/fetch_user')
     await blockchain.init(this.$store)
     await blockchain.initBlockchains(this)
+    
+    console.log(this.$store.state.user.auth.token + ' I AM HERE CLIENT')
   },
 
   methods: {
     ...mapActions({
       loadNextPosts: 'blog/posts/post_list/fetch_next_posts'
-    }),
-    setAuthHeader () {
-//      this.$axios.defaults.headers.common['Authorization'] = get_cookie('jwt')
-    }
+    })
   }
 }
 </script>

@@ -22,17 +22,12 @@ export default ({ req, isServer, isClient, store }) => {
   Vue.use(http)
 
   Vue.axios.interceptors.request.use((request) => {
-    request.baseURL = isServer ? 'localhost:3000' : host
-    if (isServer && get_cookie('jwt', req)) {
+
+    if (store.state.user.auth.token) {
       Object.assign(
         Vue.prototype.$axios.defaults.headers.common,
         Vue.prototype.$axios.defaults.headers.common,
-        { 'Authorization': 'JWT ' + get_cookie('jwt', req) })
-    } else if (isClient && Vue.cookie.get('jwt')) {
-      Object.assign(
-        Vue.prototype.$axios.defaults.headers.common,
-        Vue.prototype.$axios.defaults.headers.common,
-        { 'Authorization': 'JWT ' + Vue.cookie.get('jwt') })
+        { 'Authorization': 'JWT ' + store.state.user.auth.token })
     }
 
     Object.assign(
