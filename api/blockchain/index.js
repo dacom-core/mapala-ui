@@ -194,7 +194,7 @@ export default {
   async initBlockchains (ctx = {}) {
     try {
       const username = ctx.$store.state.user.personal.username
-      const { data } = await User.initialBlockchains({ username })
+      const { data } = await User.initialBlockchains(username ? { username: username } : '')
 
       const bc_list = []
       for (const bc of data) {
