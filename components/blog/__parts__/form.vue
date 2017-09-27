@@ -222,22 +222,22 @@
       this.form.meta.group = this.groupName
     },
     watch: {
-      resetForm () {
-        this.form = {
-          title: '',
-          body: '',
-          meta: {
-            image: [],
-            location: {
-              name: '',
-              lat: '',
-              lng: ''
-            },
-            group: null,
-            tags: []
-          }
-        }
-      }
+//      resetForm () {
+//        this.form = {
+//          title: '',
+//          body: '',
+//          meta: {
+//            image: [],
+//            location: {
+//              name: '',
+//              lat: '',
+//              lng: ''
+//            },
+//            group: null,
+//            tags: []
+//          }
+//        }
+//      }
     }
   }
 
