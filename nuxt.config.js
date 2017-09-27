@@ -52,6 +52,11 @@ module.exports = {
     resourceHints: false,
     ssr: {
       shouldPreload: () => false
+    },
+    bundleRenderer: {
+      cache: require('lru-cache')({
+        maxAge: 1000 * 60 * 15
+      })
     }
   },
   build: {

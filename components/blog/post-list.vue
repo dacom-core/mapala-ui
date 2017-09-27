@@ -10,6 +10,10 @@ import PostItem from './post-list-item'
 import { mapState } from 'vuex'
 
 export default {
+  serverCacheKey () {
+    return Math.floor(Date.now() / 30000)
+  },
+
   data () {
     return {
       loading: false

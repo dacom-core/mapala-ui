@@ -15,9 +15,15 @@
   import ModalCloseButton from '@/components/modal/__parts__/_close-button.vue'
 
   export default {
-    head: {
-      bodyAttrs: {
-        class: 'overflowHidden'
+    head () {
+      return {
+        title: this.$store.state.blog.posts.post_single.postSingle.title,
+        meta: [
+          { hid: 'description', name: 'description', content: 'My custom description' }
+        ],
+        bodyAttrs: {
+          class: 'overflowHidden'
+        }
       }
     },
     async fetch ({ store: { dispatch, commit }, params, from }) {
