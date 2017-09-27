@@ -19,7 +19,6 @@
         input.write_header.blank(
           :placeholder="$t('titile_placeholder')",
           v-model="form.title",
-          @change="$v.form.title.$touch()",
           :disabled="isEditForm"
         )
 
