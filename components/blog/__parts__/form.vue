@@ -9,10 +9,10 @@
           div.name
             | @{{ userName }}
 
-      span.form-group__message(v-if="!$v.form.title.required && $v.form.title.$dirty")
+      //span.form-group__message(v-if="!$v.form.title.required && $v.form.title.$dirty")
         | {{ $t('field_is_required') }}
 
-      span.form-group__message(v-if="!$v.form.title.minLength")
+      //span.form-group__message(v-if="!$v.form.title.minLength")
         | {{ $t('title_must_have_at_least') }} 2 {{ $t('letters') }}.
 
       div.title_heading__Wrapper
