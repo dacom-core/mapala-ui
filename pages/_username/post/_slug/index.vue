@@ -15,6 +15,7 @@
   import ModalCloseButton from '@/components/modal/__parts__/_close-button.vue'
 
   export default {
+    name: 'post_view',
     head () {
       return {
         title: this.$store.state.blog.posts.post_single.postSingle.title,
