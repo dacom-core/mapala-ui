@@ -1,7 +1,7 @@
 <template lang="pug">
   div.post-content
-    nuxt-link(v-if="next_post" class="prev_post", :to="next_post")
-    nuxt-link(v-if="prev_post" class="next_post", :to="prev_post")
+    nuxt-link(v-if="next_post" class="next_post", :to="next_post")
+    nuxt-link(v-if="prev_post" class="prev_post", :to="prev_post")
 
     div.top_block
       div.t_col
