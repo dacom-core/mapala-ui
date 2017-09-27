@@ -1,74 +1,75 @@
 <template lang="pug">
-  div
-    header.main_header
-      div.top_left_block
-        nuxt-link(
-          class="main_logo",
-          :class="{ main_logoMobile: isMobile }",
-          :to="'/'",
-          )
-          img(src="~assets/MapalaLogo.png")
-          span
-            | MAPALA
-
-        div.change_lang
-          input(type="radio" value="ru" id="rus")
-          label(for="rus", @click="switchBlockchain('ru')")
-            | rus/golos
-          input(type="radio" value="en" id="eng")
-          label(for="eng", @click="switchBlockchain('en')")
-            | eng/steem
-
-
-      div.top-right-block
-
-        poster
-
-        div.username_wrapper(v-if="isAuth")
+  no-ssr
+    div
+      header.main_header
+        div.top_left_block
           nuxt-link(
-            v-if="isAuth",
-            :to="'/'+userName"
+            class="main_logo",
+            :class="{ main_logoMobile: isMobile }",
+            :to="'/'",
             )
-            div.user
-              span(class="user_name" v-text="userName")
-              img(v-if="userAvatar" class="user_logo", :src="userAvatar")
-              img(v-else class="no_avatar" src="~assets/icon-profile-w.svg")
+            img(src="~assets/MapalaLogo.png")
+            span
+              | MAPALA
 
-        div.divider
+          div.change_lang
+            input(type="radio" value="ru" id="rus")
+            label(for="rus", @click="switchBlockchain('ru')")
+              | rus/golos
+            input(type="radio" value="en" id="eng")
+            label(for="eng", @click="switchBlockchain('en')")
+              | eng/steem
 
-        nuxt-link(v-if="!isAuth", :to="'/auth/login'", class="login")
-          | {{ $t('log_in') }}
 
-        div.right_button(v-else)
+        div.top-right-block
 
-          div(@click="openMenu", class="open_menu", v-on-clickaway="closeMenu" )
-            | {{ $t('menu') }}
+          poster
 
-          div.user_menu(
-            v-if="isAuth",
-            :class="{ active : isMenuOpened, user_menuMobile: isMobile }"
-            )
-
-            nuxt-link(:to="'/wallet'", class="wal")
-              i.purce
-              span.txt_i
-                | {{ $t('Wallet') }}
-              span(class="amount" v-text="userBalance")
-
-            div.divd
-            div.mn
-
-              nuxt-link(
-              :to="'/settings'"
-              class="m_item"
+          div.username_wrapper(v-if="isAuth")
+            nuxt-link(
+              v-if="isAuth",
+              :to="'/'+userName"
               )
-                | {{ $t('setting') }}
+              div.user
+                span(class="user_name" v-text="userName")
+                img(v-if="userAvatar" class="user_logo", :src="userAvatar")
+                img(v-else class="no_avatar" src="~assets/icon-profile-w.svg")
 
-              nuxt-link(class="m_item", :to="'/ico/'")
-                | ICO
+          div.divider
 
-              a(href="#" v-if="isAuth" class="m_item", @click.prevent="logout")
-                | {{ $t('log_out') }}
+          nuxt-link(v-if="!isAuth", :to="'/auth/login'", class="login")
+            | {{ $t('log_in') }}
+
+          div.right_button(v-else)
+
+            div(@click="openMenu", class="open_menu", v-on-clickaway="closeMenu" )
+              | {{ $t('menu') }}
+
+            div.user_menu(
+              v-if="isAuth",
+              :class="{ active : isMenuOpened, user_menuMobile: isMobile }"
+              )
+
+              nuxt-link(:to="'/wallet'", class="wal")
+                i.purce
+                span.txt_i
+                  | {{ $t('Wallet') }}
+                span(class="amount" v-text="userBalance")
+
+              div.divd
+              div.mn
+
+                nuxt-link(
+                :to="'/settings'"
+                class="m_item"
+                )
+                  | {{ $t('setting') }}
+
+                nuxt-link(class="m_item", :to="'/ico/'")
+                  | ICO
+
+                a(href="#" v-if="isAuth" class="m_item", @click.prevent="logout")
+                  | {{ $t('log_out') }}
 </template>
 
 <script>
