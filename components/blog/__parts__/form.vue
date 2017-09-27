@@ -27,17 +27,12 @@
         input(ref="inputImage", @change="uploadImage", hidden, type="file")
 
 
-      span.form-group__message(v-if="!$v.form.body.required && $v.form.body.$dirty")
-        | {{ $t('field_is_required') }}
-
-
       div#write_text
         div.quill-editor.write_text(
           v-quill:myQuillEditor="editorOption",
           ref="myQuillEditor",
           @ready="onEditorReady($event)"
-          v-model="form.body",
-          @change="$v.form.body.$touch()"
+          v-model="form.body"
           )
 
 
@@ -55,7 +50,6 @@
 <script>
   import { Post, Image } from '@/api/services'
   import { mapState, mapMutations } from 'vuex'
-  import { required, minLength } from 'vuelidate/lib/validators'
   import { validationMixin } from 'vuelidate'
 
   export default {
@@ -109,13 +103,13 @@
         return this.$route.params.groupname
       }
     },
-    validations: {
-      form: {
-        body: {
-          required
-        }
-      }
-    },
+//    validations: {
+//      form: {
+//        body: {
+//          required
+//        }
+//      }
+//    },
     methods: {
       ...mapMutations({
         hideModal: 'modal/HIDE_MODAL'
@@ -184,27 +178,27 @@
         })
       },
       submit () {
-        if (this.isFormValid()) {
+//        if (this.isFormValid()) {
           if (this.isEditForm) {
             this.$emit('updatePost', this.form)
           } else {
             this.$emit('createPost', this.form)
           }
-        } else {
-          this.showErrors()
-        }
+//        } else {
+//          this.showErrors()
+//        }
       },
-      showErrors () {
-        this.$v.form.$touch()
-      },
-      isFormValid () {
-        if (!this.form.meta.location.name) {
-          this.$notify({ message: this.$t('location_is_required'), type: 'warning' })
-          return false
-        }
-
-        return !this.$v.form.$invalid
-      },
+//      showErrors () {
+//        this.$v.form.$touch()
+//      },
+//      isFormValid () {
+//        if (!this.form.meta.location.name) {
+//          this.$notify({ message: this.$t('location_is_required'), type: 'warning' })
+//          return false
+//        }
+//
+//        return !this.$v.form.$invalid
+//      },
       setPlace (place) {
         this.form.meta.location.name = place.formatted_address
         this.form.meta.location.lat = place.geometry.location.lat()
