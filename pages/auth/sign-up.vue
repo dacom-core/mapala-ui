@@ -7,10 +7,10 @@
     </el-button-group>
 
     <div v-else>
-      <div class="inpt_w">
+      <div class="inpt_w" v-if="golosAlreadyReg">
         <input placeholder="Login" v-model="username" class="inpt i-user"><label></label>
       </div>
-      <div class="inpt_w">
+      <div class="inpt_w" v-if="golosAlreadyReg">
         <input type="password" placeholder="Password" v-model="password" class="inpt i-pass"><label></label>
       </div>
 
@@ -20,8 +20,11 @@
         </div>
       </div>
       <div v-else>
+        <h4>Мы мененяем логику регистрации аккаунтов в блокчейне, в связи с этим регистрация временно приостановлена.
+          Оставьте свой e-mail и мы уведомим вас о возобновлении регистрации.</h4>
         <div class="inpt_w">
-          <input placeholder="Желаемый Golos.io username" v-model="bc_username" class="inpt i-user"><label></label>
+          <input type="email" placeholder="email" v-model="email_request" class="inpt i-user"><label></label>
+          <!--<input placeholder="Желаемый Golos.io username" v-model="bc_username" class="inpt i-user"><label></label>-->
         </div>
       </div>
 
@@ -35,7 +38,7 @@
 <script>
   import auth from '@/api/auth'
   import bc from '@/api/blockchain'
-  import { User } from '@/api/services'
+  import { User, EmailRequest } from '@/api/services'
   import VueRecaptcha from 'vue-recaptcha'
   import { showErrors } from '@/utils/show_errors'
 
@@ -47,7 +50,8 @@
         loading: false,
         username: '',
         password: '',
-        bc_username: '',
+//        bc_username: '',
+        email_request: '',
         wif: '',
         errors: [],
         golosAlreadyReg: this.$store.state.locale === 'ru' ? null : true
@@ -66,8 +70,13 @@
             creds.wif = this.wif
             auth.existngSignUp(this, creds, {name: 'index'})
           } else {
-            creds.bc_username = this.bc_username
-            auth.signUp(this, creds, {name: 'index'})
+//            creds.bc_username = this.bc_username
+//            auth.signUp(this, creds, {name: 'index'})
+            EmailRequest.save({ email_request: this.email_request }).then(res => {
+              this.$alert('Вы получите письмо сразу после возобновления регистрации', 'Спасибо', { confirmButtonText: 'OK' })
+            }, err => {
+              this.$notify({ title: 'Error', message: 'Почта уже добавлена', type: 'warning' })
+              })
           }
           this.$refs.recaptcha.reset()
         } catch (e) {

@@ -53,7 +53,7 @@
   import { validationMixin } from 'vuelidate'
 
   export default {
-    props: ['isEditForm', 'isFormSaving', 'resetForm'],
+    props: ['isEditForm', 'isFormSaving'],
     mixins: [validationMixin],
     data () {
       return {

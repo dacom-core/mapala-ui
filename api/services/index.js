@@ -45,3 +45,5 @@ export const Image = Resource('/api/images{/id}/', {}, {
 export const Group = Resource('/api/groups{/name}/', {}, {
   'markers': { method: 'GET', url: '/api/markers/' }
 })
+
+export const EmailRequest = Resource('/api/email_request/')
