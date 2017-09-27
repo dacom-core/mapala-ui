@@ -4,21 +4,10 @@
 <script>
 export default {
   mounted () {
-    (function(){
-      function Build(name, args){return function(){window.carrotquestasync.push(name, arguments);} }
-      if (typeof carrotquest === 'undefined') {
-        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true;
-        s.src = '//cdn.carrotquest.io/api.min.js';
-        var x = document.getElementsByTagName('head')[0]; x.appendChild(s);
-        window.carrotquest = {}; window.carrotquestasync = []; carrotquest.settings = {};
-        var m = ['connect', 'track', 'identify', 'auth', 'open', 'onReady', 'addCallback', 'removeCallback', 'trackMessageInteraction'];
-        for (var i = 0; i < m.length; i++) carrotquest[m[i]] = Build(m[i]);
-      }
-    })();
-    carrotquest.connect('10040-2d686a923f91bb2d1be7c7118d');
+    window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(e){n=document.domain,r.src='javascript:var d=document.open();d.domain="'+n+'";void(0);',o=s}o.open()._l=function(){var e=this.createElement("script");n&&(this.domain=n),e.id="js-iframe-async",e.src="https://assets.zendesk.com/embeddable_framework/main.js",this.t=+new Date,this.zendeskHost="mapalasupport.zendesk.com",this.zEQueue=a,this.body.appendChild(e)},o.write('<body onload="document._l();">'),o.close()}();
   },
 
-  data() {
+  data () {
     return {}
   },
 
