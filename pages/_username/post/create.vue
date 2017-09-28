@@ -2,7 +2,7 @@
   modal-backdrop
     modal-box
       modal-content
-        post-form(:isEditForm="false", @createPost="createPost", :resetForm="resetForm", :isFormSaving="isFormSaving")
+        post-form(:isEditForm="false", @createPost="createPost()", :resetForm="resetForm", :isFormSaving="isFormSaving")
 </template>
 
 <script>

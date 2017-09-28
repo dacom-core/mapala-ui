@@ -11,6 +11,8 @@
 
       div.title_heading__Wrapper
         input.write_header.blank(
+          :placeholder="$t('titile_placeholder')",
+          v-model="form.title",
           :disabled="isEditForm"
         )
 
@@ -26,9 +28,8 @@
 
 
       div#write_text
-        div.quill-editor.write_text(
-          v-quill:myQuillEditor="editorOption",
-          ref="myQuillEditor",
+        //div.quill-editor.write_text(
+          //v-quill:myQuillEditor="editorOption",
           @ready="onEditorReady($event)"
           v-model="form.body"
           )

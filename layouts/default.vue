@@ -120,7 +120,7 @@ export default {
     left: 0
     padding-top 72px
     box-sizing border-box
-    z-index 101
+    z-index 9999
     padding-bottom 60px
   .hideScroll
     overflow-y hidden
