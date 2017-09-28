@@ -25,6 +25,7 @@
 
       div.search_location
         gmap-autocomplete(
+        :placeholder="$t('enter_location')"
         class="search_field",
         :value="form.position_text",
         @place_changed="setPlace"
