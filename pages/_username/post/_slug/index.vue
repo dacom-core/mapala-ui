@@ -20,7 +20,11 @@
       return {
         title: this.$store.state.blog.posts.post_single.postSingle.title,
         meta: [
-          { hid: 'description', name: 'description', content: 'My custom description' }
+          {
+            hid: 'description',
+            name: 'description',
+            content: this.$store.state.blog.posts.post_single.postSingle.body.substring(0, 200)
+          }
         ],
         bodyAttrs: {
           class: 'overflowHidden'
