@@ -41,8 +41,6 @@
       div#write_text
         div.quill-editor.write_text(
         v-quill:myQuillEditor="editorOption",
-        ref="myQuillEditor",
-        @ready="onEditorReady($event)"
         v-model="form.body",
         @change="$v.form.body.$touch()"
         )
