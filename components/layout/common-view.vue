@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div.dash_wrapper
     create-post-button(v-if="isAuth")
     switch-blog-buttons
 </template>
@@ -26,4 +26,15 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+  .dash_wrapper
+    position: fixed;
+    padding: 15px 20px 10px;
+    top: 42px;
+    left: 22px;
+    min-width: 473px;
+    z-index: 2;
+    border-radius: 0 0 10px 10px;
+    -webkit-box-shadow: 0 5px 6px 0 rgba(0,0,0,.4);
+    box-shadow: 0 5px 6px 0 rgba(0,0,0,.4);
+    background-image: linear-gradient(180deg,#4b5e7a,#5d7394);
 </style>

@@ -13,6 +13,7 @@
           common-view(v-else-if="isCommonViewVisible")
 
           post-list#post_list_block(
+            :style="{ top: topOffset }",
             v-infinite-scroll="loadNextPosts",
             infinite-scroll-disabled="isLoadingDisabled",
             :infinite-scroll-distance="10"
@@ -63,6 +64,9 @@ export default {
       isCommonViewVisible: state => state.layout.isCommonViewVisible,
       rightColumn: state => state.layout.rightColumn
     }),
+    topOffset () {
+      return this.isAuth ? '120px' : '50px'
+    },
     isLoadingDisabled () { // Check on has loading of next posts to be disabled
       return this.isLoading || !this.isLoadingAllowed
       // The first check: Is loading posts already in progress
@@ -144,4 +148,7 @@ export default {
   .overflowHidden {
     overflow: hidden
   }
+
+  #post_list_block
+    position: relative
 </style>
