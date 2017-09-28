@@ -50,11 +50,11 @@
 <script>
   import { Post, Image } from '@/api/services'
   import { mapState, mapMutations } from 'vuex'
-  import { validationMixin } from 'vuelidate'
+//  import { validationMixin } from 'vuelidate'
 
   export default {
     props: ['isEditForm', 'isFormSaving'],
-    mixins: [validationMixin],
+//    mixins: [validationMixin],
     data () {
       return {
         form: {
