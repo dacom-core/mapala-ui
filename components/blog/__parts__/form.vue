@@ -9,31 +9,43 @@
           div.name
             | @{{ userName }}
 
+      span.form-group__message(v-if="!$v.form.title.required && $v.form.title.$dirty")
+        | {{ $t('field_is_required') }}
+
+      span.form-group__message(v-if="!$v.form.title.minLength")
+        | {{ $t('title_must_have_at_least') }} 2 {{ $t('letters') }}.
+
       div.title_heading__Wrapper
         input.write_header.blank(
-          :placeholder="$t('titile_placeholder')",
-          v-model="form.title",
-          :disabled="isEditForm"
+        :placeholder="$t('titile_placeholder')",
+        v-model="form.title",
+        @change="$v.form.title.$touch()",
+        :disabled="isEditForm"
         )
 
       div.search_location
         gmap-autocomplete(
-          class="search_field",
-          :value="form.position_text",
-          @place_changed="setPlace"
+        class="search_field",
+        :value="form.position_text",
+        @place_changed="setPlace"
         )
 
         <!-- Image loader -->
         input(ref="inputImage", @change="uploadImage", hidden, type="file")
 
 
+      span.form-group__message(v-if="!$v.form.body.required && $v.form.body.$dirty")
+        | {{ $t('field_is_required') }}
+
+
       div#write_text
         div.quill-editor.write_text(
-          ref="myTextEditor",
-          @change="test",
-          v-quill:myQuillEditor="editorOption",
-          v-model="form.body"
-          )
+        v-quill:myQuillEditor="editorOption",
+        ref="myQuillEditor",
+        @ready="onEditorReady($event)"
+        v-model="form.body",
+        @change="$v.form.body.$touch()"
+        )
 
 
       div.bottom_block
@@ -50,11 +62,12 @@
 <script>
   import { Post, Image } from '@/api/services'
   import { mapState, mapMutations } from 'vuex'
-//  import { validationMixin } from 'vuelidate'
+  import { required, minLength } from 'vuelidate/lib/validators'
+  import { validationMixin } from 'vuelidate'
 
   export default {
-    props: ['isEditForm', 'isFormSaving'],
-//    mixins: [validationMixin],
+    props: ['isEditForm', 'isFormSaving', 'resetForm'],
+    mixins: [validationMixin],
     data () {
       return {
         form: {
@@ -67,7 +80,7 @@
               lat: '',
               lng: ''
             },
-            group: null,
+            group: this.groupName || null,
             tags: []
           }
         },
@@ -103,32 +116,39 @@
         return this.$route.params.groupname
       }
     },
-//    validations: {
-//      form: {
-//        body: {
-//          required
-//        }
-//      }
-//    },
+    validations: {
+      form: {
+        title: {
+          required,
+          minLength: minLength(2)
+        },
+        body: {
+          required
+        }
+      }
+    },
     methods: {
       ...mapMutations({
         hideModal: 'modal/HIDE_MODAL'
       }),
-  //      updateTitle (e) {
-  //        this.$store.commit('blog/posts/post_form/UPDATE_TITLE', e.target.value)
-  //      },
-  //      updateBody ({ editor, html, text }) {
-  //        this.$store.commit('blog/posts/post_form/UPDATE_BODY', html)
-  //        this.$store.commit('blog/posts/post_form/UPDATE_BODY', html)
-  //        this.$v.form.body.$touch()
-  //      },
-  //      showInput () {
-  //        this.inputVisible = true
-  //        this.$nextTick(_ => {
-  //          this.$refs.saveTagInput.$refs.input.focus()
-  //        })
-  //      },
-  //
+      onEditorReady (editor) {
+        this.editor = editor
+      },
+      //      updateTitle (e) {
+      //        this.$store.commit('blog/posts/post_form/UPDATE_TITLE', e.target.value)
+      //      },
+      //      updateBody ({ editor, html, text }) {
+      //        this.$store.commit('blog/posts/post_form/UPDATE_BODY', html)
+      //        this.$store.commit('blog/posts/post_form/UPDATE_BODY', html)
+      //        this.$v.form.body.$touch()
+      //      },
+      //      showInput () {
+      //        this.inputVisible = true
+      //        this.$nextTick(_ => {
+      //          this.$refs.saveTagInput.$refs.input.focus()
+      //        })
+      //      },
+      //
       onPaste (e) {
         if (e.defaultPrevented || !this.quill.isEnabled()) {
           return
@@ -175,27 +195,27 @@
         })
       },
       submit () {
-//        if (this.isFormValid()) {
+        if (this.isFormValid()) {
           if (this.isEditForm) {
             this.$emit('updatePost', this.form)
           } else {
             this.$emit('createPost', this.form)
           }
-//        } else {
-//          this.showErrors()
-//        }
+        } else {
+          this.showErrors()
+        }
       },
-//      showErrors () {
-//        this.$v.form.$touch()
-//      },
-//      isFormValid () {
-//        if (!this.form.meta.location.name) {
-//          this.$notify({ message: this.$t('location_is_required'), type: 'warning' })
-//          return false
-//        }
-//
-//        return !this.$v.form.$invalid
-//      },
+      showErrors () {
+        this.$v.form.$touch()
+      },
+      isFormValid () {
+        if (!this.form.meta.location.name) {
+          this.$notify({ message: this.$t('location_is_required'), type: 'warning' })
+          return false
+        }
+
+        return !this.$v.form.$invalid
+      },
       setPlace (place) {
         this.form.meta.location.name = place.formatted_address
         this.form.meta.location.lat = place.geometry.location.lat()
@@ -204,7 +224,7 @@
     },
     created () {
       if (this.isEditForm) {
-        Post.get({ permlink: this.$route.params.username + '*@*' + this.$route.params.slug }).then(res => {
+        Post.get(this.$route.params.username + '*@*' + this.$route.params.slug).then(res => {
           this.form.title = res.data.title
           this.form.body = res.data.body
           this.form.position_text = res.data.position_text
@@ -216,25 +236,26 @@
     },
 
     mounted () {
-      this.form.meta.group = this.groupName
+      console.log(this.$route.params)
     },
+
     watch: {
-//      resetForm () {
-//        this.form = {
-//          title: '',
-//          body: '',
-//          meta: {
-//            image: [],
-//            location: {
-//              name: '',
-//              lat: '',
-//              lng: ''
-//            },
-//            group: null,
-//            tags: []
-//          }
-//        }
-//      }
+      resetForm () {
+        this.form = {
+          title: '',
+          body: '',
+          meta: {
+            image: [],
+            location: {
+              name: '',
+              lat: '',
+              lng: ''
+            },
+            group: this.groupName || null,
+            tags: []
+          }
+        }
+      }
     }
   }
 
