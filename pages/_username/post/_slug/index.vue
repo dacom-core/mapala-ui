@@ -43,6 +43,7 @@
     },
     mounted () {
       this.showModal()
+      console.log(this.$store.state.blog.posts.post_single.postSingle.body.substring(0, 200))
     },
     components: {
       PostView,

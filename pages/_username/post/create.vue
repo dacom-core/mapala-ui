@@ -20,7 +20,7 @@ export default {
     }
   },
 
-//  middleware: ['auth', 'has-posting-key'],
+  middleware: ['auth'],
 
   data () {
     return {
@@ -38,6 +38,9 @@ export default {
     async createPost (form) {
       try {
         this.isFormSaving = true
+
+        console.log(form)
+
         await bc.createPost(this, form)
 
         this.isFormSaving = false
