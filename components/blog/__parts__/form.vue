@@ -28,9 +28,8 @@
 
 
       div#write_text
-        //div.quill-editor.write_text(
-          //v-quill:myQuillEditor="editorOption",
-          @ready="onEditorReady($event)"
+        div.quill-editor.write_text(
+          v-quill:myQuillEditor="editorOption",
           v-model="form.body"
           )
 
