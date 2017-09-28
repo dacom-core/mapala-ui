@@ -399,7 +399,7 @@ export default {
     letter-spacing: .3px;
     color: #fff;
     opacity: 0.5;
-    /*padding-left: 35px;*/
+    transition: 1s all;
     margin-left: 0;
     cursor: pointer;
     position: relative;
