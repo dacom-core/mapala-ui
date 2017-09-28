@@ -11,12 +11,12 @@
           span
             | MAPALA
 
-        div.change_lang
-          input(type="radio" value="ru" id="rus")
-          label(for="rus", @click="switchBlockchain('ru')")
+        div.change_lang(ref="switchLangButtons")
+          a.switch_lang.golos(@click="changeLang('ru')")
+            img(src="~assets/ico/golos.png")
             | rus/golos
-          input(type="radio" value="en" id="eng")
-          label(for="eng", @click="switchBlockchain('en')")
+          a.switch_lang.steemit(@click="changeLang('en')")
+            img(src="~assets/ico/steemit.png")
             | eng/steem
 
 
@@ -38,7 +38,6 @@
 
         nuxt-link(v-if="!isAuth", :to="'/auth/login'", class="login")
           | {{ $t('log_in') }}
-
         div.right_button(v-else)
 
           div(@click="openMenu", class="open_menu", v-on-clickaway="closeMenu" )
@@ -109,13 +108,22 @@ export default {
       resetUser: 'user/personal/RESET_USER'
     }),
 
-    switchBlockchain (locale) {
+    changeLang (locale) {
+      this.resetIconsOpacity()
+      const switchLangButtons = this.$refs.switchLangButtons.children
+      locale === 'ru' ? switchLangButtons[0].style.opacity = 1 : switchLangButtons[1].style.opacity = 1
       this.$i18n.locale = locale
       this.$store.commit('SET_LANG', locale)
       this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
       this.$store.dispatch('blog/posts/post_list/fetch_posts')
       this.$store.dispatch('map/fetch_markers')
       locale === 'en' ? bc.setBlockchain('steemit') : bc.setBlockchain('golos')
+    },
+
+    resetIconsOpacity () {
+      [].forEach.call(this.$refs.switchLangButtons.children, function (item) {
+        item.style.opacity = 0.5
+      })
     },
 
     logout () {
@@ -130,11 +138,12 @@ export default {
 
     closeMenu () {
       this.isMenuOpened = false
-    },
-
-    changeLang (locale) {
-      // TODO
     }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.changeLang(this.$store.state.locale)
+    }, 1000)
   },
   components: {
     Poster
@@ -373,12 +382,11 @@ export default {
   }
 
   .change_lang{
-    margin: 0;
+    margin: 0 0 0 20px;
     height: 42px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 20px;
   }
 
   .change_lang .lab{
@@ -386,16 +394,12 @@ export default {
     color: white;
   }
 
-  .change_lang [type="radio"]{
-    display: none;
-  }
-
-  .change_lang label{
+  .change_lang a {
     font: 700 14px/58px PT Sans;
     letter-spacing: .3px;
     color: #fff;
     opacity: 0.5;
-    padding-left: 35px;
+    /*padding-left: 35px;*/
     margin-left: 0;
     cursor: pointer;
     position: relative;
@@ -406,17 +410,44 @@ export default {
     padding-right: 15px;
   }
 
-  .change_lang label:before{
+  .change_lang:first-child {
+    /*margin-left:;: 15px;*/
+  }
+
+  .change_lang a img {
     width: 25px;
     height: 25px;
-    position: absolute;
-    display: block;
-    content: "";
-    background-color: #eaeaea;
-    background-repeat: no-repeat;
+    border: 1px solid white;
     border-radius: 50%;
-    left: 0;
+    padding: 2px;
+    background: #fff;
+    margin-right: 10px;
   }
+
+  /*.switch_lang */
+
+
+  /*.change_lang a:before {*/
+    /*width: 25px;*/
+    /*height: 25px;*/
+    /*position: absolute;*/
+    /*display: block;*/
+    /*content: "";*/
+    /*background-repeat: no-repeat;*/
+    /*border-radius: 50%;*/
+    /*left: 0;*/
+    /*background-size: contain;*/
+    /*border: 2px solid lightblue;*/
+    /*background-color: #fff;*/
+  /*}*/
+
+  /*.change_lang a.golos:before{*/
+    /*background-image: url('~assets/ico/golos.png');*/
+  /*}*/
+
+  /*.change_lang a.steemit:before {*/
+    /*background-image: url('~assets/ico/steemit.png');*/
+  /*}*/
 
   .top-right-block {
     display: flex;
@@ -424,12 +455,9 @@ export default {
   .top-right-block .username_wrapper {
     padding: 0 20px;
   }
-  .change_lang [type="radio"]:checked + label{
-    opacity: 1;
-  }
-  .change_lang [type="radio"]:checked + label:before{
-    background-image: url('~assets/icon-checked-blue.svg');
-  }
+  /*.change_lang [type="radio"]:checked + label{*/
+    /*opacity: 1;*/
+  /*}*/
 
 
 @media screen and (max-width: 600px) {
