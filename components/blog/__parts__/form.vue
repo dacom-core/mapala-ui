@@ -11,7 +11,6 @@
 
       div.title_heading__Wrapper
         input.write_header.blank(
-          :placeholder="$t('titile_placeholder')",
           v-model="form.title",
           :disabled="isEditForm"
         )
