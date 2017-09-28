@@ -109,14 +109,15 @@ export default {
     }),
 
     changeLang (locale) {
-      this.resetIconsOpacity()
       const switchLangButtons = this.$refs.switchLangButtons.children
-      locale === 'ru' ? switchLangButtons[0].style.opacity = 1 : switchLangButtons[1].style.opacity = 1
+
       this.$i18n.locale = locale
       this.$store.commit('SET_LANG', locale)
       this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
       this.$store.dispatch('blog/posts/post_list/fetch_posts')
       this.$store.dispatch('map/fetch_markers')
+      this.resetIconsOpacity()
+      locale === 'ru' ? switchLangButtons[0].style.opacity = 1 : switchLangButtons[1].style.opacity = 1
       locale === 'en' ? bc.setBlockchain('steemit') : bc.setBlockchain('golos')
     },
 
