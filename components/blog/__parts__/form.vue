@@ -115,7 +115,9 @@
         hideModal: 'modal/HIDE_MODAL'
       }),
       test () {
-        console.log(this.$refs.myTextEditor)
+//        console.log(this.$refs.myTextEditor)
+        console.log(this.$refs)
+        console.log(this.myQuillEditor)
       },
   //      updateTitle (e) {
   //        this.$store.commit('blog/posts/post_form/UPDATE_TITLE', e.target.value)
