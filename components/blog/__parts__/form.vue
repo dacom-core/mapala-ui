@@ -114,11 +114,6 @@
       ...mapMutations({
         hideModal: 'modal/HIDE_MODAL'
       }),
-      test () {
-//        console.log(this.$refs.myTextEditor)
-        console.log(this.$refs)
-        console.log(this.myQuillEditor)
-      },
   //      updateTitle (e) {
   //        this.$store.commit('blog/posts/post_form/UPDATE_TITLE', e.target.value)
   //      },
@@ -150,9 +145,9 @@
         }, 1)
       },
       imageHandler () {
-        const range = this.editor.getSelection()
+        const range = this.myQuillEditor.getSelection()
         const value = prompt('What is the image URL')
-        this.editor.insertEmbed(range.index, 'image', value, Quill.sources.USER)
+        this.myQuillEditor.insertEmbed(range.index, 'image', value)
       },
 
       imageUploadHandler () {
