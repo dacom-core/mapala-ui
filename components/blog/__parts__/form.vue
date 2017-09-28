@@ -29,8 +29,9 @@
 
       div#write_text
         div.quill-editor.write_text(
+          ref="myTextEditor",
+          @change="test",
           v-quill:myQuillEditor="editorOption",
-          @ready.once="onEditorReady($event)"
           v-model="form.body"
           )
 
@@ -113,8 +114,8 @@
       ...mapMutations({
         hideModal: 'modal/HIDE_MODAL'
       }),
-      onEditorReady (editor) {
-        this.editor = editor
+      test () {
+        console.log(this.$refs.myTextEditor)
       },
   //      updateTitle (e) {
   //        this.$store.commit('blog/posts/post_form/UPDATE_TITLE', e.target.value)
