@@ -11,7 +11,6 @@
 
       div.title_heading__Wrapper
         input.write_header.blank(
-          v-model="form.title",
           :disabled="isEditForm"
         )
 
