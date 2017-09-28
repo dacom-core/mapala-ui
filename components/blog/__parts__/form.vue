@@ -129,9 +129,6 @@
       ...mapMutations({
         hideModal: 'modal/HIDE_MODAL'
       }),
-      onEditorReady (editor) {
-        this.editor = editor
-      },
       //      updateTitle (e) {
       //        this.$store.commit('blog/posts/post_form/UPDATE_TITLE', e.target.value)
       //      },
@@ -231,10 +228,6 @@
           this.form.meta.location.lng = res.data.position.longitude
         })
       }
-    },
-
-    mounted () {
-      console.log(this.$route.params)
     },
 
     watch: {
