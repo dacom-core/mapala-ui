@@ -121,5 +121,6 @@
   "balance": "Steem",
   "rostov_na_donu": "Rostov-on-Don",
   "stable_currency": "SBD",
-  "comments_added": "Comment has been successfully added!"
+  "comments_added": "Comment has been successfully added!",
+  "user_not_found": "User not found"
 }

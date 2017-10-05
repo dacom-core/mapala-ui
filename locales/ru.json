@@ -122,5 +122,6 @@
   "balance": "Golos",
   "rostov_na_donu": "Ростов-на-Дону",
   "stable_currency": "GBG",
-  "comments_added": "Комментрий успешно добавлен!"
+  "comments_added": "Комментрий успешно добавлен!",
+  "user_not_found": "Такого пользователя не существует"
 }

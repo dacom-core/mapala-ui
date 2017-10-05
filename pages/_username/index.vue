@@ -7,7 +7,7 @@ import { User } from '@/api/services'
 import _ from 'lodash'
 
 export default {
-  async fetch ({ store: { commit, dispatch, state }, params: { username }, error }) {
+  async fetch ({ store: { commit, dispatch, state }, params: { username }, error, app: { i18n } }) {
     // LAYOUT BLOCK
     commit('layout/SET_RIGHT_COLUMN', 'map')
     commit('layout/SET_USER_BLOCK_VISIBLE')
@@ -23,10 +23,10 @@ export default {
 
     // ACTIONS BLOCK
     try {
-      const { data: user } = await User.get({ username })
+      const { data: user } = await User.get({ username: username })
       commit('blog/posts/posts_author/SET_PAGE_AUTHOR_BC_USERNAME', user.bc_username)
     } catch (e) {
-      return error()
+      error({ statusCode: 404, message: i18n.t('user_not_found') })
     }
     await dispatch('blog/posts/post_list/fetch_posts')
 
