@@ -35,8 +35,10 @@
         personalTokens: 0
       }
     },
-    async mounted () {
+    created () {
       this.showModal()
+    },
+    async mounted () {
       const { balance: golos, sbd_balance: gbg } = await bc.getUser(this.bc_username)
 
       this.$store.commit('user/wallet/SET_GOLOS_BALANCE', golos)

@@ -30,23 +30,21 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
-import Vue from 'vue'
 import blockchain from '@/api/blockchain'
 import TopLine from '~/components/layout/top-line'
 import PostList from '~/components/blog/post-list'
-import Map from '~/components/blog/post-map'
+import PostMap from '~/components/blog/post-map'
 import BlogDesk from '~/components/blog/blog-desk'
 import CommonView from '~/components/layout/common-view'
 import GroupView from '~/components/layout/group-view'
 import UserView from '~/components/layout/user-view'
 import Chat from '~/components/other/chat'
-import { get_cookie } from '@/utils/cookies'
 
 export default {
   components: {
     TopLine,
     PostList,
-    Map,
+    PostMap,
     BlogDesk,
     CommonView,
     GroupView,
@@ -83,7 +81,7 @@ export default {
       if (this.rightColumn === 'desk') {
         return BlogDesk
       } else if (this.rightColumn === 'map') {
-        return Map
+        return PostMap
       }
     }
   },

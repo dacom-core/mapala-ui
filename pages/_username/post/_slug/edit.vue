@@ -48,7 +48,7 @@
         }
       }
     },
-    mounted () {
+    created () {
       this.showModal()
     },
 

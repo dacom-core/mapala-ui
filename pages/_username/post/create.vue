@@ -57,7 +57,7 @@ export default {
     }
   },
 
-  mounted () {
+  created () {
     this.showModal()
 
 //    const username = this.$store.state.user.personal.username

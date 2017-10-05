@@ -141,11 +141,6 @@ export default {
       this.isMenuOpened = false
     }
   },
-  mounted () {
-    setTimeout(() => {
-      this.changeLang(this.$store.state.locale)
-    }, 1000)
-  },
   components: {
     Poster
   }

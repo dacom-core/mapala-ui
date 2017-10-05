@@ -71,9 +71,9 @@
       ModalBox,
       ModalContent
     },
-    mounted () {
+    async created () {
       this.showModal()
-      const { data } = Locomotive.get()
+      const { data } = await Locomotive.get()
       this.locomotive = data
     },
     methods: {

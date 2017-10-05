@@ -32,6 +32,7 @@
       }
     },
     async fetch ({ store: { dispatch, commit }, params, from }) {
+      commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) // Disallow making requests for new posts.
       commit('SET_BACK_PATH', from || {})
       await dispatch('blog/posts/post_single/fetch_single_post', params)
     },
@@ -41,9 +42,8 @@
         showModal: 'modal/SHOW_MODAL'
       })
     },
-    mounted () {
+    created () {
       this.showModal()
-      console.log(this.$store.state.blog.posts.post_single.postSingle.body.substring(0, 200))
     },
     components: {
       PostView,
