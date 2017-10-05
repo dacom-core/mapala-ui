@@ -20,7 +20,7 @@ export default {
     }
   },
 
-  middleware: ['auth'],
+  middleware: ['auth', 'has-posting-key'],
 
   data () {
     return {
@@ -59,11 +59,13 @@ export default {
 
   created () {
     this.showModal()
+  },
 
+  mounted () {
 //    const username = this.$store.state.user.personal.username
 //    if (!bc.getPostingKey(undefined, username)) {
-//      this.$router.push('/')
 //      this.$notify({ message: this.$t('add_key'), type: 'warning' })
+//      this.$router.push('/')
 //    }
   },
 
