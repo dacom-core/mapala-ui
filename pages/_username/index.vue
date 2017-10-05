@@ -28,7 +28,7 @@ export default {
     } catch (e) {
       return error()
     }
-    dispatch('blog/posts/post_list/fetch_posts')
+    await dispatch('blog/posts/post_list/fetch_posts')
 
     if (state.map.isReady) {
       //  1. If the page is loaded on client-side. (vue-router transition)

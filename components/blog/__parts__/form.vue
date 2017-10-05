@@ -220,7 +220,7 @@
     },
     created () {
       if (this.isEditForm) {
-        Post.get(this.$route.params.username + '*@*' + this.$route.params.slug).then(res => {
+        Post.get({ permlink: this.$route.params.username + '*@*' + this.$route.params.slug }).then(res => {
           this.form.title = res.data.title
           this.form.body = res.data.body
           this.form.position_text = res.data.position_text
