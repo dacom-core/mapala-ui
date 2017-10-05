@@ -31,10 +31,15 @@
         }
       }
     },
-    async fetch ({ store: { dispatch, commit }, params, from }) {
+    async fetch ({ store: { dispatch, commit }, params, from, isServer }) {
       commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) // Disallow making requests for new posts.
       commit('SET_BACK_PATH', from || {})
-      await dispatch('blog/posts/post_single/fetch_single_post', params)
+
+      if (isServer) { // Prefetch post content if it's SSR page loading.
+        await dispatch('blog/posts/post_single/fetch_single_post', params)
+      } else { // Load post content after modal opening.
+        dispatch('blog/posts/post_single/fetch_single_post', params)
+      }
     },
 
     methods: {
