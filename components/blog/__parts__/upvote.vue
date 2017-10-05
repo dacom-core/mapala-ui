@@ -3,13 +3,13 @@
     el-button(v-if="isAuth", @click="vote(post)")
       img(style="height: 12px" src="~assets/like.png")
     el-button(v-else :plain="true", :disabled="true" icon="check")
-    el-button(type="primary" class="support")
-      | {{ post.payout | toRub }} ₽
+    el-button(type="primary" class="support" v-text="computePayout")
 </template>
 
 <script>
   import bc from '@/api/blockchain'
   import { Post } from '@/api/services'
+  import { mapState } from 'vuex'
 
   export default {
     props: ['post'],
@@ -21,8 +21,16 @@
     },
 
     computed: {
-      isAuth () {
-        return this.$store.state.user.auth.isAuth
+      ...mapState({
+        isAuth: state => state.user.auth.isAuth,
+        locale: state => state.locale
+      }),
+      computePayout () {
+        if (this.locale === 'ru') {
+          return `${this.$options.filters.toRub(this.post.payout)} ₽`
+        } else if (this.$store.state.locale === 'en') {
+          return `${this.$options.filters.toDollar(this.post.payout)} $`
+        }
       }
     },
 

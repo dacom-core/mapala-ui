@@ -7,7 +7,7 @@ import { User } from '@/api/services'
 import _ from 'lodash'
 
 export default {
-  async fetch ({ store: { commit, dispatch, state }, params: { username } }) {
+  async fetch ({ store: { commit, dispatch, state }, params: { username }, error }) {
     // LAYOUT BLOCK
     commit('layout/SET_RIGHT_COLUMN', 'map')
     commit('layout/SET_USER_BLOCK_VISIBLE')
@@ -22,12 +22,13 @@ export default {
     commit('SET_FILTERS', { author__username: username }) // Filters for markers/post
 
     // ACTIONS BLOCK
-    await dispatch('blog/posts/post_list/fetch_posts')
-    const { data: user } = await User.get({ username })
-
-    if (!_.isEmpty(user)) {
+    try {
+      const { data: user } = await User.get({ username })
       commit('blog/posts/posts_author/SET_PAGE_AUTHOR_BC_USERNAME', user.bc_username)
+    } catch (e) {
+      return error()
     }
+    dispatch('blog/posts/post_list/fetch_posts')
 
     if (state.map.isReady) {
       //  1. If the page is loaded on client-side. (vue-router transition)
@@ -46,10 +47,6 @@ export default {
   },
 
   methods: mapActions({ fetchMarkers: 'map/fetch_markers' }),
-
-  mounted () {
-    document.body.scrollTop = 0
-  },
 
   beforeDestroy () {
     // If user's post is opened, do not hide the user profile block.

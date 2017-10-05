@@ -178,15 +178,15 @@
 
         Image.upload(formData).then(res => {
           const imgUrl = res.data
-          const range = this.editor.getSelection(true)
-          this.editor.insertEmbed(range.index + 1, 'image', imgUrl, 'user')
-          this.editor.insertEmbed(range.index + 2, 'block', 'asdf', 'user')
-          this.editor.setSelection(range.index + 3, 'silent')
+          const range = this.myQuillEditor.getSelection(true)
+          this.myQuillEditor.insertEmbed(range.index + 1, 'image', imgUrl, 'user')
+          this.myQuillEditor.insertEmbed(range.index + 2, 'block', 'asdf', 'user')
+          this.myQuillEditor.setSelection(range.index + 3, 'silent')
 
           this.form.meta.image.push(imgUrl)
           this.image_loading = false
         }, err => {
-          this.$notify({ message: err.body, type: 'warning' })
+          this.$notify({ message: err.data, type: 'warning' })
           this.image_loading = false
         })
       },

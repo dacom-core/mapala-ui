@@ -39,7 +39,7 @@ export const User = Resource('/api/users{/username}/', {}, {
 })
 
 export const Image = Resource('/api/images{/id}/', {}, {
-  'upload': { method: 'POST', url: '/post_image/' }
+  'upload': { method: 'POST', url: '/api/images/' }
 })
 
 export const Group = Resource('/api/groups{/name}/', {}, {

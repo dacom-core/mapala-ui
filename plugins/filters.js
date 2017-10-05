@@ -14,3 +14,9 @@ Vue.filter('toRub', (value) => {
   const sum = value * price
   return sum.toFixed(2)
 })
+
+Vue.filter('toDollar', (value) => {
+  const price = 0.080715
+  const sum = value * price
+  return sum.toFixed(2)
+})

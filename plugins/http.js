@@ -1,10 +1,8 @@
 import axios from 'axios'
-import { get_cookie } from '@/utils/cookies'
 import Vue from 'vue'
 import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from '../api/config'
 
 export default ({ req, isServer, isClient, store }) => {
-
   const host = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}`
 
   const config = {
@@ -22,7 +20,6 @@ export default ({ req, isServer, isClient, store }) => {
   Vue.use(http)
 
   Vue.axios.interceptors.request.use((request) => {
-
     if (store.state.user.auth.token) {
       Object.assign(
         Vue.prototype.$axios.defaults.headers.common,
@@ -37,4 +34,10 @@ export default ({ req, isServer, isClient, store }) => {
 
     return request
   })
+
+  // Vue.axios.interceptors.response.use(resp => {
+  //   console.log('response is fine', resp)
+  // }, resp => {
+  //   console.log('response is bad', resp, resp.response)
+  // })
 }

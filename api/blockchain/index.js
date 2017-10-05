@@ -213,7 +213,7 @@ export default {
       if (this.blockchains) {
         this.setBlockchain(undefined, ctx.$store.state)
       }
-      const { balance } = await this.getUser()
+      // const { balance } = await this.getUser()
       // commit('user/wallet/SET_BALANCE', balance)
       // TODO SET_BALANCE GOLOS/GBG
     } catch (error) {

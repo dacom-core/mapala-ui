@@ -4,7 +4,6 @@
 <script>
   export default {
     async fetch ({ store: { dispatch, commit, state } }) {
-
       // LAYOUT BLOCK
       commit('layout/SET_RIGHT_COLUMN', 'map')
       commit('layout/SET_COMMON_BLOCK_VISIBLE')

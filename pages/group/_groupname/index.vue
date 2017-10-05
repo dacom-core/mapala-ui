@@ -5,7 +5,7 @@
   import { mapState, mapActions } from 'vuex'
 
   export default {
-    fetch ({ store: { commit, dispatch, state }, params: { groupname } }) {
+    fetch ({ store: { commit, dispatch, state }, params: { groupname }, error }) {
       // LAYOUT BLOCK
       commit('layout/SET_RIGHT_COLUMN', 'map')
       commit('layout/SET_GROUP_BLOCK_VISIBLE')
@@ -20,8 +20,15 @@
       commit('blog/posts/post_list/IS_LOADING_ALLOWED', true) // Allow making requests for new posts.
 
       // ACTIONS BLOCK
-      dispatch('group/fetch_group', groupname)
-      dispatch('blog/posts/post_list/fetch_posts')
+      try {
+        // TODO check does it work.
+        Promise.all([
+          dispatch('group/fetch_group', groupname),
+          dispatch('blog/posts/post_list/fetch_posts')
+        ])
+      } catch (e) {
+        return error()
+      }
 
       if (state.map.isReady) {
         // 1. If the page is loaded on client-side. (vue-router transition)

@@ -56,7 +56,7 @@ export const getters = {
 }
 
 export const actions = {
-  async nuxtServerInit ({ dispatch, commit, state }, { req }) {
+  nuxtServerInit ({ dispatch, commit }, { req }) {
     const isMobile = new MobileDetect(req.headers['user-agent']).phone() //  Is the page loaded from a phone
     commit('SET_MOBILE', isMobile)
 
@@ -64,7 +64,7 @@ export const actions = {
 
     if (JWTtoken) {
       commit('user/auth/SET_JWT_TOKEN', JWTtoken)
-      await dispatch('user/auth/fetch_user')
+      dispatch('user/auth/fetch_user')
     } else {
       commit('user/auth/LOGOUT')
       commit('user/personal/RESET_USER')
