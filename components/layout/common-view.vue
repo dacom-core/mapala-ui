@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.dash_wrapper
+  div
     create-post-button(v-if="isAuth")
     switch-blog-buttons
 </template>
@@ -32,7 +32,7 @@ export default {
     top: 42px;
     left: 22px;
     min-width: 473px;
-    z-index: 2;
+    z-index: 3;
     border-radius: 0 0 10px 10px;
     -webkit-box-shadow: 0 5px 6px 0 rgba(0,0,0,.4);
     box-shadow: 0 5px 6px 0 rgba(0,0,0,.4);

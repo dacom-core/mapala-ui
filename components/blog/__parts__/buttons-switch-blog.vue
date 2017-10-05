@@ -56,7 +56,7 @@ export default {
     overflow-y: hidden;
   }
   .blog-nav {
-    margin-bottom: 0;
+    margin-bottom: 25px;
     text-align: center;
   }
   .blog-nav button {
@@ -71,11 +71,5 @@ export default {
   }
   .tapeMobile {
     margin-left: 0!important;
-  }
-
-  .blog-nav .nuxt-link-exact-active button {
-    border-color: transparent !important;
-    color: #fff !important;
-    background: rgba(0, 0, 0, 0.4) !important;
   }
 </style>

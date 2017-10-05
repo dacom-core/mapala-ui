@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     post-item(v-for="post in posts.data", :post="post", :key="post.id")
-    div(v-loading.body="isLoading")
+    div.loading_spinner(v-loading.body="isLoading")
 </template>
 
 
@@ -251,5 +251,10 @@ export default {
   .vue-map-container{
     width: 100%;
     height: 100%;
+  }
+
+  .loading_spinner {
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
 </style>
