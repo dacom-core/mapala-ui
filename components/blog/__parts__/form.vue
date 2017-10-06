@@ -63,6 +63,7 @@
   import { mapState, mapMutations } from 'vuex'
   import { required, minLength } from 'vuelidate/lib/validators'
   import { validationMixin } from 'vuelidate'
+  import { uploadImage } from '@/api/Utils/images'
 
   export default {
     props: ['isEditForm', 'isFormSaving', 'resetForm'],
@@ -169,26 +170,28 @@
       imageUploadHandler () {
         this.$refs.inputImage.click()
       },
-      uploadImage (e) {
+
+      async uploadImage (e) {
         this.image_loading = true
         e.preventDefault()
 
         const formData = new FormData()
         formData.append('file', this.$refs.inputImage.files[0])
 
-        Image.upload(formData).then(res => {
-          const imgUrl = res.data
+        try {
+          const imgUrl = await uploadImage(this.$refs.inputImage.files[0])
+
           const range = this.myQuillEditor.getSelection(true)
           this.myQuillEditor.insertEmbed(range.index + 1, 'image', imgUrl, 'user')
           this.myQuillEditor.insertEmbed(range.index + 2, 'block', 'asdf', 'user')
           this.myQuillEditor.setSelection(range.index + 3, 'silent')
 
           this.form.meta.image.push(imgUrl)
-          this.image_loading = false
-        }, err => {
-          this.$notify({ message: err.data, type: 'warning' })
-          this.image_loading = false
-        })
+        } catch (e) {
+          this.$notify({ message: e.message, type: 'warning' })
+        }
+
+        this.image_loading = false
       },
       submit () {
         if (this.isFormValid()) {
