@@ -11,14 +11,19 @@
           span
             | MAPALA
 
-        div.change_lang(ref="switchLangButtons")
-          a.switch_lang.golos(@click="changeLang('ru')")
-            img(src="~assets/ico/golos.png")
-            | rus/golos
-          a.switch_lang.steemit(@click="changeLang('en')")
-            img(src="~assets/ico/steemit.png")
-            | eng/steem
-
+        div.change_lang
+          div.radio_wrapper
+            input(type="radio" value="ru" v-model="locale")
+            label.switch_lang.golos(@click="changeLang('ru', 'golos')")
+              img(src="~assets/ico/golos.png")
+              p
+                | rus/golos
+          div.radio_wrapper
+            input(type="radio" value="en" v-model="locale")
+            label.switch_lang.steemit(@click="changeLang('en', 'steemit')")
+              img(src="~assets/ico/steemit.png")
+              p
+                | eng/steem
 
       div.top-right-block
 
@@ -76,6 +81,7 @@ import Poster from '~/components/layout/__parts__/poster'
 import { delete_cookie } from '@/utils/cookies'
 import bc from '@/api/blockchain'
 import { mixin as clickaway } from 'vue-clickaway'
+import { Loading } from 'element-ui'
 
 export default {
   mixins: [clickaway],
@@ -108,23 +114,36 @@ export default {
       resetUser: 'user/personal/RESET_USER'
     }),
 
-    changeLang (locale) {
-        this.router.push()
-//      const switchLangButtons = this.$refs.switchLangButtons.children
-//      this.$i18n.locale = locale
-//      this.$store.commit('SET_LANG', locale)
-//      this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
-//      this.$store.dispatch('blog/posts/post_list/fetch_posts')
-//      this.$store.dispatch('map/fetch_markers')
-//      this.resetIconsOpacity()
-//      locale === 'ru' ? switchLangButtons[0].style.opacity = 1 : switchLangButtons[1].style.opacity = 1
-//      locale === 'en' ? bc.setBlockchain('steemit') : bc.setBlockchain('golos')
-    },
+    changeLang (locale, blockchain) {
+      const config = {
+        name: this.$route.name,
+        params: this.$route.params
+      }
+      config.params.lang = locale
+      this.$router.push(config)
 
-    resetIconsOpacity () {
-//      [].forEach.call(this.$refs.switchLangButtons.children, function (item) {
-//        item.style.opacity = 0.5
-//      })
+      const loadingInstance = Loading.service({
+        fullscreen: true,
+        text: this.$t('switch_locale_in_progress')
+      })
+
+      this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
+
+      Promise.all([
+        this.$store.dispatch('blog/posts/post_list/fetch_posts'),
+        this.$store.dispatch('map/fetch_markers')
+      ])
+        .then(() => {
+          this.$i18n.locale = locale
+          this.$store.commit('SET_LANG', locale)
+          this.$cookie.set('locale', locale, { expires: '1Y' })
+          loadingInstance.close()
+          bc.setBlockchain(blockchain)
+        })
+        .catch(() => {
+          this.$notify({ message: 'Some error occurred while switching locale. Please, try later.', type: 'warning' })
+          loadingInstance.close()
+        })
     },
 
     logout () {
@@ -385,16 +404,19 @@ export default {
     align-items: center;
   }
 
+  .change_lang input {
+    display: none;
+  }
+
   .change_lang .lab{
     font: 700 18px/58px 'PT Sans';
     color: white;
   }
 
-  .change_lang a {
+  .change_lang {
     font: 700 14px/58px PT Sans;
     letter-spacing: .3px;
     color: #fff;
-    opacity: 0.5;
     transition: 1s all;
     margin-left: 0;
     cursor: pointer;
@@ -410,7 +432,7 @@ export default {
     /*margin-left:;: 15px;*/
   }
 
-  .change_lang a img {
+  .switch_lang img {
     width: 25px;
     height: 25px;
     border: 1px solid white;
@@ -420,30 +442,23 @@ export default {
     margin-right: 10px;
   }
 
-  /*.switch_lang */
+  .switch_lang {
+    line-height: 0;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    opacity: .5;
+  }
 
+  .radio_wrapper:not(:last-child) {
+    margin-right:20px;
+  }
 
-  /*.change_lang a:before {*/
-    /*width: 25px;*/
-    /*height: 25px;*/
-    /*position: absolute;*/
-    /*display: block;*/
-    /*content: "";*/
-    /*background-repeat: no-repeat;*/
-    /*border-radius: 50%;*/
-    /*left: 0;*/
-    /*background-size: contain;*/
-    /*border: 2px solid lightblue;*/
-    /*background-color: #fff;*/
-  /*}*/
+  .switch_lang:hover {
+    opacity: 1;
+  }
 
-  /*.change_lang a.golos:before{*/
-    /*background-image: url('~assets/ico/golos.png');*/
-  /*}*/
-
-  /*.change_lang a.steemit:before {*/
-    /*background-image: url('~assets/ico/steemit.png');*/
-  /*}*/
 
   .top-right-block {
     display: flex;
@@ -451,9 +466,10 @@ export default {
   .top-right-block .username_wrapper {
     padding: 0 20px;
   }
-  /*.change_lang [type="radio"]:checked + label{*/
-    /*opacity: 1;*/
-  /*}*/
+
+  .radio_wrapper input[type="radio"]:checked + label{
+    opacity: 1;
+  }
 
 
 @media screen and (max-width: 600px) {

@@ -123,5 +123,6 @@
   "stable_currency": "SBD",
   "comments_added": "Comment has been successfully added!",
   "user_not_found": "User not found",
-  "404": "This page could not be found."
+  "404": "This page could not be found.",
+  "switch_locale_in_progress": "Locale is changing"
 }

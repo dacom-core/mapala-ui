@@ -2,7 +2,7 @@ import axios from 'axios'
 import Vue from 'vue'
 import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from '../api/config'
 
-export default ({ req, isServer, isClient, store }) => {
+export default ({ store }) => {
   const host = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}`
 
   const config = {
@@ -21,23 +21,10 @@ export default ({ req, isServer, isClient, store }) => {
 
   Vue.axios.interceptors.request.use((request) => {
     if (store.state.user.auth.token) {
-      Object.assign(
-        Vue.prototype.$axios.defaults.headers.common,
-        Vue.prototype.$axios.defaults.headers.common,
-        { 'Authorization': 'JWT ' + store.state.user.auth.token })
+      request.headers['Authorization'] = 'JWT ' + store.state.user.auth.token
     }
-
-    Object.assign(
-      Vue.prototype.$axios.defaults.headers.common,
-      Vue.prototype.$axios.defaults.headers.common,
-      { 'Locale': store.state.locale })
+    request.headers['Locale'] = store.state.locale
 
     return request
   })
-
-  // Vue.axios.interceptors.response.use(resp => {
-  //   console.log('response is fine', resp)
-  // }, resp => {
-  //   console.log('response is bad', resp, resp.response)
-  // })
 }
