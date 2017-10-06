@@ -6,7 +6,7 @@ export default function ({ isHMR, app, store, route, params, error, redirect, is
 
   const cookieLocale = isServer ? get_cookie('locale', req) : get_cookie('locale')
 
-  const locale = params.lang || cookieLocale || 'ru'
+  const locale = params.lang || cookieLocale
 
   if (store.state.locales.indexOf(locale) === -1) {
     app.i18n.locale = 'ru'
