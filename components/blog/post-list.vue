@@ -252,9 +252,4 @@ export default {
     width: 100%;
     height: 100%;
   }
-
-  .loading_spinner {
-    padding-top: 50px;
-    padding-bottom: 50px;
-  }
 </style>
