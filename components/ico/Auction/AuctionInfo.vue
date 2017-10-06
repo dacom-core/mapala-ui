@@ -71,7 +71,7 @@
 <script>
 import howTo from './HowTo.vue'
 import api from '@/api/temporary'
-import auth from '../../../pages/auth'
+import auth from '../../../pages/_lang/auth'
 import { mapState } from 'vuex'
 
 

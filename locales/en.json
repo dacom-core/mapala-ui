@@ -122,5 +122,6 @@
   "rostov_na_donu": "Rostov-on-Don",
   "stable_currency": "SBD",
   "comments_added": "Comment has been successfully added!",
-  "user_not_found": "User not found"
+  "user_not_found": "User not found",
+  "404": "This page could not be found."
 }

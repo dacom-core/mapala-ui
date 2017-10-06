@@ -1,12 +1,12 @@
 <template lang="pug">
   div.comment
     div.user_av
-      nuxt-link(:to="'/'+comment.author.username")
+      nuxt-link(:to="$path('/' + comment.author.username)")
         img(:src="comment.author.avatar")
 
     div.comment_body(:id="comment.id")
       div.name_bl
-        nuxt-link.user_page(:to="'/'+comment.author.username")
+        nuxt-link.user_page(:to="$path('/' + comment.author.username)")
           | {{ comment.author.bc_username }}
 
         span.pr(v-show="comment.parent_author")
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from 'vuex'
 import VueMarkdown from 'vue-markdown'
 
 export default {

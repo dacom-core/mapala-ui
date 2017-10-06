@@ -4,10 +4,10 @@
       header-box
         div.login-form
           div.two.tab_headers
-            nuxt-link.tab_header(:to="{ path: '/auth/login' }", :class="{ active: isLoginPage }")
+            nuxt-link.tab_header(:to="$path('/auth/login')", :class="{ active: isLoginPage }")
               | {{ $t('log_in') }}
 
-            nuxt-link.tab_header(:to="{ path: '/auth/sign-up' }", :class="{ active: isSignUpPage }")
+            nuxt-link.tab_header(:to="$path('/auth/sign-up')", :class="{ active: isSignUpPage }")
               | {{ $t('sign_in') }}
 
       modal-content

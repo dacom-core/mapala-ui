@@ -5,7 +5,7 @@
         nuxt-link(
           class="main_logo",
           :class="{ main_logoMobile: isMobile }",
-          :to="'/'",
+          :to="$path('/')",
           )
           img(src="~assets/MapalaLogo.png")
           span
@@ -27,7 +27,7 @@
         div.username_wrapper(v-if="isAuth")
           nuxt-link(
             v-if="isAuth",
-            :to="'/'+userName"
+            :to="$path('/' + userName)"
             )
             div.user
               span(class="user_name" v-text="userName")
@@ -36,7 +36,7 @@
 
         div.divider
 
-        nuxt-link(v-if="!isAuth", :to="'/auth/login'", class="login")
+        nuxt-link(v-if="!isAuth", :to="$path('/auth/login')", class="login")
           | {{ $t('log_in') }}
         div.right_button(v-else)
 
@@ -48,7 +48,7 @@
             :class="{ active : isMenuOpened, user_menuMobile: isMobile }"
             )
 
-            nuxt-link(:to="'/wallet'", class="wal")
+            nuxt-link(:to="$path('/wallet')", class="wal")
               i.purce
               span.txt_i
                 | {{ $t('Wallet') }}
@@ -58,12 +58,12 @@
             div.mn
 
               nuxt-link(
-              :to="'/settings'"
+              :to="$path('/settings')"
               class="m_item"
               )
                 | {{ $t('setting') }}
 
-              nuxt-link(class="m_item", :to="'/ico/'")
+              nuxt-link(class="m_item", :to="$path('/ico/')")
                 | ICO
 
               a(href="#" v-if="isAuth" class="m_item", @click.prevent="logout")
@@ -109,22 +109,22 @@ export default {
     }),
 
     changeLang (locale) {
-      const switchLangButtons = this.$refs.switchLangButtons.children
-
-      this.$i18n.locale = locale
-      this.$store.commit('SET_LANG', locale)
-      this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
-      this.$store.dispatch('blog/posts/post_list/fetch_posts')
-      this.$store.dispatch('map/fetch_markers')
-      this.resetIconsOpacity()
-      locale === 'ru' ? switchLangButtons[0].style.opacity = 1 : switchLangButtons[1].style.opacity = 1
-      locale === 'en' ? bc.setBlockchain('steemit') : bc.setBlockchain('golos')
+        this.router.push()
+//      const switchLangButtons = this.$refs.switchLangButtons.children
+//      this.$i18n.locale = locale
+//      this.$store.commit('SET_LANG', locale)
+//      this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
+//      this.$store.dispatch('blog/posts/post_list/fetch_posts')
+//      this.$store.dispatch('map/fetch_markers')
+//      this.resetIconsOpacity()
+//      locale === 'ru' ? switchLangButtons[0].style.opacity = 1 : switchLangButtons[1].style.opacity = 1
+//      locale === 'en' ? bc.setBlockchain('steemit') : bc.setBlockchain('golos')
     },
 
     resetIconsOpacity () {
-      [].forEach.call(this.$refs.switchLangButtons.children, function (item) {
-        item.style.opacity = 0.5
-      })
+//      [].forEach.call(this.$refs.switchLangButtons.children, function (item) {
+//        item.style.opacity = 0.5
+//      })
     },
 
     logout () {

@@ -35,6 +35,7 @@ export default {
     closeModal () {
       this.hideModal()
       this.$router.push(this.backPath)
+      this.resetBackPath()
     }
   }
 }

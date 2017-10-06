@@ -9,12 +9,12 @@
 </template>
 
 <script>
-    import Chart from '../../components/ico/Chart.vue'
-    import IcoStats from '../../components/ico/IcoStats.vue'
-    import Auction from '../../components/ico/Auction/Auction.vue'
-    import AuctionInfo from '../../components/ico/Auction/AuctionInfo.vue'
-    import Faq from '../../components/ico/Faq.vue'
-    import InvestTable from '../../components/ico/Investors/InvestTable.vue'
+    import Chart from '../../../components/ico/Chart.vue'
+    import IcoStats from '../../../components/ico/IcoStats.vue'
+    import Auction from '../../../components/ico/Auction/Auction.vue'
+    import AuctionInfo from '../../../components/ico/Auction/AuctionInfo.vue'
+    import Faq from '../../../components/ico/Faq.vue'
+    import InvestTable from '../../../components/ico/Investors/InvestTable.vue'
 
     export default {
         components: {

@@ -10,12 +10,12 @@
         div.name.verified
           | {{ bc_username }}
       div.bottom_bl(v-if="isAuth && isUserOwnPage")
-        nuxt-link.but.ic.wal(:to="'/wallet'")
+        nuxt-link.but.ic.wal(:to="$path('/wallet')")
           | {{ $t('my_wallett') }}
 
         i.divd
 
-        nuxt-link.but.ic.set(:to="'/settings'")
+        nuxt-link.but.ic.set(:to="$path('/settings')")
           | {{ $t('setting') }}
 
 </template>

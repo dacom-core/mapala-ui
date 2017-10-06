@@ -28,10 +28,10 @@
 </template>
 
 <script>
-  import Chart from '../../components/ico/Chart.vue'
-  import IcoStats from '../../components/ico/IcoStats.vue'
-  import Auction from '../../components/ico/Auction/Auction.vue'
-  import Faq from '../../components/ico/Faq.vue'
+  import Chart from '../../../components/ico/Chart.vue'
+  import IcoStats from '../../../components/ico/IcoStats.vue'
+  import Auction from '../../../components/ico/Auction/Auction.vue'
+  import Faq from '../../../components/ico/Faq.vue'
   import { mapState } from 'vuex'
 
   export default {

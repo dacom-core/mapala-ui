@@ -29,13 +29,15 @@ module.exports = {
     'quill/dist/quill.core.css'
   ],
   router: {
-    middleware: ['history-logger']
+    middleware: ['history-logger', 'i18n']
     // scrollBehavior: function (to, from, savedPosition) {
     // }
   },
   plugins: [
     { src: '~/plugins/element-ui.js', ssr: true },
     { src: '~/plugins/i18n.js', ssr: true },
+    { src: '~/plugins/actionToRoute.js', ssr: true },
+    { src: '~/plugins/pathMaker.js', ssr: true },
     { src: '~/plugins/vue-cookies.js', ssr: true },
     { src: '~/plugins/vue-google-maps.js', ssr: false },
     { src: '~/plugins/vue-lazyload.js', ssr: true },

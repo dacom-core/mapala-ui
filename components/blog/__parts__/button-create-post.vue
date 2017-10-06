@@ -1,6 +1,6 @@
 <template lang="pug">
   nuxt-link(
-    :to="makePath('create', userName)",
+    :to="$action('create', userName)",
     class="add_post"
     )
     div.av_wrap
@@ -13,7 +13,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import linkMaker from '@/utils/router_link_maker'
 
 export default {
   computed: {
@@ -21,12 +20,6 @@ export default {
       userName: state => state.username,
       userAvatar: state => state.avatar
     })
-  },
-
-  methods: {
-    makePath (action, identifier, permalink) {
-      return linkMaker(action, identifier, permalink)
-    }
   }
 }
 </script>

@@ -19,7 +19,7 @@
         :icon="icon",
         @mouseover="openInfoWindow(marker)",
         @mouseout="infoWindow.opened = false",
-        @click="$router.push({ path: makePath('post-view', marker.author, marker.permlink) })"
+        @click="$router.push({ path: $action('post-view', marker.author, marker.permlink) })"
         )
 
       gmap-info-window(
@@ -34,7 +34,6 @@
 <script>
   import { googleMapStyles } from '~/plugins/vue-google-maps'
   import { mapActions, mapMutations } from 'vuex'
-  import linkMaker from '@/utils/router_link_maker'
 
   export default {
     data () {
@@ -148,9 +147,6 @@
         if (y > maxY) y = maxY;
 
         map.setCenter(new google.maps.LatLng(y, x))
-      },
-      makePath (action, identifier, permalink) {
-        return linkMaker(action, identifier, permalink)
       }
     },
 

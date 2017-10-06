@@ -214,7 +214,7 @@
 
   .profile .av_wrap{
     border-radius: 50%;
-    background: url(../assets/profile/icon-profile.svg) #fff no-repeat;
+    background: url(../../assets/profile/icon-profile.svg) #fff no-repeat;
     background-size: cover;
     overflow: hidden;
     width: 120px;
@@ -243,12 +243,12 @@
   }
 
   .profile .ic.delete {
-    background-image: url(../assets/profile/icon-trash.svg);
+    background-image: url(../../assets/profile/icon-trash.svg);
     left: -80px;
   }
 
   .profile .ic.edit {
-    background-image: url(../assets/icon-edit.svg);
+    background-image: url(../../assets/icon-edit.svg);
     right: -80px;
   }
 
@@ -256,7 +256,7 @@
     width: 100%;
     height: 100%;
     display: none;
-    background: url(../assets/icon-close.svg) #485466 no-repeat center center;
+    background: url(../../assets/icon-close.svg) #485466 no-repeat center center;
     cursor: pointer;
     position: absolute;
     z-index: 10;
@@ -282,7 +282,7 @@
     content: '';
     width: 21px;
     height: 21px;
-    background: url(../assets/icon-blue-check.svg) no-repeat;
+    background: url(../../assets/icon-blue-check.svg) no-repeat;
     top: -9px;
     right: -24px;
   }
@@ -347,12 +347,12 @@
   }
 
   .profile .icon_edit{
-    background-image: url(../assets/icon_edit.svg);
+    background-image: url(../../assets/icon_edit.svg);
     background-position: 98% center;
   }
 
   .profile .icon_good{
-    background-image: url(../assets/icon_good.svg);
+    background-image: url(../../assets/icon_good.svg);
     background-position: 98% center;
   }
 
@@ -362,7 +362,7 @@
     display: block;
     position: absolute;
     z-index: 5;
-    background: url(../assets/icon-arrow-left.svg) no-repeat center center;
+    background: url(../../assets/icon-arrow-left.svg) no-repeat center center;
     top: 12px;
     left: 12px;
     cursor: pointer;
@@ -395,28 +395,28 @@
 
   .profile .socials .soc_icon:hover{
     background-color: #E04F5F !important;
-    background-image: url(../assets/icon-close.svg) !important;
+    background-image: url(../../assets/icon-close.svg) !important;
   }
 
   .profile .socials .soc_icon.fb{
     background-color: #3b5998;
-    background-image: url(../assets/icon-fb.svg);
+    background-image: url(../../assets/icon-fb.svg);
   }
 
   .profile .socials .soc_icon.in{
     background-color: #55acee;
-    background-image: url(../assets/icon-tw.svg);
+    background-image: url(../../assets/icon-tw.svg);
 
   }
 
   .profile .socials .soc_icon.tg{
     background-color: #62a5d7;
-    background-image: url(../assets/icon-tg.svg);
+    background-image: url(../../assets/icon-tg.svg);
   }
 
   .profile .socials .soc_icon.gp{
     background-color: #dd4b39;
-    background-image: url(../assets/icon-gp.svg);
+    background-image: url(../../assets/icon-gp.svg);
   }
 
   .profile .socials .more{
@@ -438,7 +438,7 @@
   }
 
   .profile .socials .more .soc_icon:hover{
-    background-image: url(../assets/icon-plus.svg) !important;
+    background-image: url(../../assets/icon-plus.svg) !important;
     background-color: #4fe0a7 !important;
   }
 
@@ -482,28 +482,28 @@
   }
 
   .profile .soc_square .tw {
-    background-image: url(../assets/icon-tw.svg);
+    background-image: url(../../assets/icon-tw.svg);
     background-color: #64b2dd;
     background-size: 76%;
     border-top-left-radius: 2px;
   }
 
   .profile .soc_square .fb {
-    background-image: url(../assets/icon-fb.svg);
+    background-image: url(../../assets/icon-fb.svg);
     background-color: #3b5998;
     background-size: 40%;
     border-top-right-radius: 2px;
   }
 
   .profile .soc_square .tg {
-    background-image: url(../assets/icon-tg.svg);
+    background-image: url(../../assets/icon-tg.svg);
     background-color: #62a5d7;
     background-size: 78%;
     border-bottom-left-radius: 2px;
   }
 
   .profile .soc_square .gp {
-    background-image: url(../assets/icon-gp.svg);
+    background-image: url(../../assets/icon-gp.svg);
     background-color: #dd4b39;
     background-size: 81%;
     border-bottom-right-radius: 2px;

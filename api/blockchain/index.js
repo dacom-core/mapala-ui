@@ -88,7 +88,6 @@ export default {
     })
 
     const signedTr = await this.signTr(tr)
-
     try {
       return await Post.save({ tx: signedTr, blockchain: this.current.name })
     } catch (err) {

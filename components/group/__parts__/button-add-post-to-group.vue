@@ -1,5 +1,5 @@
 <template lang="pug">
-  nuxt-link.add_post_to_group(:to="makePath('create-post-group', getGroupName)")
+  nuxt-link.add_post_to_group(:to="$action('create-post-group', getGroupName)")
     div.av_wrap
       img.user_av(v-if="userAvatar", :src="userAvatar")
       img.user_av(v-else src="~assets/icon-profile-w.svg")
@@ -9,26 +9,19 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import linkMaker from '@/utils/router_link_maker'
+import { mapState } from 'vuex'
 
-  export default {
-    computed: {
-      ...mapState('user/personal', {
-        userName: state => state.username,
-        userAvatar: state => state.avatar
-      }),
-      getGroupName () {
-        return this.$route.params.groupname
-      }
-    },
-
-    methods: {
-      makePath (action, identifier, permalink) {
-        return linkMaker(action, identifier, permalink)
-      }
+export default {
+  computed: {
+    ...mapState('user/personal', {
+      userName: state => state.username,
+      userAvatar: state => state.avatar
+    }),
+    getGroupName () {
+      return this.$route.params.groupname
     }
   }
+}
 </script>
 
 <style lang="stylus" scoped>

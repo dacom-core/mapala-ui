@@ -2,7 +2,7 @@
   div.post(:id="'page_id_' + post.id", :class="post.miniature ? 'w_i' : '' ")
     nuxt-link(
       v-if="post.miniature",
-      :to="makePath('post-view', post.author.username, post.permlink)"
+      :to="$action('post-view', post.author.username, post.permlink)"
       )
       div.post_image
         img.post-image(:src="post.miniature" alt="" onerror="this.style.display='none'")
@@ -10,11 +10,11 @@
     div.short
       div.top_block
         div.img_wrap
-          nuxt-link(:to=" '/' + post.author.username")
+          nuxt-link(:to="$path('/' + post.author.username)")
             img.user_av(v-if="post.author.avatar", :src="post.author.avatar")
             img.user_av(v-else :src="~assets/icon-profile-w.svg")
         div.name_block
-          nuxt-link.name(:to=" '/' + post.author.username")
+          nuxt-link.name(:to="$path('/' + post.author.username)")
             | {{ post.author.username }}
           div.date
             | {{ post.created_at || post.updated_at | formatDate }}
@@ -22,7 +22,7 @@
         div.location(v-if="post.position_text")
           | {{ post.position_text }}
 
-      nuxt-link(:to="makePath('post-view', post.author.username, post.permlink)")
+      nuxt-link(:to="$action('post-view', post.author.username, post.permlink)")
         h2.write_header
           | {{ post.title }}
         p.write_text
@@ -31,7 +31,7 @@
     div.bottom_block(:class="{ mobileBlock: isMobile }")
       div.icons
         nuxt-link(
-          :to="makePath('post-view', post.author.username, post.permlink)"
+          :to="$action('post-view', post.author.username, post.permlink)"
           class="icon comment"
           )
           | {{ post.comments_count }}
@@ -50,7 +50,6 @@
 import { mapState } from 'vuex'
 import shareVK from '@/utils/share_vk'
 import pluralizer from '@/utils/pluralizer'
-import linkMaker from '@/utils/router_link_maker'
 import CommentsBlock from './comments/comments-block'
 import Upvote from '@/components/blog/__parts__/upvote'
 
@@ -73,9 +72,6 @@ export default {
     },
     pluralizeNoun (count, nounFormOne, nounFormTwo, nounFormThree) {
       return pluralizer(count, nounFormOne, nounFormTwo, nounFormThree)
-    },
-    makePath (action, identifier, permalink) {
-      return linkMaker(action, identifier, permalink)
     }
   },
   components: {

@@ -6,19 +6,19 @@
       justify="space-between"
       )
       el-col(:span="11")
-        nuxt-link(:to="{name: 'index'}")
+        nuxt-link(:to="$path('/')")
           el-button(:plain="true" size="large" type="info")
             | {{ $t('travel_blogs') }}
 
       el-col(:span="11")
-        nuxt-link(:to="'/mapala'")
+        nuxt-link(:to="$path('/mapala')")
           el-button(:plain="true" size="large" type="info")
             | {{ $t('mapala_blogs') }}
 
     div(v-if="userName != $route.params.user && isMobile")
       el-row(type="flex" class="blog-nav" justify="space-between")
         el-col(:span="24")
-          router-link(:to="{ name: 'index' }")
+          nuxt-link(:to="$path('/')")
             el-button(:plain="true" size="large" type="info")
               | {{ $t('travel_blogs') }}
 
@@ -29,7 +29,7 @@
         justify="space-between"
         )
         el-col(:span="24")
-          nuxt-link(:to="'/mapala'")
+          nuxt-link(:to="$path('/mapala')")
             el-button(:plain="true" size="large" type="info")
               | {{ $t('mapala_blogs') }}
 

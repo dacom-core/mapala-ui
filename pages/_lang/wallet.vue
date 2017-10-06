@@ -94,7 +94,7 @@
     cursor: pointer;
     right: 35px;
     top: 35px;
-    background: url(../assets/icon-refresh.svg) no-repeat;
+    background: url(../../assets/icon-refresh.svg) no-repeat;
   }
 
   .wallet .in_wallet{
@@ -122,7 +122,7 @@
 
   .wallet .down{
     position: absolute;
-    background: url(../assets/icon-arrow-down-circle.svg) no-repeat;
+    background: url(../../assets/icon-arrow-down-circle.svg) no-repeat;
     width: 19px;
     height: 19px;
     cursor: pointer;

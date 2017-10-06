@@ -6,11 +6,11 @@
     div.top_block
       div.t_col
         div.img_wrap
-          nuxt-link(:to=" '/' + post.author.username")
+          nuxt-link(:to="$path('/' + post.author.username)")
             img.user_av(:src="post.author.avatar")
 
         div.name_block
-          nuxt-link(:to=" '/' + post.author.username" class="name")
+          nuxt-link(:to="$path('/' + post.author.username)" class="name")
             | {{ post.author.bc_username }}
           div.date
             | {{ post.created_at || post.updated_at | formatDate }}
@@ -21,7 +21,7 @@
       div.t_col
         nuxt-link.edit(
           v-if="post.author.username == userName",
-          :to="makePath('edit', post.author.username, post.permlink)"
+          :to="$action('edit', post.author.username, post.permlink)"
           )
           | {{ $t('edit') }}
 
@@ -53,7 +53,6 @@ import CommentsBlock from './comments/comments-block'
 import VueMarkdown from 'vue-markdown'
 import shareVK from '@/utils/share_vk'
 import pluralizer from '@/utils/pluralizer'
-import linkMaker from '@/utils/router_link_maker'
 import Upvote from '@/components/blog/__parts__/upvote'
 import { mapMutations, mapActions, mapState } from 'vuex'
 
@@ -77,14 +76,14 @@ export default {
     },
 
     prev_post () {
-      return this.post.next_page ? this.makePath(
+      return this.post.next_page ? this.$action(
         'post-view',
         this.post.next_page.author__username,
         this.post.next_page.permlink
       ) : false
     },
     next_post () {
-      return this.post.prev_page ? this.makePath(
+      return this.post.prev_page ? this.$action(
         'post-view',
         this.post.prev_page.author__username,
         this.post.prev_page.permlink
@@ -104,9 +103,6 @@ export default {
     },
     pluralizeNoun (count, nounFormOne, nounFormTwo, nounFormThree) {
       return pluralizer(count, nounFormOne, nounFormTwo, nounFormThree)
-    },
-    makePath (action, username, permalink = '') {
-      return linkMaker(action, username, permalink)
     }
   },
   components: {
