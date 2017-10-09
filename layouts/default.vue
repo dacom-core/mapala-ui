@@ -89,6 +89,10 @@ export default {
     }
   },
 
+  created () {
+    this.$i18n.locale = this.$store.state.locale
+  },
+
   methods: {
     ...mapActions({
       loadNextPosts: 'blog/posts/post_list/fetch_next_posts'

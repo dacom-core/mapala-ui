@@ -57,7 +57,8 @@
     },
     methods: {
       ...mapMutations({
-        showModal: 'modal/SHOW_MODAL'
+        showModal: 'modal/SHOW_MODAL',
+        hideModal: 'modal/HIDE_MODAL'
       }),
       goBack () {
         this.hideModal()
