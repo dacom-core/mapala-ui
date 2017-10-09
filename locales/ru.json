@@ -125,5 +125,8 @@
   "comments_added": "Комментрий успешно добавлен!",
   "user_not_found": "Такого пользователя не существует",
   "404": "Такой страницы не существует",
-  "switch_locale_in_progress": "Выполняется смена языка."
+  "switch_locale_in_progress": "Выполняется смена языка.",
+  "telephone": "Телефон",
+  "verify_phone": "Получить смс",
+  "sms_code": "SMS код"
 }

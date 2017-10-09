@@ -46,4 +46,8 @@ export const Group = Resource('/api/groups{/name}/', {}, {
   'markers': { method: 'GET', url: '/api/markers/' }
 })
 
+export const Verifier = Resource('/api/pass-request/', {}, {
+  'phone': { method: 'POST', url: '/api/pass-request/' }
+})
+
 export const EmailRequest = Resource('/api/email_request/')
