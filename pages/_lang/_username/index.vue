@@ -24,7 +24,6 @@ export default {
     // ACTIONS BLOCK
     try {
       const { data: user } = await User.get({ username: username })
-      console.log(user)
       commit('blog/posts/posts_author/SET_PAGE_AUTHOR_BC_USERNAME', user.bc_username)
     } catch (e) {
       error({ statusCode: 404, message: i18n.t('user_not_found') })

@@ -5,7 +5,7 @@
   import { mapState, mapActions } from 'vuex'
 
   export default {
-    fetch ({ store: { commit, dispatch, state }, params: { groupname }, error }) {
+    async fetch ({ store: { commit, dispatch, state }, params: { groupname }, error }) {
       // LAYOUT BLOCK
       commit('layout/SET_RIGHT_COLUMN', 'map')
       commit('layout/SET_GROUP_BLOCK_VISIBLE')
@@ -21,8 +21,7 @@
 
       // ACTIONS BLOCK
       try {
-        // TODO check does it work.
-        Promise.all([
+        await Promise.all([
           dispatch('group/fetch_group', groupname),
           dispatch('blog/posts/post_list/fetch_posts')
         ])

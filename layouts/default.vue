@@ -87,6 +87,12 @@ export default {
     if (this.isAuth) {
       await blockchain.initBlockchains(this)
     }
+
+    window.scroll({
+      top: 2500,
+      left: 0,
+      behavior: 'smooth'
+    })
   },
 
   created () {
