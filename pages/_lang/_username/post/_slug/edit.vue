@@ -19,7 +19,9 @@
         class: 'overflowHidden'
       }
     },
-
+    async fetch ({ store: { commit }, isServer }) {
+      isServer ? commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) : ''// Disallow making requests for new posts.
+    },
     data () {
       return {
         resetForm: false,

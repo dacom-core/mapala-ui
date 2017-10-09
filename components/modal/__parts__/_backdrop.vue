@@ -14,27 +14,13 @@
 </template>
 
 <script>
-  import { mapState, mapMutations, mapGetters } from 'vuex'
+  import { mapState } from 'vuex'
 
   export default {
     computed: {
       ...mapState({
         isVisible: state => state.modal.isShown
-      }),
-
-      ...mapGetters(['backPath'])
-    },
-    methods: {
-      ...mapMutations({
-        hideModal: 'modal/HIDE_MODAL',
-        resetBackPath: 'RESET_BACK_PATH'
-      }),
-
-      closeModal () {
-        this.hideModal()
-        this.$router.push(this.backPath)
-        this.resetBackPath()
-      }
+      })
     }
   }
 

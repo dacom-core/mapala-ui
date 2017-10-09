@@ -35,7 +35,7 @@
       }
     },
     async fetch ({ store: { dispatch, commit }, params, from, isServer }) {
-      commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) // Disallow making requests for new posts.
+      isServer ? commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) : ''// Disallow making requests for new posts.
       commit('SET_BACK_PATH', from || {})
 
       if (isServer) { // Prefetch post content if it's SSR page loading.
@@ -48,7 +48,8 @@
     computed: {
       ...mapGetters({
         postMetaDescription: 'blog/posts/post_single/postMetaDescription',
-        postMetaTitle: 'blog/posts/post_single/postMetaTitle'
+        postMetaTitle: 'blog/posts/post_single/postMetaTitle',
+        backPath: 'backPath'
       }),
 
       ...mapState({
@@ -58,7 +59,8 @@
     methods: {
       ...mapMutations({
         showModal: 'modal/SHOW_MODAL',
-        hideModal: 'modal/HIDE_MODAL'
+        hideModal: 'modal/HIDE_MODAL',
+        resetBackPath: 'RESET_BACK_PATH'
       }),
       goBack () {
         this.hideModal()

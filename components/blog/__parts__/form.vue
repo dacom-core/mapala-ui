@@ -23,12 +23,13 @@
         :disabled="isEditForm"
         )
 
-      div.search_location
+      div.search_location#search_input
         gmap-autocomplete(
         :placeholder="$t('enter_location')"
         class="search_field",
         :value="form.position_text",
-        @place_changed="setPlace"
+        @place_changed="setPlace",
+        @focus.native="test"
         )
 
         <!-- Image loader -->
@@ -219,6 +220,13 @@
         this.form.meta.location.name = place.formatted_address
         this.form.meta.location.lat = place.geometry.location.lat()
         this.form.meta.location.lng = place.geometry.location.lng()
+      },
+      test () {
+        const pacContainer = document.getElementsByClassName('pac-container')
+        const searchInputDiv = document.getElementById('search_input')
+        for (let i = 0; i < pacContainer.length; i++) {
+          searchInputDiv.appendChild(pacContainer[i])
+        }
       }
     },
     created () {
@@ -233,7 +241,6 @@
         })
       }
     },
-
     watch: {
       resetForm () {
         this.form = {
@@ -443,7 +450,7 @@
     border: solid 1px rgba(72, 84, 101, 0.2);
     /*box-sizing: border-box;*/
     /*padding-bottom: 8px;*/
-    /*position: relative;*/
+    position: relative;
   }
 
   .search_location [type="text"]{
