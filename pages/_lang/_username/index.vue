@@ -49,6 +49,10 @@ export default {
 
   methods: mapActions({ fetchMarkers: 'map/fetch_markers' }),
 
+  mounted () {
+    document.body.scrollTop = 0
+  },
+
   beforeDestroy () {
     // If user's post is opened, do not hide the user profile block.
     this.$store.commit('SET_USER_PROFILE_BLOCK_VISIBILITY_TO', false)

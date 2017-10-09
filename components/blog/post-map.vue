@@ -7,6 +7,7 @@
       @idle="updateMarkersList",
       ref="mmm",
       map-type-id="terrain",
+
       @dragend="checkBounds"
       )
 
@@ -62,7 +63,8 @@
           },
           streetViewControlOptions: {
             position: null
-          }
+          },
+          gestureHandling: 'greedy'
         },
         center: { lat: 50.0542, lng: 20.0051 },
         icon: '/icon-marker-3.png'
