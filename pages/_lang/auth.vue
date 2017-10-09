@@ -1,5 +1,5 @@
 <template lang="pug">
-  modal-backdrop
+  modal-backdrop(@click.native.self="goBack")
     modal-box(maxWidth="393")
       header-box
         div.login-form
@@ -43,7 +43,10 @@
     methods: {
       ...mapMutations({
         showModal: 'modal/SHOW_MODAL'
-      })
+      }),
+      goBack () {
+        this.$router.go(-1)
+      }
     },
     mounted () {
       this.showModal()

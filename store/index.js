@@ -51,7 +51,7 @@ export const getters = {
   * Return the penultimate path from the history stack
   */
   backPath (state) {
-    return state.backPath ? state.backPath : state.homePage
+    return state.backPath ? state.backPath : `/${state.locale}/`
   }
 }
 

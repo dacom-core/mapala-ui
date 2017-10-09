@@ -1,5 +1,5 @@
 <template lang="pug">
-  modal-backdrop
+  modal-backdrop(@click.native.self="goBack")
     modal-box(maxWidth="480")
       modal-content
         div.wallet
@@ -49,7 +49,6 @@
       })
     },
     computed: {
-
       ...mapState({
         username: state => state.user.personal.username,
         bc_username: state => state.user.personal.bc_username,
@@ -62,7 +61,7 @@
       ...mapMutations({
         showModal: 'modal/SHOW_MODAL'
       }),
-      close () {
+      goBack () {
         this.$router.go(-1)
       }
     },

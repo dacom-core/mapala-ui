@@ -1,5 +1,5 @@
 <template lang="pug">
-  modal-backdrop
+  modal-backdrop(@click.native.self="goBack")
     modal-box(max-width="658")
       modal-content
         div.profile

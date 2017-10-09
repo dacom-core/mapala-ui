@@ -1,5 +1,5 @@
 <template lang="pug">
-  modal-backdrop
+  modal-backdrop(@click.native.self="goBack")
     modal-box
       modal-close-button
       modal-content
@@ -58,7 +58,12 @@
     methods: {
       ...mapMutations({
         showModal: 'modal/SHOW_MODAL'
-      })
+      }),
+      goBack () {
+        this.hideModal()
+        this.$router.push(this.backPath)
+        this.resetBackPath()
+      }
     },
     created () {
       this.showModal()

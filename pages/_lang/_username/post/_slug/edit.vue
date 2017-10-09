@@ -1,5 +1,5 @@
 <template lang="pug">
-  modal-backdrop
+  modal-backdrop(@click.native.self="goBack")
     modal-box
       modal-content
         post-form(:isEditForm="true", @updatePost="updatePost", :resetForm="resetForm", :isFormSaving="isFormSaving")
@@ -46,6 +46,9 @@
         } catch (error) {
           this.$notify({ message: error, type: 'warning' })
         }
+      },
+      goBack () {
+        this.$router.go(-1)
       }
     },
     created () {

@@ -1,5 +1,5 @@
 <template lang="pug">
-  modal-backdrop
+  modal-backdrop(@click.native.self="goBack")
     modal-box
       header-box
         header-content
@@ -29,11 +29,8 @@
         hideModal: 'modal/HIDE_MODAL',
         resetBackPath: 'RESET_BACK_PATH'
       }),
-
-      closeModal () {
-        this.hideModal()
-        this.$router.push(this.backPath)
-        this.resetBackPath()
+      goBack () {
+        this.$router.go(-1)
       }
     },
 

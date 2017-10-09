@@ -1,8 +1,7 @@
 <template lang="pug">
   div(
     v-show="isVisible",
-    class="pop_back",
-    @click.self="closeModal"
+    class="pop_back"
     )
     transition(
       name="custom-classes-transition"

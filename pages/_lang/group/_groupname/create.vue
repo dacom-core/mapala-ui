@@ -1,5 +1,5 @@
 <template lang="pug">
-  modal-backdrop
+  modal-backdrop(@click.native.self="goBack")
     modal-box
       modal-content
         post-form(:isEditForm="false", @createPost="createPost", :resetForm="resetForm", :isFormSaving="isFormSaving")
@@ -44,7 +44,6 @@
         showModal: 'modal/SHOW_MODAL',
         hideModal: 'modal/HIDE_MODAL'
       }),
-
       async createPost (form) {
         try {
           this.isFormSaving = true
@@ -64,6 +63,9 @@
           this.isFormSaving = false
           this.$notify({ message: error.message, type: 'warning' })
         }
+      },
+      goBack () {
+        this.$router.go(-1)
       }
     },
 
