@@ -1,5 +1,5 @@
 <template lang="pug">
-  div
+  div#anchor
     header.main_header
       div.top_left_block
         nuxt-link(
@@ -129,7 +129,9 @@ export default {
 
       this.$store.commit('blog/posts/post_list/RESET_PAGINATE')
 
-      document.body.scrollTop = 0
+      document.getElementById('anchor').scrollIntoView({
+        behavior: 'smooth'
+      })
 
       Promise.all([
         this.$store.dispatch('blog/posts/post_list/fetch_posts'),
