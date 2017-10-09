@@ -127,5 +127,6 @@
   "switch_locale_in_progress": "Locale is changing",
   "telephone": "Telephone",
   "verify_phone": "Get an SMS",
-  "sms_code": "SMS code"
+  "sms_code": "SMS code",
+  "success_signup": "Registration has been successfully completed."
 }

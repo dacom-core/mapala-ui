@@ -34,11 +34,10 @@
     },
     computed: {
       isLoginPage () {
-        console.log(this.$route.name)
-        return this.$route.name === 'lang-auth-login'
+        return this.$route.name === 'auth-login'
       },
       isSignUpPage () {
-        return this.$route.name === 'lang-auth-sign-up'
+        return this.$route.name === 'auth-sign-up'
       }
     },
     methods: {

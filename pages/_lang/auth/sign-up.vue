@@ -33,7 +33,6 @@
           <input v-model="pass_code" :placeholder="$t('sms_code')" type="text" class="inpt i-sms"><label></label>
         </div>
 
-
       </div>
       <vue-recaptcha v-show="!isPhoneVerified" ref="recaptcha" sitekey="6LfKfS8UAAAAAHEecRYjwgsL7p2SDXriEC5m0Otc" @verify="success"></vue-recaptcha>
       <el-button class="submit-button" :disabled="!isSubmitAllowed" :loading="loading" @click="signUp" v-text="buttonText"></el-button>
@@ -104,7 +103,9 @@
             g_recaptcha_response: this.recaptcha,
             number: this.rawVal,
             passcode: this.pass_code
-          }, {name: 'index'})
+          }, { name: 'index' }).then(() => {
+            this.$notify({ message: this.$t('success_signup'), type: 'success' })
+          })
         }
         this.$refs.recaptcha.reset()
       },
