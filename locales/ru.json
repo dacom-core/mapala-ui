@@ -129,5 +129,6 @@
   "telephone": "Телефон",
   "verify_phone": "Получить смс",
   "sms_code": "SMS код",
-  "success_signup": "Регистрация прошла успешно."
+  "success_signup": "Регистрация прошла успешно.",
+  "scroll_to_top": "Back to top"
 }

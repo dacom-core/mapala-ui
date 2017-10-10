@@ -128,5 +128,6 @@
   "telephone": "Telephone",
   "verify_phone": "Get an SMS",
   "sms_code": "SMS code",
-  "success_signup": "Registration has been successfully completed."
+  "success_signup": "Registration has been successfully completed.",
+  "scroll_to_top": "Вернуться в начало"
 }

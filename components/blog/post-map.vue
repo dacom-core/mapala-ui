@@ -67,7 +67,7 @@
           gestureHandling: 'greedy'
         },
         center: { lat: 50.0542, lng: 20.0051 },
-        icon: '/icon-marker-3.png'
+        icon: '/pointer.png'
       }
     },
     computed: {
