@@ -86,7 +86,9 @@
 
         if (this.golosAlreadyReg === true) {
           creds.wif = this.wif
-          auth.existngSignUp(this, creds, {name: 'index'})
+          auth.existngSignUp(this, creds, {name: 'index'}).then(() => {
+            this.$notify({ message: this.$t('success_signup'), type: 'success' })
+          })
         } else if (!this.isPhoneVerified) {
           Verifier.phone({
             number: this.rawVal,
