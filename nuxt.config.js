@@ -84,6 +84,8 @@ module.exports = {
       }
     },
     vendor: [
+      'vuex-class', 
+      'nuxt-class-component',
       'vue-i18n',
       'axios',
       'element-ui',
@@ -119,5 +121,6 @@ module.exports = {
       '~/plugins/vue-lazyload.js',
       '~/plugins/vue-scroll-to.js'
     ]
-  }
+  },
+  modules: ['@/modules/typescript.ts']
 }

@@ -34,7 +34,7 @@
         </div>
 
       </div>
-      <vue-recaptcha v-show="!isPhoneVerified" ref="recaptcha" sitekey="6LfKfS8UAAAAAHEecRYjwgsL7p2SDXriEC5m0Otc" @verify="success"></vue-recaptcha>
+      <vue-recaptcha ref="recaptcha" sitekey="6LfKfS8UAAAAAHEecRYjwgsL7p2SDXriEC5m0Otc" @verify="success"></vue-recaptcha>
       <el-button class="submit-button" :disabled="!isSubmitAllowed" :loading="loading" @click="signUp" v-text="buttonText"></el-button>
     </div>
   </form>

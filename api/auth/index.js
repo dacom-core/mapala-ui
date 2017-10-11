@@ -45,7 +45,7 @@ export default {
 
   existngSignUp (context, creds, redirect) {
     context.loading = true
-    User(context.$axios).existngSignUp(creds).then(res => {
+    User().existngSignUp(creds).then(res => {
       context.loading = false
       store.clearAll()
 
@@ -70,7 +70,7 @@ export default {
       context.loading = true
       store.clearAll()
 
-      const { data } = await User(context.$axios).signUp(creds)
+      const { data } = await User().signUp(creds)
 
       Vue.cookie.set('jwt', data.token)
 

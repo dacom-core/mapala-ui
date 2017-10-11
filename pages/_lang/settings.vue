@@ -143,7 +143,7 @@
           const formData = new FormData()
           formData.append('file', this.$refs.avatarInput.files[0])
 
-          const { data } = await User.setAvatar(this.userName, formData)
+          const { data } = await User.setAvatar({ username: this.userName }, formData)
           this.setUserAvatar(data)
           this.switch_edit_avatar()
           this.$message({ type: 'info', message: 'Avatar has been updated' })
