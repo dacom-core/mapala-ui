@@ -31,7 +31,7 @@ export const User = Resource('/api/users{/username}/', {}, {
   'signUp': { method: 'POST', url: '/sign-up/' },
   'setPassword': { method: 'POST', url: '/api/users/set_password/' },
   'resetPassword': { method: 'POST', url: '/api/users/reset_password/' },
-  'existngSignUp': { method: 'POST', url: '/existng-sign-up/' },
+  'existngSignUp': { method: 'POST', url: '/api/auth/existng-sign-up/' },
   'setAvatar': { method: 'POST', url: '/api/users{/username}/set_avatar/' },
   'removeAvatar': { method: 'POST', url: '/api/users{/username}/remove_avatar/' },
   'initialBlockchains': { method: 'GET', url: '/api/users{/username}/initial_blockchains/' },

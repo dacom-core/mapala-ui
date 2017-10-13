@@ -34,10 +34,10 @@
     },
     computed: {
       isLoginPage () {
-        return this.$route.name === 'auth-login'
+        return this.$route.name === 'lang-auth-login'
       },
       isSignUpPage () {
-        return this.$route.name === 'auth-sign-up'
+        return this.$route.name === 'lang-auth-sign-up'
       }
     },
     methods: {

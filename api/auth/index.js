@@ -45,13 +45,14 @@ export default {
 
   existngSignUp (context, creds, redirect) {
     context.loading = true
-    User().existngSignUp(creds).then(res => {
+    return User.existngSignUp(creds).then(res => {
       context.loading = false
       store.clearAll()
 
-      store.set('jwt', res.body.token)
-      this.isAuth = true
-      this.user = res.body.user
+      Vue.cookie.set('jwt', res.token)
+      context.$store.commit('user/auth/SET_JWT_TOKEN',res.token)
+      context.$store.commit('user/personal/FILL_USER', res.user)
+      context.$store.commit('user/auth/SET_AUTH_TO', true)
 
       // Добавляем ключ для голоса
       store.set(`golos_${this.user.username}_posting_key`, creds.wif)

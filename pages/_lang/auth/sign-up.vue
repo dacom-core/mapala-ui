@@ -8,15 +8,20 @@
 
     <div v-else>
       <div class="inpt_w">
-        <input type="text" placeholder="Login" v-model="username" class="inpt i-user"><label></label>
+        <input type="text" :placeholder="$t('username')" v-model="username" class="inpt i-user"><label></label>
       </div>
-      <div class="inpt_w">
+      <!-- <div class="inpt_w">
         <input type="password" placeholder="Password" v-model="password" class="inpt i-pass"><label></label>
+      </div> -->
+
+       <div class="inpt_w">
+        <vue-password v-model="password" :placeholder="$t('password')" classes="inpt i-pass"></vue-password>
+        <label></label>
       </div>
 
       <div v-if="golosAlreadyReg">
         <div class="inpt_w">
-          <input type="text" placeholder="private posting key" v-model="wif" class="inpt i-key"><label></label>
+          <input type="text" :placeholder="$t('posting_key')" v-model="wif" class="inpt i-key"><label></label>
         </div>
       </div>
       <div v-else>
@@ -34,8 +39,14 @@
         </div>
 
       </div>
-      <vue-recaptcha ref="recaptcha" sitekey="6LfKfS8UAAAAAHEecRYjwgsL7p2SDXriEC5m0Otc" @verify="success"></vue-recaptcha>
-      <el-button class="submit-button" :disabled="!isSubmitAllowed" :loading="loading" @click="signUp" v-text="buttonText"></el-button>
+
+      <invisible-recaptcha sitekey="6LegXTQUAAAAAM_qyGnITRF9FCCfNg0TThuBNZ89" :callback="success"
+        class="submit-button" type="submit" id="do-something-btn" v-if="!isPhoneVerified && !golosAlreadyReg">
+          {{ $t('verify_phone') }}
+      </invisible-recaptcha>
+    
+      <!-- <vue-recaptcha ref="recaptcha" sitekey="6LfKfS8UAAAAAHEecRYjwgsL7p2SDXriEC5m0Otc" @verify="success"></vue-recaptcha> -->
+      <el-button v-else class="submit-button" :disabled="!isSubmitAllowed" :loading="loading" @click="signUp" v-text="buttonText"></el-button>
     </div>
   </form>
 </template>
@@ -44,7 +55,9 @@
   import auth from '@/api/auth'
   import bc from '@/api/blockchain'
   import { User, Verifier } from '@/api/services'
-  import VueRecaptcha from 'vue-recaptcha'
+  import VuePassword from '@/components/auth/__parts__/password-input'
+  // import VueRecaptcha from 'vue-recaptcha'
+  import InvisibleRecaptcha from 'vue-invisible-recaptcha';
   import CountryInput from '@/components/auth/__parts__/country-input'
   import { showErrors } from '@/utils/show_errors'
 
@@ -73,22 +86,19 @@
         return this.isPhoneVerified || this.golosAlreadyReg ? this.$t('sign_in') : this.$t('verify_phone')
       },
       isSubmitAllowed () {
-        return this.golosAlreadyReg || (this.isPhoneValid && this.recaptcha)
+        return this.golosAlreadyReg || (this.isPhoneValid)
       }
     },
     methods: {
       signUp () {
         const creds = {
           username: this.username,
-          password: this.password,
-          g_recaptcha_response: this.recaptcha
+          password: this.password
         }
 
         if (this.golosAlreadyReg === true) {
           creds.wif = this.wif
-          auth.existngSignUp(this, creds, {name: 'index'}).then(() => {
-            this.$notify({ message: this.$t('success_signup'), type: 'success' })
-          })
+          auth.existngSignUp(this, creds, {name: 'index'}).then((res) => console.log(res))
         } else if (!this.isPhoneVerified) {
           Verifier.phone({
             number: this.rawVal,
@@ -109,7 +119,7 @@
             this.$notify({ message: this.$t('success_signup'), type: 'success' })
           })
         }
-        this.$refs.recaptcha.reset()
+        // this.$refs.recaptcha.reset()
       },
 
       updatePhoneNumber(phone) {
@@ -117,7 +127,13 @@
       },
 
       success(res) {
-        this.recaptcha = res
+       Verifier.phone({
+            number: this.rawVal,
+            g_recaptcha_response: res
+          }).then(() => {
+            this.isSmsCodeInputVisible = true
+            this.isPhoneVerified = true
+          }).catch(error => showErrors(error.data, this))
       },
 
       // TODO Сделать подсказки по доступности логина/блокчейн юзернейма
@@ -145,7 +161,7 @@
         this.rawVal.indexOf('_') === -1 ? this.isPhoneValid = true : this.isPhoneValid = false
       }
     },
-    components: { VueRecaptcha, CountryInput }
+    components: { "invisible-recaptcha": InvisibleRecaptcha, CountryInput, VuePassword }
   }
 </script>
 
@@ -156,14 +172,14 @@
   .i-phone + label:before{
     background-image: url('~assets/icon-phone.svg');
     background-size: contain;
-    width: 24px;
+    width: 24px !important;
     margin-left: 8px;
   }
 
   .i-sms + label:before{
     background-image: url('~assets/icon-sms.svg');
     background-size: contain;
-    width: 24px;
+    width: 24px !important;
     margin-left: 8px;
   }
 

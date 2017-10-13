@@ -130,5 +130,9 @@
   "verify_phone": "Получить смс",
   "sms_code": "SMS код",
   "success_signup": "Регистрация прошла успешно.",
-  "scroll_to_top": "Back to top"
+  "scroll_to_top": "Back to top",
+  "password": "Пароль",
+  "posting_key": "Golos.io постинг ключ", 
+  "password_strength": "Надежность пароля",
+  "username": "Логин"
 }
