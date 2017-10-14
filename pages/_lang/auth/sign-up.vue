@@ -60,6 +60,7 @@
   import InvisibleRecaptcha from 'vue-invisible-recaptcha';
   import CountryInput from '@/components/auth/__parts__/country-input'
   import { showErrors } from '@/utils/show_errors'
+  import blockchains from '@/api/blockchain'
 
   export default {
     data () {
@@ -90,7 +91,7 @@
       }
     },
     methods: {
-      signUp () {
+      async signUp () {
         const creds = {
           username: this.username,
           password: this.password
@@ -98,7 +99,26 @@
 
         if (this.golosAlreadyReg === true) {
           creds.wif = this.wif
-          auth.existngSignUp(this, creds, {name: 'index'}).then((res) => console.log(res))
+          this.loading = true
+          try {
+            const { data } = await auth.existngSignUp(creds, {name: 'index'})
+            this.loading = false
+            store.clearAll()
+            Vue.cookie.set('jwt', res.token)
+            this.$store.commit('user/auth/SET_JWT_TOKEN',res.token)
+            this.$store.commit('user/personal/FILL_USER', res.user)
+            this.$store.commit('user/auth/SET_AUTH_TO', true)
+
+            // Добавляем ключ для голоса
+            store.set(`golos_${this.user.username}_posting_key`, creds.wif)
+            blockchains.initBlockchains(this)
+
+            if (redirect) { this.$router.push(redirect) }
+          } catch (e) {
+            console.log(e)
+            this.loading = false
+            showErrors(e.response.data, this)
+          }
         } else if (!this.isPhoneVerified) {
           Verifier.phone({
             number: this.rawVal,
@@ -106,7 +126,9 @@
           }).then(() => {
             this.isSmsCodeInputVisible = true
             this.isPhoneVerified = true
-          }).catch(error => showErrors(error.data, this))
+          }).catch(error => {
+            showErrors(error.response.data, this)
+          })
         } else if (this.isPhoneVerified) {
           auth.signUp(this, {
             username: this.username,
@@ -115,9 +137,10 @@
             g_recaptcha_response: this.recaptcha,
             number: this.rawVal,
             passcode: this.pass_code
-          }, { name: 'index' }).then(() => {
-            this.$notify({ message: this.$t('success_signup'), type: 'success' })
-          })
+          }, { name: 'index' })
+          // .then(() => {
+            // this.$notify({ message: this.$t('success_signup'), type: 'success' })
+          // })
         }
         // this.$refs.recaptcha.reset()
       },
@@ -133,7 +156,7 @@
           }).then(() => {
             this.isSmsCodeInputVisible = true
             this.isPhoneVerified = true
-          }).catch(error => showErrors(error.data, this))
+          }).catch(error => showErrors(error.response.data, this))
       },
 
       // TODO Сделать подсказки по доступности логина/блокчейн юзернейма

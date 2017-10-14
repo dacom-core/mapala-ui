@@ -43,27 +43,8 @@ export default {
     if (redirect) { context.$router.push(redirect) }
   },
 
-  existngSignUp (context, creds, redirect) {
-    context.loading = true
-    return User.existngSignUp(creds).then(res => {
-      context.loading = false
-      store.clearAll()
-
-      Vue.cookie.set('jwt', res.token)
-      context.$store.commit('user/auth/SET_JWT_TOKEN',res.token)
-      context.$store.commit('user/personal/FILL_USER', res.user)
-      context.$store.commit('user/auth/SET_AUTH_TO', true)
-
-      // Добавляем ключ для голоса
-      store.set(`golos_${this.user.username}_posting_key`, creds.wif)
-      blockchains.initBlockchains(context)
-
-      if (redirect) { context.$router.push(redirect) }
-
-    }, res => {
-      context.loading = false
-      showErrors(res.data, context)
-    })
+  existngSignUp (creds, redirect) {
+    return User.existngSignUp(creds)
   },
 
   async signUp (context, creds, redirect) {
@@ -71,7 +52,7 @@ export default {
       context.loading = true
       store.clearAll()
 
-      const { data } = await User().signUp(creds)
+      const { data } = await User.signUp(creds)
 
       Vue.cookie.set('jwt', data.token)
 

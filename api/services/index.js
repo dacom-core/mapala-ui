@@ -28,7 +28,7 @@ export const MasterTag = Resource('/api/master-tags{/id}/', {}, {
 
 export const User = Resource('/api/users{/username}/', {}, {
   'current': { method: 'GET', url: '/api/users/current/' },
-  'signUp': { method: 'POST', url: '/sign-up/' },
+  'signUp': { method: 'POST', url: '/api/auth/sign-up/' },
   'setPassword': { method: 'POST', url: '/api/users/set_password/' },
   'resetPassword': { method: 'POST', url: '/api/users/reset_password/' },
   'existngSignUp': { method: 'POST', url: '/api/auth/existng-sign-up/' },
