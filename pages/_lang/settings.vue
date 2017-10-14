@@ -7,7 +7,7 @@
             i.back(@click="goBack")
 
           div.user
-            div.round_av(v-on:click="switch_edit_avatar()", :class="{ edit_av : edit_av }")
+            div.round_av(:class="{ edit_av : edit_av }")
               i.ic.delete(@click="removeAvatar")
               i.ic.edit(@click="$refs.avatarInput.click()")
                 input(ref="avatarInput", @change="setAvatar" hidden type="file")
@@ -22,7 +22,7 @@
             label
               | {{ blockchains.current.name }}
               span.blue(v-if="blockchains.current.activated")
-                | {{ blockchains.current.blockchain_username }}
+                | {{ ' ' + blockchains.current.blockchain_username }}
 
             input(
               type="text",
@@ -57,7 +57,7 @@
         blockchains: blockchains,
         locomotive: false,
         error: false,
-        edit_av: false,
+        edit_av: true,
         old_password: '',
         new_password: ''
       }
@@ -252,7 +252,7 @@
     right: -80px;
   }
 
-  .profile .close_edit{
+  /* .profile .close_edit{
     width: 100%;
     height: 100%;
     display: none;
@@ -263,11 +263,11 @@
     top: 0;
     left: 0;
     border-radius: 50%;
-  }
+  } */
 
-  .profile .edit_av .close_edit{
+  /* .profile .edit_av .close_edit{
     display: block;
-  }
+  } */
 
   .profile .user .name {
     font: 700 26px 'PT Sans';
