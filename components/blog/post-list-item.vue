@@ -5,7 +5,7 @@
       :to="$action('post-view', post.author.username, post.permlink)"
       )
       div.post_image
-        img.post-image(:src="'https://imgp.golos.io/492x32/' + post.miniature" alt="" onerror="this.style.display='none'")
+        img.post-image(:src="'https://imgp.golos.io/492x328/' + post.miniature" alt="" onerror="this.style.display='none'")
 
     div.short
       div.top_block
