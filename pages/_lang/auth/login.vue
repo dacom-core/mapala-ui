@@ -13,6 +13,7 @@
         class="inpt i-pass"
         required
         )
+      label
 
     div(v-for="error in Object.keys(errors)")
       i.el-icon-warning
@@ -21,7 +22,7 @@
     button.submit-button
       | {{ $t('log_in') }}
 
-    router-link.forgot(:to="{ name: 'auth-reset-password' }")
+    router-link.forgot(:to="{ name: 'lang-auth-reset-password' }")
       | {{ $t('forgot_password') }}
 </template>
 

@@ -151,6 +151,7 @@ export default {
   setBlockchain (blockchain, state) {
     // HACK: На данный момент решено менять блокчейн по локали:
     // en -> steemil, ru -> golos
+
     if (typeof blockchain === 'undefined') {
       blockchain = state.locale === 'ru' ? 'golos' : 'steemit'
     }

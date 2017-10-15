@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex'
+  import { mapMutations, mapGetters } from 'vuex'
   import Auth from '@/components/auth/Auth'
   import ModalBackdrop from '@/components/modal/__parts__/_backdrop.vue'
   import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
@@ -29,10 +29,14 @@
         class: 'overflowHidden'
       }
     },
-    fetch ({ store: { commit }, from }) {
+    fetch ({ store: { commit }, from, isServer }) {
+      isServer ? commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) : ''// Disallow making requests for new posts.
       commit('SET_BACK_PATH', from || {})
     },
     computed: {
+      ...mapGetters({
+        backPath: 'backPath'
+      }),
       isLoginPage () {
         return this.$route.name === 'lang-auth-login'
       },
@@ -42,10 +46,14 @@
     },
     methods: {
       ...mapMutations({
-        showModal: 'modal/SHOW_MODAL'
+        showModal: 'modal/SHOW_MODAL',
+        hideModal: 'modal/HIDE_MODAL',
+        resetBackPath: 'RESET_BACK_PATH'
       }),
       goBack () {
-        this.$router.go(-1)
+        this.hideModal()
+        this.$router.push(this.backPath)
+        this.resetBackPath()
       }
     },
     mounted () {
