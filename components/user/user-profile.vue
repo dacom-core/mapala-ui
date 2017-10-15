@@ -6,7 +6,7 @@
 
       div.user
         div.round_av
-          img.user_av(:src="userAvatar")
+          img.user_av(:src="avatar")
         div.name.verified
           | {{ bc_username }}
       div.bottom_bl(v-if="isAuth && isUserOwnPage")
@@ -40,11 +40,18 @@
         userName: state => state.user.personal.username,
         userAvatar: state => state.user.personal.avatar,
         isMobile: state => state.isMobile,
-        bc_username: state => state.blog.posts.posts_author.bc_username
+        bc_username: state => state.blog.posts.posts_author.bc_username,
+        author_avatar: state => state.blog.posts.posts_author.avatar
       }),
 
       isUserOwnPage () {
         return this.userName === this.$route.params.username // Is it the logged user's page.
+      }
+    },
+
+    methods: {
+      avatar () {
+        return this.isUserOwnPage ? this.userAvatar : this.author_avatar 
       }
     }
   }
