@@ -11,7 +11,7 @@ import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
 import ModalContent from '@/components/modal/__parts__/_modal-content.vue'
 import PostForm from '@/components/blog/__parts__/form'
 import bc from '@/api/blockchain'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
   head: {
@@ -22,6 +22,10 @@ export default {
 
   middleware: ['auth', 'has-posting-key'],
 
+  fetch ({ store: { commit }, from }) {
+    commit('SET_BACK_PATH', from || {})
+  },
+
   data () {
     return {
       resetForm: false,
@@ -29,10 +33,17 @@ export default {
     }
   },
 
+  computed: {
+      ...mapGetters({
+        backPath: 'backPath'
+      })
+  },
+
   methods: {
     ...mapMutations({
       showModal: 'modal/SHOW_MODAL',
-      hideModal: 'modal/HIDE_MODAL'
+      hideModal: 'modal/HIDE_MODAL',
+      resetBackPath: 'RESET_BACK_PATH'
     }),
     async createPost (form) {
       try {
@@ -44,7 +55,7 @@ export default {
 
         this.hideModal()
 
-        this.$router.go(-1)
+        this.$router.push(this.backPath)
 
         this.resetForm = true
 
@@ -55,7 +66,9 @@ export default {
       }
     },
     goBack () {
-      this.$router.go(-1)
+      this.hideModal()
+      this.$router.push(this.backPath)
+      this.resetBackPath()
     }
   },
 
