@@ -114,9 +114,6 @@
       close () {
         this.$router.go(-1)
       },
-      switch_edit_avatar () {
-        this.edit_av = !this.edit_av
-      },
 //      async update () {
 //        try {
 //          const { data } = await User.update({ username: this.userName }, { username: this.userName })
@@ -145,7 +142,6 @@
 
           const { data } = await User.setAvatar({ username: this.userName }, formData)
           this.setUserAvatar(data)
-          this.switch_edit_avatar()
           this.$message({ type: 'info', message: 'Avatar has been updated' })
         } catch (e) {
           this.error = e

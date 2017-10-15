@@ -13,7 +13,8 @@ export default {
   current: {},
   bc_list: [],
   blockchains: {},
-  app_tag: process.env.NODE_ENV === 'production' ? 'mapala' : 'testing',
+  app_tag: process.env.NODE_ENV === 'production' ? 'testing' : 'testing',
+  // TODO разветвить постинг в зависимости от NODE_ENV
 
   init (store = '') {
     ChainConfig.expire_in_secs = 30
@@ -72,11 +73,9 @@ export default {
   },
 
   async updatePost (context, post) {
-
     this.checkValidKey(context)
     const tr = new TransactionBuilder()
     post.permlink = this.getPermlink(post.title)
-
     tr.add_type_operation('comment', {
       parent_author: '',
       parent_permlink: this.app_tag,
@@ -86,7 +85,6 @@ export default {
       body: post.body,
       json_metadata: this.getJsonMeta(post.meta)
     })
-
     const signedTr = await this.signTr(tr)
     try {
       return await Post.save({ tx: signedTr, blockchain: this.current.name })

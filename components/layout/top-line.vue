@@ -153,6 +153,8 @@ export default {
     logout () {
       this.userLogout()
       this.resetUser()
+      // localStorage.remove(`${bc.current.name}_${this.userName}_posting_key`)
+      //TODO delete old posting key when logouting
       delete_cookie('jwt')
     },
 
