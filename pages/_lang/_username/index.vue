@@ -25,7 +25,7 @@ export default {
     try {
       const { data: user } = await User.get({ username: username })
       commit('blog/posts/posts_author/SET_PAGE_AUTHOR_BC_USERNAME', user.bc_username)
-      commit('blog/posts/posts_author/SET_PAGE_AUTHOR_AVATAR', user.avatar) 
+      commit('blog/posts/posts_author/SET_PAGE_AUTHOR_AVATAR', user.avatar)
     } catch (e) {
       error({ statusCode: 404, message: i18n.t('user_not_found') })
     }
