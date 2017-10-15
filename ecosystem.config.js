@@ -20,7 +20,10 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@github.com:dacom-core/mapala-ui.git',
       path : '/var/www/mapala-ui',
-      'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env production',
+      env  : {
+        NODE_ENV: 'production'
+      }
     },
     development : {
       user : 'root',

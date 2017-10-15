@@ -13,7 +13,7 @@ export default {
   current: {},
   bc_list: [],
   blockchains: {},
-  app_tag: process.env.NODE_ENV === 'production' ? 'testing' : 'testing',
+  app_tag: process.env.NODE_ENV === 'production' ? 'mapala' : 'testing',
   // TODO разветвить постинг в зависимости от NODE_ENV
 
   init (store = '') {

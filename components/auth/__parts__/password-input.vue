@@ -7,7 +7,8 @@
             ref="input",
             @input="updatePassword($event.target.value)",
             v-on="$listeners",
-            v-bind="$attrs"
+            v-bind="$attrs",
+            autocomplete="off"
       )
       label
 
