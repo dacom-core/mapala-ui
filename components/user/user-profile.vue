@@ -46,11 +46,10 @@
 
       isUserOwnPage () {
         return this.userName === this.$route.params.username // Is it the logged user's page.
-      }
-    },
+      },
 
-    methods: {
       avatar () {
+        console.log(this.author_avatar)
         return this.isUserOwnPage ? this.userAvatar : this.author_avatar 
       }
     }
