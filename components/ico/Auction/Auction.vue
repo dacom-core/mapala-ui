@@ -1,6 +1,6 @@
 <template>
     <div class="auc-block" :class="{aucblMobile: mobile}">
-      <nuxt-link class="auction_button" :to="{ path: 'ico/auction' }">{{ $t('auction') }}</nuxt-link>
+      <nuxt-link class="auction_button" :to="{ name: 'lang-ico-auction' }">{{ $t('auction') }}</nuxt-link>
         <el-row type="flex" class="auc-cent" justify="center" :gutter="20">
             <el-col class="week-wraper" :span="8">
                 <auction-stat :stat="stats.week.btc" :isBold="true"></auction-stat>
