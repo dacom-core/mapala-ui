@@ -64,6 +64,9 @@ export const actions = {
     const isMobile = new MobileDetect(req.headers['user-agent']).phone() //  Is the page loaded from a phone
     commit('SET_MOBILE', isMobile)
 
+
+    console.log(process.env)
+
     const JWTtoken = get_cookie('jwt', req)
 
     if (JWTtoken) {
