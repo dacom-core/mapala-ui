@@ -7,24 +7,24 @@
     <el-row type="flex" class="auc-bg" justify="center" :gutter="20">
       <el-col :xs="24" :sm="24" :md="18" :lg="18">
         <el-card class="auc-card">
-          <auction  :mobile="isMobile" :btc="ico.weekly_btc" :gbg="ico.weekly_gbg" :usd="ico.total_usd" :tokens="ico.total_tokens"></auction>
+          <auction  :mobile="mobile" :btc="ico.weekly_btc" :gbg="ico.weekly_gbg" :usd="ico.total_usd" :tokens="ico.total_tokens"></auction>
         </el-card>
       </el-col>
     </el-row>
     <el-row class="ico-bottom" type="flex" justify="center" :gutter="20">
       <el-col :xs="12" :sm="12" :md="6" :lg="6">
-        <nuxt-link :to="{name: 'investors'}">
+        <router-link :to="{name: 'investors'}">
           <h4 class="ico-hist">{{ $t('history') }}<br>Pre-ICO</h4>
-        </nuxt-link>
+        </router-link>
       </el-col>
       <el-col :xs="12" :sm="12" :md="6" :lg="6">
-        <nuxt-link to="/mapala">
+        <router-link to="/mapala">
           <h4 class="ico-blog">{{ $t('blog') }}<br>Mapala</h4>
-        </nuxt-link>
+        </router-link>
       </el-col>
     </el-row>
     <faq></faq>
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -36,7 +36,7 @@
 
   export default {
     layout: 'full-width',
-    props: ['ico'],
+
     components: {
       Chart,
       IcoStats,
@@ -49,6 +49,10 @@
       }
     },
     computed: {
+      ico: function () {
+        return this.$parent.ico
+      },
+
       ...mapState({
         isMobile: state => state.isMobile
       }),
@@ -57,15 +61,15 @@
         var sections = [
           {
             title: this.$t('current_rate'),
-            value: this.ico.current_rate + ' BTC/MPL'
+            value: this.$parent.ico.current_rate + ' BTC/MPL'
           },
           {
             title: this.$t('investments'),
-            value: this.ico.total_btc.toFixed(6) + ' BTC'
+            value: this.$parent.ico.total_btc.toFixed(6) + ' BTC'
           },
           {
             title: this.$t('distributed_tokens'),
-            value: this.ico.total_tokens.toFixed() + ' MPL'
+            value: this.$parent.ico.total_tokens.toFixed() + ' MPL'
           },
         ]
 

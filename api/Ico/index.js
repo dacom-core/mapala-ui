@@ -10,6 +10,7 @@ export function auction (user, callback) {
   const parameters = {
     user
   }
+
   const endpoint = '/auction'
   return _get(endpoint, parameters, callback)
 }

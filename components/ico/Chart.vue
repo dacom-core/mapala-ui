@@ -7,6 +7,11 @@
 </template>
 
 <script>
+import VueHighcharts from 'vue-highcharts'
+import Vue from 'vue'
+
+Vue.use(VueHighcharts)
+
   export default {
     props: ['x', 'y'],
     data () {

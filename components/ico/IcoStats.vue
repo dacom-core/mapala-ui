@@ -29,7 +29,7 @@
     },
     computed: {
       mobile () {
-        return this.$store.state.mobile.mobile()
+        return this.$store.state.isMobile
       }
     }
   }

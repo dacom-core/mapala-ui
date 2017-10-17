@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from '../config'
-const API_URL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}/api/v1/site`
+const API_URL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}api/v1/site`
 
 /**
  * Make Api
