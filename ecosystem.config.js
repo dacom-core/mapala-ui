@@ -6,10 +6,12 @@ module.exports = {
       args      : 'start',
       env: {
         COMMON_VARIABLE: 'true',
-        NODE_ENV: 'development' 
+        NODE_ENV: 'development',
+        API_SERVER: 'https://dev.mapala.net/'
       },
       env_production : {
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        API_SERVER: 'https://mapala.net/'
       }
     },
   ],
