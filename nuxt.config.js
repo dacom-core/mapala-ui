@@ -57,7 +57,7 @@ module.exports = {
     },
     bundleRenderer: {
       cache: require('lru-cache')({
-        maxAge: 1000 * 60 * 15
+        maxAge: 1000 * 60 * 5
       })
     }
   },

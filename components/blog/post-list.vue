@@ -11,11 +11,6 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'post-list',
-
-  serverCacheKey () {
-    return Math.floor(Date.now() / 30000)
-  },
-
   data () {
     return {
       loading: false
