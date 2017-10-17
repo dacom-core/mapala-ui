@@ -60,7 +60,7 @@ export const getters = {
 }
 
 export const actions = {
-  async nuxtServerInit ({ state, dispatch, commit }, { req }) {
+  async nuxtServerInit ({ dispatch, commit }, { req }) {
     const isMobile = new MobileDetect(req.headers['user-agent']).phone() //  Is the page loaded from a phone
     commit('SET_MOBILE', isMobile)
 
