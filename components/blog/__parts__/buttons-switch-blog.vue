@@ -12,7 +12,7 @@
 
       el-col(:span="11")
         nuxt-link(:to="$path('/mapala')")
-          el-button(:plain="true" size="large" type="info")
+          el-button.fullHeight(:plain="true" size="large" type="info")
             | {{ $t('mapala_blogs') }}
 
     div(v-if="userName != $route.params.user && isMobile")
@@ -51,7 +51,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
   .hideScroll {
     overflow-y: hidden;
   }
@@ -71,5 +71,12 @@ export default {
   }
   .tapeMobile {
     margin-left: 0!important;
+  }
+  .fullHeight {
+    height: 100%;
+  }
+
+  button.el-button.el-button--info.el-button--large.is-plain {
+    white-space: pre-line;
   }
 </style>

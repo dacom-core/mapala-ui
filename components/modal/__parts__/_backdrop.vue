@@ -1,7 +1,8 @@
 <template lang="pug">
   div(
     v-show="isVisible",
-    class="pop_back"
+    class="pop_back",
+    :class="{ container: isMobile }"
     )
     transition(
       name="custom-classes-transition"
@@ -19,7 +20,8 @@
   export default {
     computed: {
       ...mapState({
-        isVisible: state => state.modal.isShown
+        isVisible: state => state.modal.isShown,
+        isMobile: state => state.isMobile
       })
     }
   }
