@@ -13,12 +13,8 @@ export default {
     layout: 'full-width',
     async asyncData ({ store }) {
         
-        const { data: ico } = await axios.get(`${API_URL}/ico`, {
-//          params: {
-//            user: store.state.user.personal.username 
-//          }
-        })
-        console.log(ico)
+        const { data: ico } = await axios.get(`${API_URL}/ico`)
+        
         return { ico: ico }
     }, 
     data () {
