@@ -68,7 +68,12 @@ export const actions = {
 
     if (JWTtoken) {
       commit('user/auth/SET_JWT_TOKEN', JWTtoken)
-      await dispatch('user/auth/fetch_user')
+      try {
+        await dispatch('user/auth/fetch_user')
+      } catch (e) {
+        console.log(e)
+      }
+      
     } else {
       commit('user/auth/LOGOUT')
       commit('user/personal/RESET_USER')
