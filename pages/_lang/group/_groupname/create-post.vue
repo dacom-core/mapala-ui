@@ -1,6 +1,7 @@
 <template lang="pug">
   modal-backdrop(@click.native.self="goBack")
     modal-box
+      modal-close-button
       modal-content
         post-form(
           :isEditForm="false", 
@@ -13,6 +14,7 @@
 
 <script>
   import ModalBackdrop from '@/components/modal/__parts__/_backdrop.vue'
+  import ModalCloseButton from '@/components/modal/__parts__/_close-button.vue'
   import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
   import ModalContent from '@/components/modal/__parts__/_modal-content.vue'
   import PostForm from '@/components/blog/__parts__/form'
@@ -26,6 +28,9 @@
       }
     },
     middleware: ['auth', 'has-posting-key'],
+    fetch ({ isServer, store: { commit }}) {
+      isServer ? commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) : ''// Disallow making requests for new posts.
+    },
     asyncData ({ route }) {
       return {
         groupname: route.params.groupname || null
@@ -37,7 +42,7 @@
         isFormSaving: false
       }
     },
-    mounted () {
+    created () {
       this.showModal()
 //      const username = this.$store.state.user.personal.username
 //      if (!bc.getPostingKey(undefined, username)) {
@@ -84,7 +89,8 @@
       PostForm,
       ModalBackdrop,
       ModalBox,
-      ModalContent
+      ModalContent,
+      ModalCloseButton
     }
   }
 </script>

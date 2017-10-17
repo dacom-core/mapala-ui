@@ -1,12 +1,14 @@
 <template lang="pug">
   modal-backdrop(@click.native.self="goBack")
     modal-box
+      modal-close-button
       modal-content
         post-form(:isEditForm="false", @createPost="createPost", :resetForm="resetForm", :isFormSaving="isFormSaving")
 </template>
 
 <script>
 import ModalBackdrop from '@/components/modal/__parts__/_backdrop.vue'
+import ModalCloseButton from '@/components/modal/__parts__/_close-button.vue'
 import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
 import ModalContent from '@/components/modal/__parts__/_modal-content.vue'
 import PostForm from '@/components/blog/__parts__/form'
@@ -22,7 +24,8 @@ export default {
 
   middleware: ['auth', 'has-posting-key'],
 
-  fetch ({ store: { commit }, from }) {
+  fetch ({ store: { commit }, from, isServer }) {
+    isServer ? commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) : ''// Disallow making requests for new posts.
     commit('SET_BACK_PATH', from || {})
   },
 
@@ -92,7 +95,8 @@ export default {
     PostForm,
     ModalBackdrop,
     ModalBox,
-    ModalContent
+    ModalContent,
+    ModalCloseButton
   }
 }
 </script>
