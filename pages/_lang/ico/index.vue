@@ -13,7 +13,7 @@
     </el-row>
     <el-row class="ico-bottom" type="flex" justify="center" :gutter="20">
       <el-col :xs="12" :sm="12" :md="6" :lg="6">
-        <nuxt-link :to="{name: 'investors'}">
+        <nuxt-link :to="{ path: 'ico/investors' }">
           <h4 class="ico-hist">{{ $t('history') }}<br>Pre-ICO</h4>
         </nuxt-link>
       </el-col>

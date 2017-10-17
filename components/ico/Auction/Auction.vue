@@ -1,6 +1,6 @@
 <template>
     <div class="auc-block" :class="{aucblMobile: mobile}">
-      <nuxt-link :to="{ path: 'auction' }">{{ $t('auction') }}</nuxt-link>
+      <nuxt-link class="auction_button" :to="{ path: 'ico/auction' }">{{ $t('auction') }}</nuxt-link>
         <el-row type="flex" class="auc-cent" justify="center" :gutter="20">
             <el-col class="week-wraper" :span="8">
                 <auction-stat :stat="stats.week.btc" :isBold="true"></auction-stat>
@@ -91,5 +91,17 @@ h3 {
 }
 .aucblMobile {
     padding-bottom: 10px;
+}
+a.auction_button:hover {
+    opacity: 0.7;
+}
+
+a.auction_button {
+    padding: 12px 25px;
+    text-decoration: none;
+    color: white;
+    background-color: #00a3e5;
+    border-radius: 5px;
+    transition: all .5s;
 }
 </style>

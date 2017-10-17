@@ -4,7 +4,9 @@
         <ico-stats :sections="sections"></ico-stats>
         <auction-info :mobile="mobile" :btcAddress="ico.btc_wallet"></auction-info>
         <h1>{{ $t('auction') }}</h1>
-        <invest-table :table-data="ico.data_provider.allModels"></invest-table>
+        <no-ssr>
+            <invest-table :table-data="ico.data_provider.allModels"></invest-table>
+        </no-ssr>
     </div>
 </template>
 

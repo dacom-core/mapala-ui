@@ -12,9 +12,8 @@ const API_URL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_P
 export default {
     layout: 'full-width',
     async asyncData ({ store }) {
-        
         const { data: ico } = await axios.get(`${API_URL}/ico`)
-        
+
         return { ico: ico }
     }, 
     data () {

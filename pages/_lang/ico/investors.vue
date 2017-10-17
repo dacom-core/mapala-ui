@@ -2,7 +2,9 @@
     <div v-if="ico" class="icoInvest">
         <ico-stats :sections="sections"></ico-stats>
         <h1>{{ $t('investment_history') }}</h1>
-        <invest-table :table-data="investors"></invest-table>
+        <no-ssr>
+          <invest-table :table-data="investors"></invest-table>
+        </no-ssr>
     </div>
 </template>
 
@@ -13,6 +15,10 @@
     import Faq from '@/components/ico/Faq.vue'
     import InvestTable from '@/components/ico/Investors/InvestTable.vue'
     import api from '@/api/temporary'
+    import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from '@/api/config'
+    import axios from 'axios'
+
+    const API_URL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}api/v1/site`
 
     export default {
       components: {
@@ -22,34 +28,35 @@
         Faq,
         InvestTable
       },
+      async asyncData ({ store }) {
+        const [{ data: investors }, { data: ico }] = await Promise.all([
+          axios.get(`${API_URL}/investors`),
+          axios.get(`${API_URL}/ico`)
+        ])
+
+        return { 
+          investors: investors.data_provider.allModels,
+          ico: ico
+         }
+      }, 
       data () {
         return {
-          investors: null
         }
       },
       computed: {
-        ico: function () {
-          return this.$parent.ico
-        },
         sections: function () {
           var sections = [
             {
               title: this.$t('investments'),
-              value: this.$parent.ico.total_btc.toFixed(6) + ' BTC'
+              value: this.ico.total_btc.toFixed(6) + ' BTC'
             },
             {
               title: this.$t('distributed_tokens'),
-              value: this.$parent.ico.total_tokens.toFixed() + ' MPL'
+              value: this.ico.total_tokens.toFixed() + ' MPL'
             }
           ]
           return sections
         }
-      },
-      created () {
-        let that = this
-        api.ico.investors(function (data) {
-          that.investors = data.data_provider.allModels
-        })
       }
     }
 </script>
