@@ -5,14 +5,12 @@
 
 <script>
 import auth from '@/api/auth'
-import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from '@/api/config'
 import axios from 'axios'
-const API_URL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}api/v1/site`
 
 export default {
     layout: 'full-width',
     async asyncData ({ store }) {
-        const { data: ico } = await axios.get(`${API_URL}/ico`)
+        const { data: ico } = await axios.get(`${store.state.API_SERVER}api/v1/site/ico`)
 
         return { ico: ico }
     }, 

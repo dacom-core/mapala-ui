@@ -18,15 +18,12 @@
     import Faq from '@/components/ico/Faq.vue'
     import InvestTable from '@/components/ico/Investors/InvestTable.vue'
     import axios from 'axios'
-    import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from '@/api/config'
-
-    const API_URL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}api/v1/site`
 
     export default {
         middleware: ['auth'],
         async asyncData ({ store }) {
         
-            const { data: ico } = await axios.get(`${API_URL}/auction`, {
+            const { data: ico } = await axios.get(`${store.state.API_SERVER}api/v1/site/auction`, {
                 params: {
                     user: store.state.user.personal.username
                 }

@@ -1,17 +1,20 @@
 <template lang="pug">
   modal-backdrop(@click.native.self="goBack")
     modal-box
+      modal-close-button
       modal-content
-        post-form(:isEditForm="true", @updatePost="updatePost", :resetForm="resetForm", :isFormSaving="isFormSaving")
+        post-form(:isEditForm="true", :postData="postData", @updatePost="updatePost", :resetForm="resetForm", :isFormSaving="isFormSaving")
 </template>
 
 <script>
   import ModalBackdrop from '@/components/modal/__parts__/_backdrop.vue'
+  import ModalCloseButton from '@/components/modal/__parts__/_close-button.vue'
   import ModalBox from '@/components/modal/__parts__/_modal-box.vue'
   import ModalContent from '@/components/modal/__parts__/_modal-content.vue'
   import PostForm from '@/components/blog/__parts__/form'
   import bc from '@/api/blockchain'
-  import { mapMutations } from 'vuex'
+  import { Post } from '@/api/services'
+  import { mapMutations, mapGetters } from 'vuex'
 
   export default {
     head: {
@@ -19,8 +22,16 @@
         class: 'overflowHidden'
       }
     },
+    middleware: ['auth', 'has-posting-key'],
     async fetch ({ store: { commit }, isServer }) {
       isServer ? commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) : ''// Disallow making requests for new posts.
+    },
+    async asyncData ({ route }) {
+      const { data: postData } = await Post.get({ 
+        permlink: route.params.username + '*@*' + route.params.slug 
+      })
+
+      return { postData: postData }
     },
     data () {
       return {
@@ -28,10 +39,16 @@
         isFormSaving: false
       }
     },
+    computed: {
+      ...mapGetters({
+        backPath: 'backPath'
+      }),
+    },
     methods: {
       ...mapMutations({
         showModal: 'modal/SHOW_MODAL',
-        hideModal: 'modal/HIDE_MODAL'
+        hideModal: 'modal/HIDE_MODAL',
+        resetBackPath: 'RESET_BACK_PATH'
       }),
 
       async updatePost (form) {
@@ -50,7 +67,9 @@
         }
       },
       goBack () {
-        this.$router.go(-1)
+        this.hideModal()
+        this.$router.push(this.backPath)
+        this.resetBackPath()
       }
     },
     created () {
@@ -64,7 +83,8 @@
       PostForm,
       ModalBackdrop,
       ModalBox,
-      ModalContent
+      ModalContent,
+      ModalCloseButton
     }
   }
 </script>

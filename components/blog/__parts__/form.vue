@@ -67,7 +67,8 @@
   import { uploadImage } from '@/api/Utils/images'
 
   export default {
-    props: ['isEditForm', 'isFormSaving', 'resetForm'],
+    props: ['isEditForm', 'isFormSaving', 'resetForm', 'postData', 'groupname'],
+    middleware: ['auth', 'has-posting-key'],
     mixins: [validationMixin],
     data () {
       return {
@@ -81,7 +82,7 @@
               lat: '',
               lng: ''
             },
-            group: this.groupName || null,
+            group: this.groupname,
             tags: []
           }
         },
@@ -112,10 +113,7 @@
       ...mapState({
         userAvatar: state => state.user.personal.avatar,
         userName: state => state.user.personal.username
-      }),
-      groupName () {
-        return this.$route.params.groupname
-      }
+      })
     },
     validations: {
       form: {
@@ -231,14 +229,12 @@
     },
     created () {
       if (this.isEditForm) {
-        Post.get({ permlink: this.$route.params.username + '*@*' + this.$route.params.slug }).then(res => {
-          this.form.title = res.data.title
-          this.form.body = res.data.body
-          this.form.position_text = res.data.position_text
-          this.form.meta.location.name = res.data.position_text
-          this.form.meta.location.lat = res.data.position.latitude
-          this.form.meta.location.lng = res.data.position.longitude
-        })
+        this.form.title = this.postData.title
+        this.form.body = this.postData.body
+        this.form.position_text = this.postData.position_text
+        this.form.meta.location.name = this.postData.position_text
+        this.form.meta.location.lat = this.postData.position.latitude
+        this.form.meta.location.lng = this.postData.position.longitude
       }
     },
     watch: {
@@ -253,7 +249,7 @@
               lat: '',
               lng: ''
             },
-            group: this.groupName || null,
+            group: this.groupname,
             tags: []
           }
         }

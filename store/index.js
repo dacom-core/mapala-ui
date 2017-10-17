@@ -6,6 +6,7 @@ import axios from 'axios'
 export const state = () => ({
   locales: ['en', 'ru'],
   locale: 'ru',
+  API_SERVER: '',
   isMobile: false,
   historyStack: [], // All urls(paths) which have been visited.
   backPath: '', // The Url Before Modal Was Opened
@@ -16,6 +17,9 @@ export const state = () => ({
 })
 
 export const mutations = {
+  SET_API_SERVER_ADDRESS (state, payload) {
+    state.API_SERVER = payload 
+  },
   SET_LANG (state, locale) {
     if (state.locales.indexOf(locale) !== -1) {
       state.locale = locale
@@ -56,7 +60,7 @@ export const getters = {
 }
 
 export const actions = {
-  async nuxtServerInit ({ dispatch, commit }, { req }) {
+  async nuxtServerInit ({ state, dispatch, commit }, { req }) {
     const isMobile = new MobileDetect(req.headers['user-agent']).phone() //  Is the page loaded from a phone
     commit('SET_MOBILE', isMobile)
 

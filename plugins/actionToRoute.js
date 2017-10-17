@@ -7,13 +7,13 @@ export default ({ store }) => {
         let link
 
         if (action === 'post-view') {
-          link = `/${store.state.locale}/${identifier}/post/${permalink}/`
+          link = `/${store.state.locale}/${identifier}/${permalink}/`
         } else if (action === 'edit') {
-          link = `/${store.state.locale}/${identifier}/post/${permalink}/edit/`
+          link = `/${store.state.locale}/${identifier}/${permalink}/edit/`
         } else if (action === 'create') {
-          link = `/${store.state.locale}/${identifier}/post/create/`
+          link = `/${store.state.locale}/create-post/`
         } else if (action === 'create-post-group') {
-          link = `/${store.state.locale}/group/${identifier}/create/`
+          link = `/${store.state.locale}/group/${identifier}/create-post/`
         }
 
         return link

@@ -2,7 +2,13 @@
   modal-backdrop(@click.native.self="goBack")
     modal-box
       modal-content
-        post-form(:isEditForm="false", @createPost="createPost", :resetForm="resetForm", :isFormSaving="isFormSaving")
+        post-form(
+          :isEditForm="false", 
+          @createPost="createPost", 
+          :resetForm="resetForm", 
+          :isFormSaving="isFormSaving",
+          :groupname="groupname"
+          )
 </template>
 
 <script>
@@ -19,19 +25,20 @@
         class: 'overflowHidden'
       }
     },
-
     middleware: ['auth', 'has-posting-key'],
-
+    asyncData ({ route }) {
+      return {
+        groupname: route.params.groupname || null
+      }
+    },
     data () {
       return {
         resetForm: false,
         isFormSaving: false
       }
     },
-
     mounted () {
       this.showModal()
-
 //      const username = this.$store.state.user.personal.username
 //      if (!bc.getPostingKey(undefined, username)) {
 //        this.$router.push('/')

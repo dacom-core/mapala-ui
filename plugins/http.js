@@ -1,12 +1,11 @@
 import axios from 'axios'
 import Vue from 'vue'
-import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from '../api/config'
 
 export default ({ store }) => {
-  const host = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}`
-
+  store.commit('SET_API_SERVER_ADDRESS', process.env.API_SERVER || 'https://dev.mapala.net/')
+  
   const config = {
-    baseURL: host,
+    baseURL: store.state.API_SERVER,
     withCredentials: true,
     headers: {}
   }

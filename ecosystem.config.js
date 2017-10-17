@@ -5,7 +5,8 @@ module.exports = {
       script    : 'npm',
       args      : 'start',
       env: {
-        COMMON_VARIABLE: 'true'
+        COMMON_VARIABLE: 'true',
+        NODE_ENV: 'development' 
       },
       env_production : {
         NODE_ENV: 'production'
@@ -22,7 +23,8 @@ module.exports = {
       path : '/var/www/mapala-ui',
       'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env production',
       env  : {
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        API_SERVER: 'https://mapala.net/'
       }
     },
     development : {
@@ -33,7 +35,8 @@ module.exports = {
       path : '/var/www/mapala-ui',
       'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env development',
       env  : {
-        NODE_ENV: 'development'
+        NODE_ENV: 'development',
+        API_SERVER: 'https://dev.mapala.net/'
       }
     }
   }

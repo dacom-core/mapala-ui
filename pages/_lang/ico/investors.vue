@@ -14,11 +14,7 @@
     import Auction from '@/components/ico/Auction/Auction.vue'
     import Faq from '@/components/ico/Faq.vue'
     import InvestTable from '@/components/ico/Investors/InvestTable.vue'
-    import api from '@/api/temporary'
-    import { MAPALA_API_PROTOCOL, MAPALA_API_HOST, MAPALA_API_BASE_PATH } from '@/api/config'
     import axios from 'axios'
-
-    const API_URL = `${MAPALA_API_PROTOCOL}://${MAPALA_API_HOST}/${MAPALA_API_BASE_PATH}api/v1/site`
 
     export default {
       components: {
@@ -30,8 +26,8 @@
       },
       async asyncData ({ store }) {
         const [{ data: investors }, { data: ico }] = await Promise.all([
-          axios.get(`${API_URL}/investors`),
-          axios.get(`${API_URL}/ico`)
+          axios.get(`${store.state.API_SERVER}api/v1/site/investors`),
+          axios.get(`${store.state.API_SERVER}api/v1/site/ico`)
         ])
 
         return { 
