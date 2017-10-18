@@ -1,5 +1,5 @@
 <template lang="pug">
-  modal-backdrop(@click.native.self="goBack")
+  modal-backdrop(:style="authModalStyles", @click.native.self="goBack")
     modal-box(maxWidth="393")
       header-box
         div.login-form
@@ -32,6 +32,15 @@
     fetch ({ store: { commit }, from, isServer }) {
       isServer ? commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) : ''// Disallow making requests for new posts.
       commit('SET_BACK_PATH', from || {})
+    },
+    data () {
+      return {
+        authModalStyles: {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }  
+      }
     },
     computed: {
       ...mapGetters({

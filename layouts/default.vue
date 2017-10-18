@@ -130,9 +130,7 @@ export default {
     box-sizing border-box
     z-index 100000
     padding-bottom 60px
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
   .hideScroll
     overflow-y hidden
 
