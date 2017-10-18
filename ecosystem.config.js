@@ -6,10 +6,12 @@ module.exports = {
       args      : 'start',
       env: {
         COMMON_VARIABLE: 'true',
-        NODE_ENV: 'development' 
+        NODE_ENV: 'development',
+        API_SERVER: 'https://mapala.net/'
       },
       env_production : {
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        API_SERVER: 'https://mapala.net/'
       }
     },
   ],
@@ -21,7 +23,7 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@github.com:dacom-core/mapala-ui.git',
       path : '/var/www/mapala-ui',
-      'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env production',
+      'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env prod',
       env  : {
         NODE_ENV: 'production',
         API_SERVER: 'https://mapala.net/'
