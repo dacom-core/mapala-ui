@@ -1,14 +1,9 @@
 import axios from 'axios'
 import Vue from 'vue'
 
-export default ({ store }) => {
-  console.log(process.env.API_SERVER)
-  store.commit('SET_API_SERVER_ADDRESS', process.env.API_SERVER || 'https://dev.mapala.net/')
- 
-  console.log(store.state.API_SERVER)
-
+export default ({ store, isServer }) => {
   const config = {
-    baseURL: store.state.API_SERVER,
+    baseURL: process.env.API_SERVER || store.state.API_SERVER || 'https://dev.mapala.net/',
     withCredentials: true,
     headers: {}
   }
