@@ -1,7 +1,7 @@
 <template lang="pug">
   div
     user-profile-block
-    create-post-button(v-if="isAuth")
+    create-post-button(v-if="isAuth && $route.params.username === authUserName")
     switch-blog-buttons
 </template>
 
@@ -15,7 +15,8 @@
     computed: {
       ...mapState({
         isAuth: state => state.user.auth.isAuth,
-        isVisible: state => state.isUserProfileBlockVisible
+        isVisible: state => state.isUserProfileBlockVisible,
+        authUserName: state => state.user.personal.username
       }),
       isMapalaPage () {
         return this.$route.path === '/mapala'
