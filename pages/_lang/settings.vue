@@ -101,9 +101,7 @@
 
       loco_update () {
         if (this.locomotive) {
-          Locomotive.save({ wif: blockchains.current.wif }).then(res => {
-            console.log(res.data)
-          })
+          Locomotive.save({ wif: blockchains.current.wif })
         } else {
           Locomotive.delete().then(res => console.log(res.data))
         }

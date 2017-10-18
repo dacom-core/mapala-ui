@@ -115,7 +115,6 @@
 
             if (redirect) { this.$router.push(redirect) }
           } catch (e) {
-            console.log(e)
             this.loading = false
             showErrors(e.response.data, this)
           }

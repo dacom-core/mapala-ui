@@ -49,7 +49,6 @@
       },
 
       avatar () {
-        console.log(this.author_avatar)
         return this.isUserOwnPage ? this.userAvatar : this.author_avatar 
       }
     }

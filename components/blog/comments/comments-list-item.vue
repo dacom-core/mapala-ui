@@ -86,7 +86,7 @@ export default {
   }
 
   .comments_block .comment .comment_body img {
-    max-width: 80%;
+    max-width:100%;
   }
 
   .comments_block .comment .user_page{
