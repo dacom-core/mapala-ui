@@ -114,12 +114,9 @@ module.exports = {
       '~/plugins/element-ui.js',
       '~/plugins/filters.js',
       '~/plugins/i18n.js',
-      '~/plugins/infinite-scroll.js',
       '~/plugins/nuxt-quill-plugin.js',
       '~/plugins/vue-cookies.js',
       '~/plugins/vue-google-maps.js',
-      '~/plugins/vue-lazyload.js',
-      '~/plugins/vue-scroll-to.js'
     ]
   },
   modules: ['@/modules/typescript.ts']
