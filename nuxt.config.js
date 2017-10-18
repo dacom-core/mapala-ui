@@ -12,7 +12,8 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/mapala.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=PT+Sans:400,700' },
-      { rel: 'stylesheet', href: 'https://necolas.github.io/normalize.css/3.0.3/normalize.css' }
+      { rel: 'stylesheet', href: 'https://necolas.github.io/normalize.css/3.0.3/normalize.css' },
+      { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap-grid.min.css' }
     ]
   },
   /*
@@ -57,7 +58,7 @@ module.exports = {
     },
     bundleRenderer: {
       cache: require('lru-cache')({
-        maxAge: 1000 * 60 * 15
+        maxAge: 1000 * 60 * 5
       })
     }
   },

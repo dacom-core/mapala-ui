@@ -10,8 +10,8 @@ module.exports = {
         API_SERVER: 'https://dev.mapala.net/'
       },
       env_production : {
-        NODE_ENV: 'production',
-        API_SERVER: 'https://mapala.net/'
+        "NODE_ENV": 'production',
+        "API_SERVER": 'https://mapala.net/'
       }
     },
   ],
@@ -23,10 +23,10 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@github.com:dacom-core/mapala-ui.git',
       path : '/var/www/mapala-ui',
-      'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env production',
+      'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env production --update-env 1',
       env  : {
-        NODE_ENV: 'production',
-        API_SERVER: 'https://mapala.net/'
+        "NODE_ENV": 'production',
+        "API_SERVER": 'https://mapala.net/'
       }
     },
     development : {
@@ -35,10 +35,10 @@ module.exports = {
       ref  : 'origin/dev',
       repo : 'git@github.com:dacom-core/mapala-ui.git',
       path : '/var/www/mapala-ui',
-      'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env development',
+      'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env development --update-env 1',
       env  : {
-        NODE_ENV: 'development',
-        API_SERVER: 'https://dev.mapala.net/'
+        "NODE_ENV": 'development',
+        "API_SERVER": 'https://dev.mapala.net/'
       }
     }
   }

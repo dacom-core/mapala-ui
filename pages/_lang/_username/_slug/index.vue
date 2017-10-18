@@ -34,9 +34,9 @@
         }
       }
     },
-    async fetch ({ store: { dispatch, commit }, params, from, isServer }) {
+    async fetch ({ store: { dispatch, commit, state }, params, from, isServer }) {
       isServer ? commit('blog/posts/post_list/IS_LOADING_ALLOWED', false) : ''// Disallow making requests for new posts.
-      commit('SET_BACK_PATH', from || {})
+      commit('SET_BACK_PATH', from || { path: `/${state.locale}/`})
 
       if (isServer) { // Prefetch post content if it's SSR page loading.
         await dispatch('blog/posts/post_single/fetch_single_post', params)
