@@ -12,11 +12,7 @@
 
           common-view(v-else-if="isCommonViewVisible")
 
-          post-list#post_list_block(
-            v-infinite-scroll="loadNextPosts",
-            infinite-scroll-disabled="isLoadingDisabled",
-            :infinite-scroll-distance="10"
-            )
+          post-list#post_list_block
 
         //- RIGHT COLUMNT
         component(v-if="!isMobile", :is="rightComponent")
@@ -28,7 +24,7 @@
 
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import blockchain from '@/api/blockchain'
 import TopLine from '~/components/layout/top-line'
 import PostList from '~/components/blog/post-list'
@@ -40,16 +36,6 @@ import UserView from '~/components/layout/user-view'
 import Chat from '~/components/other/chat'
 
 export default {
-  components: {
-    TopLine,
-    PostList,
-    PostMap,
-    BlogDesk,
-    CommonView,
-    GroupView,
-    UserView,
-    Chat
-  },
   computed: {
     ...mapState({
       isMobile: state => state.isMobile,
@@ -61,18 +47,6 @@ export default {
       isCommonViewVisible: state => state.layout.isCommonViewVisible,
       rightColumn: state => state.layout.rightColumn
     }),
-    isLoadingDisabled () { // Check on has loading of next posts to be disabled
-      return this.isLoading || !this.isLoadingAllowed
-      // The first check: Is loading posts already in progress
-      // The second check: Are there more posts to load
-    },
-    distanceToLoad () {
-      if (typeof window !== 'undefined') {
-        //  const lastPostInList = document.getElementById('post_list_block')
-        //  TODO compute distance to load next posts
-      }
-    },
-
     rightComponent () {
       if (this.rightColumn === 'desk') {
         return BlogDesk
@@ -81,28 +55,29 @@ export default {
       }
     }
   },
-
   async mounted () {
     await blockchain.init(this.$store)
     if (this.isAuth) {
       await blockchain.initBlockchains(this)
     }
-
     window.scroll({
       top: 2500,
       left: 0,
       behavior: 'smooth'
     })
   },
-
   created () {
     this.$i18n.locale = this.$store.state.locale
   },
-
-  methods: {
-    ...mapActions({
-      loadNextPosts: 'blog/posts/post_list/fetch_next_posts'
-    })
+  components: {
+    TopLine,
+    PostList,
+    PostMap,
+    BlogDesk,
+    CommonView,
+    GroupView,
+    UserView,
+    Chat
   }
 }
 </script>

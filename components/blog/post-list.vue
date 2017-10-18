@@ -1,29 +1,43 @@
 <template lang="pug">
   div
     post-item(v-for="post in posts.data", :post="post", :key="post.id")
-    div.loading_spinner(v-loading.body="isLoading")
+    infinite-loading(@infinite="handleLoading" ref="infiniteLoading" :distance="200" v-if="isLoadingAllowed")
 </template>
-
 
 <script>
 import PostItem from './post-list-item'
-import { mapState } from 'vuex'
+import InfiniteLoading from '@/components/other/infinity-loading'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'post-list',
-  data () {
-    return {
-      loading: false
+  computed: { 
+    ...mapState({
+      posts: state => state.blog.posts.post_list.postList,
+      isLoading: state => state.blog.posts.post_list.isLoading,
+      isLoadingAllowed: state => state.blog.posts.post_list.isLoadingAllowed,
+    }),
+    isLoadingDisabled () { // Check on has loading of next posts to be disabled
+      return this.isLoading || !this.isLoadingAllowed
+      // The first check: Is loading posts already in progress
+      // The second check: Are there more posts to load
+    },
+  },
+  methods:{
+    ...mapActions({
+      loadNextPosts: 'blog/posts/post_list/fetch_next_posts'
+    }),
+    handleLoading ($state) {
+      if (!this.isLoadingAllowed) {
+        $state.complete();
+      } else {
+        this.loadNextPosts().then(() => $state.loaded())
+      }
     }
   },
-
-  computed: mapState('blog/posts/post_list', {
-    posts: state => state.postList,
-    isLoading: state => state.isLoading
-  }),
-
   components: {
-    PostItem
+    PostItem,
+    InfiniteLoading
   }
 }
 </script>

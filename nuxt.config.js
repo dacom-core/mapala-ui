@@ -41,9 +41,8 @@ module.exports = {
     { src: '~/plugins/pathMaker.js', ssr: true },
     { src: '~/plugins/vue-cookies.js', ssr: true },
     { src: '~/plugins/vue-google-maps.js', ssr: false },
-    { src: '~/plugins/vue-lazyload.js', ssr: true },
-    { src: '~/plugins/vue-scroll-to.js', ssr: false },
-    { src: '~/plugins/infinite-scroll.js', ssr: false },
+    // { src: '~/plugins/vue-lazyload.js', ssr: true },
+    // { src: '~/plugins/vue-scroll-to.js', ssr: false },
     { src: '~/plugins/filters.js', ssr: true },
     { src: '~/plugins/http.js', ssr: true },
     { src: '~/plugins/nuxt-quill-plugin.js', ssr: false }

@@ -134,5 +134,7 @@
   "password": "Пароль",
   "posting_key": "Golos.io постинг ключ", 
   "password_strength": "Надежность пароля",
-  "username": "Логин"
+  "username": "Логин",
+  "no-results": "Нет постов.",
+  "no-more": "Больше постов нет."
 }

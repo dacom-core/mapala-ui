@@ -6983,6 +6983,10 @@ vue-i18n@^7.1.0:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-7.3.1.tgz#62930f0f229d4ba467209140f15b664539c1794b"
 
+vue-infinite-loading@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/vue-infinite-loading/-/vue-infinite-loading-2.2.1.tgz#91a349c0fde8a1a51befd9d867eafd80c0dc2126"
+
 vue-infinite-scroll@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/vue-infinite-scroll/-/vue-infinite-scroll-2.0.2.tgz#ca37a91fe92ee0ad3b74acf8682c00917144b711"

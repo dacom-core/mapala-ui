@@ -49,6 +49,7 @@
     "vue-fontawesome": "0.0.2",
     "vue-highcharts": "0.0.10",
     "vue-i18n": "^7.1.0",
+    "vue-infinite-loading": "^2.2.1",
     "vue-infinite-scroll": "^2.0.1",
     "vue-invisible-recaptcha": "^0.1.0",
     "vue-lazyload": "^1.0.6",
