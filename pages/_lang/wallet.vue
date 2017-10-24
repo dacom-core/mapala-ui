@@ -15,6 +15,33 @@
           div.currency
             | {{ gbgBalance }}
 
+          el-tabs(v-model="activeName")
+            el-tab-pane(label="BTC" name="btc" v-if="wallet" class="is-active")
+              h2
+                span
+                  | {{ $t('investments') }}:
+                | {{wallet.personal_btc || 0}} BTC
+            el-tab-pane(label="GBG" name="gbg")
+              h2
+                span
+                  | {{ $t('investments') }}:
+                | {{wallet.personal_gbg || 0}} Mpl
+            el-tab-pane(:label="$t('tokens')" name="tokens")
+              h2
+                span
+                  | {{ $t('investments') }}:
+                | {{wallet.personal_tokens || 0 }} GBG
+            el-tab-pane(:label="$t('bounty')" name="bounty")
+              h2
+                span
+                  | {{ $t('investments') }}:
+                | {{wallet.personal_bounty || 0}} Mpl
+                          
+            el-tab-pane(label="USD" name="usd")
+              h2
+                span
+                  | {{ $t('investments') }}:
+                | {{wallet.total_personal_usd}} Mpl
 </template>
 
 <script>
@@ -32,11 +59,20 @@
       return {
         moment: moment,
         error: false,
-        personalTokens: 0
+        personalTokens: 0,
+        wallet: {},
+        activeName: 'btc' 
       }
     },
     created () {
       this.showModal()
+
+      const that = this
+      api.ico.wallet(this.username, function(data) {
+        that.wallet = data
+
+        console.log(data)
+      });
     },
     async mounted () {
       const { balance: golos, sbd_balance: gbg } = await bc.getUser(this.bc_username)
@@ -74,6 +110,11 @@
 </script>
 
 <style>
+
+  .el-tabs__content {
+    text-align: center;
+  }
+
   .wallet{
     margin: 0 auto;
     max-width: 480px;
