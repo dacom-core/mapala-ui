@@ -13,7 +13,7 @@ export default {
         const { data: ico } = await axios.get(`${store.state.API_SERVER}api/v1/site/ico`)
 
         return { ico: ico }
-    }, 
+    },
     data () {
         return {
             title: 'ICO',
@@ -67,20 +67,26 @@ export default {
 }
 
 .ico-bottom h4 {
-    height: 127px;
-    max-width: 200px;
-    padding-left: 80px;
-    padding-top: 40px;
-    font-weight: normal;
+  display: grid;
+  align-items: center;
+  grid-auto-flow: column;
+  grid-gap: 5px;
 }
 
 .ico-bottom a {
     text-decoration: none;
 }
 
-.ico-hist {
-    background: url('~assets/ico/history.png') no-repeat;
+.ico-bottom h4.ico-hist:before {
+  content: '';
+  background: url('~assets/ico/history.png') no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 127px;
+  min-width: 110px;
+  display: inline-block;
 }
+
 
 .ico-blog {
     background: url('~assets/ico/blog.png') no-repeat;
