@@ -15,33 +15,33 @@
           div.currency
             | {{ gbgBalance }}
 
-          el-tabs(v-model="activeName")
+          el-tabs(v-model="activeName" class="investment-tabs")
             el-tab-pane(label="BTC" name="btc" v-if="wallet" class="is-active")
               h2
                 span
-                  | {{ $t('investments') }}:
-                | {{wallet.personal_btc || 0}} BTC
+                  | {{ $t('investments') + ' BTC: ' }}
+                | {{ wallet.personal_btc || 0 }}
             el-tab-pane(label="GBG" name="gbg")
               h2
                 span
-                  | {{ $t('investments') }}:
-                | {{wallet.personal_gbg || 0}} Mpl
+                  | {{ $t('investments') + ' GBG: ' }}
+                | {{ wallet.personal_gbg || 0 }}
             el-tab-pane(:label="$t('tokens')" name="tokens")
               h2
                 span
-                  | {{ $t('investments') }}:
-                | {{wallet.personal_tokens || 0 }} GBG
+                  | {{ $t('investments') + ' Mpl: ' }}
+                | {{ wallet.personal_tokens || 0 }}
             el-tab-pane(:label="$t('bounty')" name="bounty")
               h2
                 span
-                  | {{ $t('investments') }}:
-                | {{wallet.personal_bounty || 0}} Mpl
-                          
+                  | {{ $t('investments') + ' Mpl: ' }}
+                | {{ wallet.personal_bounty || 0 }}
+
             el-tab-pane(label="USD" name="usd")
               h2
                 span
-                  | {{ $t('investments') }}:
-                | {{wallet.total_personal_usd}} Mpl
+                  | {{ $t('investments') + ' USD: ' }}
+                | {{ wallet.total_personal_usd }}
 </template>
 
 <script>
@@ -61,7 +61,7 @@
         error: false,
         personalTokens: 0,
         wallet: {},
-        activeName: 'btc' 
+        activeName: 'btc'
       }
     },
     created () {
@@ -182,5 +182,18 @@
     margin: 0 14px 19px;
     border: 0;
     border-bottom: solid 1px rgba(72, 84, 101, 0.2);
+  }
+
+
+  .investment-tabs {
+    font-size: 20px;
+    letter-spacing: -.7px;
+    font-weight: normal;
+  }
+
+  .el-tab-pane h2 span {
+    font-size: 20px;
+    letter-spacing: -.7px;
+    font-weight: normal;
   }
 </style>

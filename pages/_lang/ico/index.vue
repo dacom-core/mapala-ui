@@ -2,7 +2,7 @@
   <div>
     <h3 v-if="isMobile">{{ $t('invest_blockchain') }}</h3>
     <h1 v-else>{{ $t('invest_blockchain') }}</h1>
-    <chart :x="ico.xaxis" :y="ico.yaxis"></chart>
+    <!--<chart :x="ico.xaxis" :y="ico.yaxis"></chart>-->
     <ico-stats :sections="sections"></ico-stats>
     <el-row type="flex" class="auc-bg" justify="center" :gutter="20">
       <el-col :xs="24" :sm="24" :md="18" :lg="18">
@@ -24,7 +24,7 @@
       </el-col>
     </el-row>
     <faq></faq>
-  </div>  
+  </div>
 </template>
 
 <script>
