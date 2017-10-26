@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 style="margin: 50px 25px 25px;" v-if="isMobile" v-html="$t('invest_blockchain')"></h3>
-    <h1 class="margin: 50px 25px 25px;" v-else v-html="$t('invest_blockchain')"></h1>
+    <h1 style="margin: 50px 25px 25px;" v-else v-html="$t('invest_blockchain')"></h1>
     <ul class="travelchain_channels">
       <li class="telegram_channel">
         <a href="https://t.me/travelchainrus">Rus chat</a>
