@@ -6,7 +6,7 @@
           i.refresh
           div.in_wallet
             | In wallet {{ moment().format('DD.MM.YYYY') }}
-          div.coins
+          //div.coins
             | {{ personalTokens }} Tokens
 
           div.currency
@@ -127,6 +127,7 @@
   }
 
   .wallet .refresh{
+    display: none;
     position: absolute;
     width: 30px;
     height: 30px;
@@ -154,7 +155,8 @@
   .wallet .currency{
     font-size: 20px;
     letter-spacing: -0.7px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     margin-left: 40px;
     position: relative;
     display: inline-block;
