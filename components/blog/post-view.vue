@@ -303,6 +303,8 @@ export default {
 
   .post-content .content {
     overflow: hidden;
+    -ms-word-wrap: break-word
+    word-wrap: break-word
   }
 
   .post-content .c_text img {
