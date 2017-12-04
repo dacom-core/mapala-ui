@@ -47,7 +47,7 @@
       "aw":{"code":"aw","name":"Aruba","dialCode":297,"phoneFormat":"111 1111"},
       "au":{"code":"au","name":"Australia","dialCode":61,"phoneFormat":"1111 111 111"},
       "at":{"code":"at","name":"Austria (Österreich)","dialCode":43,"phoneFormat":"0664 123456"},
-      "az":{"code":"az","name":"Azerbaijan (Azərbaycan)","dialCode":994,"phoneFormat":"040 123 45 67"},
+      "az":{"code":"az","name":"Azerbaijan (Azərbaycan)","dialCode":994,"phoneFormat":"(111) 111 11 11"},
       "bs":{"code":"bs","name":"Bahamas","dialCode":1242,"phoneFormat":"(242) 359-1234"},
       "bh":{"code":"bh","name":"Bahrain (‫البحرين‬‎)","dialCode":973,"phoneFormat":"3600 1234"},
       "bd":{"code":"bd","name":"Bangladesh (বাংলাদেশ)","dialCode":880,"phoneFormat":"01812-345678"},
