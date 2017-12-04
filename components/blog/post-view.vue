@@ -303,10 +303,12 @@ export default {
 
   .post-content .content {
     overflow: hidden;
+    -ms-word-wrap: break-word
+    word-wrap: break-word
   }
 
   .post-content .c_text img {
-    max-height: 492px;
+    /*max-height: 492px;*/
     max-width: 100%;
     text-align: center;
     margin: 24px auto;
