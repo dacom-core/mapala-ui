@@ -10,13 +10,13 @@ export default function ({ isHMR, app, store, route, params, error, redirect, is
 
   if (store.state.locales.indexOf(locale) === -1) {
     app.i18n.locale = 'ru'
-    return redirect(route.fullPath.replace(/^/, `/ru`))
+    // return redirect(route.fullPath.replace(/^/, `/ru`))
   }
 
   app.i18n.locale = locale
   store.commit('SET_LANG', locale)
 
   if (typeof params.lang === 'undefined') {
-    return redirect(route.fullPath.replace(/^/, locale))
+    // return redirect(route.fullPath.replace(/^/, locale))
   }
 }

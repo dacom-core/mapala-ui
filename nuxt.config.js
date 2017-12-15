@@ -84,7 +84,7 @@ module.exports = {
       }
     },
     vendor: [
-      'vuex-class', 
+      'vuex-class',
       'nuxt-class-component',
       'vue-i18n',
       'axios',
@@ -119,5 +119,9 @@ module.exports = {
       '~/plugins/vue-google-maps.js',
     ]
   },
-  modules: ['@/modules/typescript.ts']
+  modules: [
+    '@/modules/typescript.ts',
+    ['@nuxtjs/proxy', { pathRewrite: { '^/$' : '/1.html' } }]
+  ]
+
 }
