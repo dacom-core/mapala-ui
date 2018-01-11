@@ -8,7 +8,7 @@
 
     <div v-else>
       <div class="inpt_w">
-        <input type="text" :placeholder="$t('username')" @change="hanldeUsernameInput"  class="inpt i-user"><label></label>
+        <input type="text" :placeholder="$t('username')" v-model="username" class="inpt i-user"><label></label>
       </div>
       <!-- <div class="inpt_w">
         <input type="password" placeholder="Password" v-model="password" class="inpt i-pass"><label></label>
@@ -91,11 +91,6 @@
       }
     },
     methods: {
-
-      hanldeUsernameInput (value) {
-        this.username = value.replace(/[^a-z-0-9]/i, "")
-      },
-
       async signUp () {
         const creds = {
           username: this.username,
@@ -186,6 +181,9 @@
     watch: {
       'rawVal' () {
         this.rawVal.indexOf('_') === -1 ? this.isPhoneValid = true : this.isPhoneValid = false
+      },
+      'username' (newVal, oldVal) {
+        this.username = newVal.replace(/[^a-z-0-9]/ig, "")
       }
     },
     components: { "invisible-recaptcha": InvisibleRecaptcha, CountryInput, VuePassword }
