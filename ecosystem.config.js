@@ -7,7 +7,7 @@ module.exports = {
       env: {
         COMMON_VARIABLE: 'true',
         NODE_ENV: 'development',
-        API_SERVER: 'https://dev.mapala.net/'
+        API_SERVER: 'https://mapala.net/'
       },
       env_production : {
         "NODE_ENV": 'production',
@@ -38,7 +38,7 @@ module.exports = {
       'post-deploy' : 'yarn install && npm run build && pm2 reload ecosystem.config.js --env development --update-env 1',
       env  : {
         "NODE_ENV": 'development',
-        "API_SERVER": 'https://dev.mapala.net/'
+        "API_SERVER": 'https://mapala.net/'
       }
     }
   }

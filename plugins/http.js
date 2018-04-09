@@ -3,7 +3,8 @@ import Vue from 'vue'
 
 export default ({ store, isServer }) => {
   const config = {
-    baseURL: process.env.API_SERVER || store.state.API_SERVER || 'https://dev.mapala.net/',
+    // baseURL: process.env.API_SERVER || store.state.API_SERVER || 'https://dev.mapala.net/',
+    baseURL: process.env.API_SERVER || store.state.API_SERVER || 'https://mapala.net/',
     withCredentials: true,
     headers: {}
   }
