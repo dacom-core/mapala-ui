@@ -34,7 +34,7 @@
     "query-string": "^5.0.0",
     "sass-loader": "^6.0.6",
     "slug": "^0.9.1",
-    "steem": "^0.6.3",
+    "steem": "^0.7.1",
     "steem-rpc": "^0.6.6",
     "store": "^2.0.12",
     "stylus-loader": "^3.0.1",
