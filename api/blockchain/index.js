@@ -121,7 +121,7 @@ export default {
       steem.broadcast.vote(
         this.current.wif, this.current.blockchain_username, page.author.bc_username, page.permlink, 10000, function (err, result) {
           if (err) {
-            const message = err.cause.payload.error.message
+            const message = err.cause.message
             if (message.includes('You have already voted in a similar way')) {
               reject('You have already voted in a similar way')
             } else if (message.includes('Cannot vote again on a comment after payout')) {
