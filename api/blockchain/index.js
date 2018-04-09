@@ -169,7 +169,7 @@ export default {
     })
 
     // steem-js conf
-    steem.config.set('websocket', this.current.wss)
+    steem.api.setOptions({url: this.current.wss})
     steem.config.set('address_prefix', this.current.address_prefix)
     steem.config.set('chain_id', this.current.chain_id)
   },
