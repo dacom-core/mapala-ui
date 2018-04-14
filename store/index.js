@@ -55,7 +55,7 @@ export const getters = {
   * Return the penultimate path from the history stack
   */
   backPath (state) {
-    return state.backPath ? state.backPath : `/${state.locale}/`
+    return state.backPath ? state.backPath : `${process.env.API_SERVER}${state.locale}/`
   }
 }
 
