@@ -1,8 +1,9 @@
 // import slug from 'unicode-slug'
-import steem from 'steem'
+import golos from 'golos-js'
+import golos_auth from '../../node_modules/golos-js/lib/auth'
+
 import store from 'store'
 import auth from '../auth'
-import { Client } from 'steem-rpc'
 import { ChainConfig, PrivateKey, TransactionBuilder } from 'esteem-lib'
 import { User, Comment, Post, UserBlockChain, BlockChain } from '../services'
 const slugify = require('unicode-slug')
@@ -29,7 +30,7 @@ export default {
   getUser (username = null) {
     return new Promise((resolve, reject) => {
       username = username || this.current.blockchain_username
-      steem.api.getAccounts([username], (err, result) => {
+      golos.api.getAccounts([username], (err, result) => {
         err ? reject(err) : resolve(result[0])
       })
     })
@@ -45,19 +46,13 @@ export default {
     }
   },
 
-  signTr (tr) {
-    tr.add_signer(PrivateKey.fromWif(this.current.wif))
-
-    return new Promise((resolve, reject) => {
-      tr.finalize().then(() => {
-        tr.sign()
-        resolve(tr.toObject())
-      }, err => reject(err))
-    })
+  async signTr (tx) {
+    tx = Object.assign(tx, await golos.broadcast._prepareTransaction({})).toObject()
+    return golos_auth.signTransaction(tx, {posting: this.current.wif})
   },
 
   async postExists (author, permlink) {
-    const data = await steem.api.getContent(author, permlink)
+    const data = await golos.api.getContent(author, permlink)
 
     return !!data.id
   },
@@ -118,7 +113,7 @@ export default {
 
   vote (page) {
     return new Promise((resolve, reject) => {
-      steem.broadcast.vote(
+      golos.broadcast.vote(
         this.current.wif, this.current.blockchain_username, page.author.bc_username, page.permlink, 10000, function (err, result) {
           if (err) {
             const message = err.cause.message
@@ -158,20 +153,10 @@ export default {
 
     this.current = this.blockchains[blockchain]
 
-    if (window.Api !== undefined) {
-      window.Api.close()
-    }
-
-    // esteem-lib conf
-    window.Api = Client.get({ url: this.current.wss }, true)
-    window.Api.initPromise.then(response => {
-      ChainConfig.setChainId(this.current.chain_id)
-    })
-
     // steem-js conf
-    steem.api.setOptions({url: this.current.wss})
-    steem.config.set('address_prefix', this.current.address_prefix)
-    steem.config.set('chain_id', this.current.chain_id)
+    golos.config.set('websocket', this.current.wss)
+    golos.config.set('address_prefix', this.current.address_prefix)
+    golos.config.set('chain_id', this.current.chain_id)
   },
 
   getPostingKey (blockchain, username) {
@@ -221,13 +206,13 @@ export default {
 
   getUsernameByKey (key, prefix = this.current.address_prefix) {
     return new Promise((resolve, reject) => {
-      steem.config.set('address_prefix', prefix)
-      steem.api.getKeyReferences([key], function (err, result) {
+      golos.config.set('address_prefix', prefix)
+      golos.api.getKeyReferences([key], function (err, result) {
         err ? reject(err) : resolve(result[0][0])
       })
       if (this.current.address_prefix) {
         const curr_adress = this.current.address_prefix
-        steem.config.set('address_prefix', curr_adress)
+        golos.config.set('address_prefix', curr_adress)
       }
     })
   },
