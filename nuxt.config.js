@@ -89,7 +89,7 @@ module.exports = {
       'vue-i18n',
       'axios',
       'element-ui',
-      'steem',
+      'golos-js',
       'esteem-lib',
       'bytebuffer',
       'bluebird',
